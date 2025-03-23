@@ -11,7 +11,9 @@ const Template = ({
         <>
             <Siderbar />
             <Topbar />
-            {children}
+            <div className="ml-[250px] mt-[60px]">
+                {children}
+            </div>
         </>
     )
 }
