@@ -1,26 +1,101 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+	--text-primary : #E7E7EB;
+  --text-secondary : #C6C6C8;
+  --text-tetiary : #7C7C88;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --bg-primary : #15151F;
+  --bg-secondary : #191923;
+  --bg-tetiary : #25252E;
+  --bg-quantinary : #32323e;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --border-primary : #272737;
+  --border-secondary : #2C2C3F;
+  --border-tetiary : #3A3A46;
+  --border-quantinary : #2f2f39;
+
+  --main-primary : #6060D0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-image: url('/assets/prod/bg-gradient.webp');
+  background-color: #15151F;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  margin: 0;
+}
+
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #00000000;
+  border-radius: 100px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--bg-quantinary);
+  border-radius: 100px;
+}
+
+.ant-message-notice-content{
+  background-color: var(--bg-secondary) !important;
+  color : var(--text-primary);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--text-primary);
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px transparent;
+}
+
+@font-face {
+  font-family: 'greater-theory';
+  src: url('/fonts/GreaterTheory.otf') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* hot-toast */
+.go2072408551 {
+  background-color: var(--bg-secondary) !important;
+  border : 1px solid var(--border-secondary) !important;
+  color: var(--text-primary) !important;
+  border-radius: 15px !important;
+  font-size: 14px !important;
+}
+
+@theme {
+	--color-text-primary : #E7E7EB;
+  --color-text-secondary : #C6C6C8;
+  --color-text-tetiary : #7C7C88;
+
+  --color-bg-primary : #15151F;
+  --color-bg-secondary : #191923;
+  --color-bg-tetiary : #25252E;
+  --color-bg-quantinary : #32323e;
+
+  --color-border-primary : #272737;
+  --color-border-secondary : #2C2C3F;
+  --color-border-tetiary : #3A3A46;
+  --color-border-quantinary : #2f2f39;
+
+  --color-main-primary : #6060D0;
 }
