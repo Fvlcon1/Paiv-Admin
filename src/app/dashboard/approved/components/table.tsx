@@ -6,6 +6,7 @@ import Text from "@styles/components/text";
 import theme from "@styles/theme";
 import { TypographyBold } from "@styles/style.types";
 import NoData from "@components/NoData/noData";
+import { useApprovedContext } from "../context/context";
 
 const Table = ({
     data,
@@ -14,6 +15,7 @@ const Table = ({
     data: any;
     isLoading: boolean;
 }) => {
+    const {setShowClaimDetail} = useApprovedContext()
     const { getHeaderGroups, getRowModel } = useReactTable({
         data: data,
         columns: columns,
@@ -49,7 +51,10 @@ const Table = ({
                 {!isLoading && data.length ? (
                     <tbody>
                         {getRowModel().rows.map((row) => (
-                            <tr key={row.id}>
+                            <tr 
+                                key={row.id} className="hover:bg-bg-secondary cursor-pointer duration-200"
+                                onClick={()=>setShowClaimDetail(true)}
+                            >
                                 {row.getVisibleCells().map((cell) => (
                                     <td
                                         key={cell.id}

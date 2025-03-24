@@ -65,7 +65,7 @@ const Button = ({
       onMouseLeave={()=>setOnHover(false)}
       onMouseDown={()=>setOnPress(true)}
       onMouseUp={()=>setOnPress(false)}
-      className={`${className} duration-200 border-[1px] border-solid border-border-tetiary ${disabled && 'cursor-not-allowed'}`}
+      className={`${className} duration-200 border-[1px] cursor-pointer border-solid border-border-tetiary ${disabled && 'cursor-not-allowed'}`}
       disabled={disabled ?? loading}
       type={type ?? 'submit'}
     >
