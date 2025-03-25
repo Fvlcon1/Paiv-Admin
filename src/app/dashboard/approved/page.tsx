@@ -1,15 +1,21 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Controls from "./components/controls"
 import Table from "./components/table"
-import { data } from "./components/data"
 import ClaimDetails from "./components/claimDetails/claimDetails"
+import useApprovedClaims from "./hooks/useClaims"
+import { useApprovedContext } from "./context/context"
 
 const Approved = () => {
     const [pageSize, setPageSize] = useState(15)
     const [pageNumber, setPageNumber] = useState(1)
     const [view, setView] = useState<"list" | "grid">("list")
+    const {getApprovedClaimsMutation, tableData} = useApprovedContext()
+
+    useEffect(()=>{
+        getApprovedClaimsMutation()
+    }, [])
 
     return (
         <>
@@ -25,7 +31,7 @@ const Approved = () => {
                         setView={setView}
                     />
                 </div>
-                <Table data={data} isLoading={false}/>
+                <Table />
             </div>
         </>
     )
