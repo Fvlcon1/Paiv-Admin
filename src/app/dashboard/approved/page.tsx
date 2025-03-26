@@ -19,7 +19,6 @@ const Approved = () => {
 
     return (
         <>
-            <ClaimDetails />
             <div className="w-full flex flex-col">
                 <div className="w-full px-3 h-[60px] flex items-center border-b-[1px] border-solid border-b-border-primary">
                     <Controls 
