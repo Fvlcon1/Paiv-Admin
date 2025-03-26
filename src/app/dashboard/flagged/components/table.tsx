@@ -9,7 +9,7 @@ import { useApprovedContext } from "../context/context";
 import useApprovedClaims from "../hooks/useClaims";
 import useClaimsTable from "../hooks/useClaimsTable";
 import ClaimDetails from "./claimDetails/claimDetails";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IClaimsDetailType } from "../utils/types";
 
 const Table = ({
@@ -21,6 +21,13 @@ const Table = ({
     const {tableData, isApprovedClaimsPending : isLoading} = useApprovedContext()
     const {columns} = useClaimsTable()
     const [claimDetails, setClaimDetails] = useState<IClaimsDetailType>()
+    const [containerHeight, setContainerHeight] = useState(500)
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setContainerHeight(window.innerHeight - 300);
+        }
+    }, []);
 
     const { getHeaderGroups, getRowModel } = useReactTable({
         data: tableData,
@@ -92,7 +99,7 @@ const Table = ({
                 <div 
                     className={`w-full justify-center flex items-center`}
                     style={{
-                        height : `${window.innerHeight - 300}px`
+                        height : `${containerHeight - 300}px`
                     }}
                 >
                     <div className="normal-loader"></div>
@@ -101,7 +108,7 @@ const Table = ({
                 <div 
                     className={`w-full justify-center flex items-center`}
                     style={{
-                        height : `${window.innerHeight - 300}px`
+                        height : `${containerHeight - 300}px`
                     }}
                 >
                     <NoData />
