@@ -62,7 +62,6 @@ const Profile = () => {
                         value={searchValue}
                         setValue={setSearchValue}
                         className="!py-[5px] !bg-[#ffffff0c] pl-[10px] pr-1"
-                        borderColor="transparent"
                         placeholder="Search anything..."
                         PreIcon={
                             <FaMagnifyingGlass 

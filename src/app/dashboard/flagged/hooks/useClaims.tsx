@@ -97,7 +97,7 @@ const useApprovedClaims = () => {
             ),
             hospitalName: item.hospital_name,
             patientName: item.patient_name,
-            location: item.hospital_location,
+            location: item.location,
             diagnosis: item.diagnosis,
             drugs: item.drugs.map((drug : any) => `${drug.code} Qty(${drug.quantity})`),
             details : convertToClaimsDetails(item)

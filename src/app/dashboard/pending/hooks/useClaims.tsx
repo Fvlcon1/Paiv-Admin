@@ -14,7 +14,7 @@ const useApprovedClaims = () => {
 
     const getApprovedClaims = async () => {
         setSelectedClaims([])
-        const response = await protectedApi.GET("/approved")
+        const response = await protectedApi.GET("/pending")
         console.log({response})
         return response
     }
