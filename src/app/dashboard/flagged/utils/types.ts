@@ -19,7 +19,7 @@ export interface IClaimsDetailType {
 export interface IDrugsType {
     code : string,
     description : string
-    quantity : number
+    dosage : string
     date : Date
 }
 export interface IDiagonosisType {

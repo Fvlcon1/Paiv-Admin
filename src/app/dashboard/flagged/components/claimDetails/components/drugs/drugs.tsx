@@ -1,7 +1,7 @@
 import Text from "@styles/components/text"
 import { TypographyBold } from "@styles/style.types"
 import Table from "./table"
-import { IDrugsType } from "@/app/dashboard/approved/utils/types"
+import { IDrugsType } from "@/app/dashboard/pending/utils/types"
 
 const Drugs = ({
     drugs
