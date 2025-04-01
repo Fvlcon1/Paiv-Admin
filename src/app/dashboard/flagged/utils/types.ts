@@ -1,4 +1,5 @@
 import { JSX } from "react";
+import { IClaimsDetailType } from "../../utils/types";
 
 export interface IApprovedTableData {
     id: string;
@@ -9,22 +10,4 @@ export interface IApprovedTableData {
     diagnosis: string;
     drugs: string;
     details : IClaimsDetailType
-}
-export interface IClaimsDetailType {
-    reasons? : string[]
-    diagnosis : IDiagonosisType[],
-    drugs : IDrugsType[]
-}
-
-export interface IDrugsType {
-    code : string,
-    description : string
-    dosage : string
-    date : Date
-}
-export interface IDiagonosisType {
-    GRDG : string
-    description : string
-    diagnosis : string
-    ICD10 : string
 }

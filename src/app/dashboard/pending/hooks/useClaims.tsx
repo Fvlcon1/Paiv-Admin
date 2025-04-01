@@ -2,10 +2,11 @@
 
 import { protectedApi } from '@/app/utils/apis/api';
 import { useMutation } from '@tanstack/react-query';
-import { IApprovedTableData, IClaimsDetailType } from '../utils/types';
+import { IApprovedTableData } from '../utils/types';
 import { useEffect, useState } from 'react';
 import { FaSquareCheck } from 'react-icons/fa6';
 import theme, { colors } from '../../../styles/theme';
+import { IClaimsDetailType } from '../../utils/types';
 
 const useApprovedClaims = () => {
     const [selectedClaims, setSelectedClaims] = useState<string[]>([])
@@ -58,6 +59,7 @@ const useApprovedClaims = () => {
     const convertToClaimsDetails = (claim:any) : IClaimsDetailType => {
         return {
             reasons : claim.reason,
+            totalPayout : claim.total_payout,
             diagnosis : [{
                 description : claim.diagnosis,
                 diagnosis : claim.diagnosis,

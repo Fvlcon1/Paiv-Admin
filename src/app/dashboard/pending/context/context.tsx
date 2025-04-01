@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, ReactNode, SetStateAction, Dispatch } from 'react';
 import useApprovedClaims from '../hooks/useClaims';
 import { UseMutateFunction } from '@tanstack/react-query';
-import { IApprovedTableData, IClaimsDetailType } from '../utils/types';
+import { IApprovedTableData } from '../utils/types';
 
 const approvedContext = createContext<{
     setShowClaimDetail: Dispatch<SetStateAction<boolean>>

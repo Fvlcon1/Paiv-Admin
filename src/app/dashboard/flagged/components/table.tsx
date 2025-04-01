@@ -10,7 +10,7 @@ import useApprovedClaims from "../hooks/useClaims";
 import useClaimsTable from "../hooks/useClaimsTable";
 import ClaimDetails from "./claimDetails/claimDetails";
 import { useState, useEffect } from "react";
-import { IClaimsDetailType } from "../utils/types";
+import { IClaimsDetailType } from "../../utils/types";
 
 const Table = () => {
     const { setShowClaimDetail, tableData, isApprovedClaimsPending: isLoading } = useApprovedContext();

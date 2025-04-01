@@ -1,7 +1,7 @@
-import { IDrugsType } from "@/app/dashboard/pending/utils/types"
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
 import { useState, useEffect } from "react"
+import { IDrugsType } from '../../../../../utils/types';
 
 const Table = ({
     drugs

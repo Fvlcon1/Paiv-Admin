@@ -1,7 +1,7 @@
 import Text from "@styles/components/text"
 import { TypographyBold } from "@styles/style.types"
 import Table from "./table"
-import { IDiagonosisType } from "@/app/dashboard/approved/utils/types"
+import { IDiagonosisType } from "@/app/dashboard/utils/types"
 
 const Diagnosis = ({
     diagnosis

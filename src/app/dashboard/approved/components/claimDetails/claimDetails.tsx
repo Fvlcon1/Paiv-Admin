@@ -11,7 +11,8 @@ import Diagnosis from "./components/diagnosis/diagnosis";
 import { useApprovedContext } from "../../context/context";
 import Drugs from "./components/drugs/drugs";
 import Button from "@components/button/button";
-import { IClaimsDetailType } from "../../utils/types";
+import { IClaimsDetailType } from "@/app/dashboard/utils/types";
+import theme from "@styles/theme";
 
 const ClaimDetails = ({
     claimDetails
@@ -68,6 +69,20 @@ const ClaimDetails = ({
                                 }
                                 <Diagnosis diagnosis={claimDetails.diagnosis} />
                                 <Drugs drugs={claimDetails.drugs} />
+                                
+                                {/* Payout */}
+                                <div className="flex gap-2 items-center">
+                                    <Text
+                                        textColor={theme.colors.text.tetiary}
+                                    >
+                                        Total Payout:
+                                    </Text>
+                                    <Text
+                                        bold={TypographyBold.md2}
+                                    >
+                                        GHS {claimDetails.totalPayout}
+                                    </Text>
+                                </div>
                             </div>
 
                             {/* Actions */}
