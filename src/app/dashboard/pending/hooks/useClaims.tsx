@@ -75,22 +75,22 @@ const useApprovedClaims = () => {
 
     const convertToApprovedTableData = (data:any[]) => {
         const approvedTableData = data.map((item) => ({
-            id: item.id,
+            id: item.encounter_token,
             selectable: (
-                selectedClaims.includes(item.id)
+                selectedClaims.includes(item.encounter_token)
                 ? <FaSquareCheck 
                     size={20}
                     color={theme.colors.main.primary}
                     className="rounded-[6px] mt-2 overflow-hidden relative w-[20px] h-[20px] bg-bg-tetiary"
                     onClick={(e)=>{
                         e.stopPropagation()
-                        handleUnselectClaim(item.id)
+                        handleUnselectClaim(item.encounter_token)
                     }} 
                 />
                 : <div 
                     onClick={(e)=>{
                         e.stopPropagation()
-                        handleSelectClaim(item.id)
+                        handleSelectClaim(item.encounter_token)
                     }} 
                     className="rounded-[6px] mt-2 overflow-hidden relative w-[20px] h-[20px] bg-bg-tetiary"
                 />
