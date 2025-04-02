@@ -17,7 +17,7 @@ const useApprovedClaims = () => {
         setSelectedClaims([])
         const response = await protectedApi.GET("/approved")
         console.log({response})
-        return response
+        return response.reverse()
     }
 
     const handleSelectClaim = (id:string) => {
