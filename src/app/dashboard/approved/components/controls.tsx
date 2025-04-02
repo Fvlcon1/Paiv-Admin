@@ -8,6 +8,7 @@ import { Dispatch, SetStateAction } from "react"
 import useApprovedClaims from "../hooks/useClaims"
 import Pressable from "@components/button/pressable"
 import { useApprovedContext } from "../context/context"
+import Button from "@components/button/button"
 
 const Controls = ({
     setPageSize,
@@ -24,7 +25,7 @@ const Controls = ({
     setView: Dispatch<SetStateAction<"list" | "grid">>
     view: "list" | "grid"
 }) => {
-    const {getApprovedClaimsMutation} = useApprovedContext()
+    const {getApprovedClaimsMutation, selectedClaims} = useApprovedContext()
 
     return (
         <div className="flex items-center gap-2">
@@ -75,6 +76,15 @@ const Controls = ({
                 </div>
             </Tooltip>
             </div>
+            {
+                selectedClaims.length ? 
+                <Button
+                    text="Approve"
+                    className="!bg-[#2D7F41] !border-none !h-[32px]"
+                />
+                :
+                <></>
+            }
         </div>
     )
 }
