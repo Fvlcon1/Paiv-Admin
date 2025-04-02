@@ -13,6 +13,7 @@ import Drugs from "./components/drugs/drugs";
 import Button from "@components/button/button";
 import { IClaimsDetailType } from "@/app/dashboard/utils/types";
 import theme from "@styles/theme";
+import ReasonForDeclining from '@/app/dashboard/components/reason/reason';
 
 const ClaimDetails = ({
     claimDetails
@@ -21,6 +22,7 @@ const ClaimDetails = ({
 }) => {
     const { showClaimDetail, setShowClaimDetail } = useApprovedContext();
     const [maxHeight, setMaxHeight] = useState<number | null>(null);
+    const [isReasonVisible, setIsReasonVisible] = useState(false)
 
     useEffect(() => {
         const updateHeight = () => {
@@ -42,6 +44,10 @@ const ClaimDetails = ({
                     onClick={() => setShowClaimDetail(false)} 
                     className="!px-6"
                 >
+                    <ReasonForDeclining
+                        isVisible={isReasonVisible}
+                        close={() => setIsReasonVisible(false)}
+                    />
                     <Container 
                         isVisible={showClaimDetail} 
                         close={() => setShowClaimDetail(false)} 
@@ -80,7 +86,7 @@ const ClaimDetails = ({
                                     <Text
                                         bold={TypographyBold.md2}
                                     >
-                                        GHS {claimDetails.totalPayout}
+                                        GHS {claimDetails.totalPayout ?? 0}
                                     </Text>
                                 </div>
                             </div>
@@ -91,6 +97,7 @@ const ClaimDetails = ({
                                     <Button 
                                         text="Decline"
                                         className="!bg-[#BA3D36] !border-none"
+                                        onClick={()=>setIsReasonVisible(true)}
                                     />
                                     <Button 
                                         text="Approve"

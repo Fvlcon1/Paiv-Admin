@@ -68,7 +68,7 @@ const useApprovedClaims = () => {
             }],
             drugs : claim.drugs.map((drug:any) => ({
                 code : drug.code,
-                quantity : drug.quantity,
+                dosage : drug.dosage,
                 description : drug.code,
                 date : new Date()
             }))
@@ -101,7 +101,7 @@ const useApprovedClaims = () => {
             patientName: item.patient_name,
             location: item.location,
             diagnosis: item.diagnosis,
-            drugs: item.drugs.map((drug : any) => `${drug.code} Qty(${drug.quantity})`),
+            drugs: item.drugs.map((drug : any) => `${drug.code} - (${drug.dosage})`),
             details : convertToClaimsDetails(item)
         }));
       

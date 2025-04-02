@@ -80,22 +80,8 @@ const ClaimDetails = ({
                                     <Text
                                         bold={TypographyBold.md2}
                                     >
-                                        GHS {claimDetails.totalPayout}
+                                        Pending...
                                     </Text>
-                                </div>
-                            </div>
-
-                            {/* Actions */}
-                            <div className="bg-[#1F1F28] border-solid border-t-[1px] border-border-secondary rounded-b-[20px] h-[55px] flex items-center pl-6">
-                                <div className="w-full flex justify-end gap-2 items-center h-full px-6">
-                                    <Button 
-                                        text="Decline"
-                                        className="!bg-[#BA3D36] !border-none"
-                                    />
-                                    <Button 
-                                        text="Approve"
-                                        className="!bg-[#2D7F41] !border-none"
-                                    />
                                 </div>
                             </div>
                         </div>

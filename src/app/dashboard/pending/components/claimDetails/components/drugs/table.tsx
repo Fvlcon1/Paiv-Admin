@@ -8,7 +8,7 @@ const Table = ({
 } : {
     drugs : IDrugsType[]
 }) => {
-    const tableHeads = ["Code", "Description", "Quantity", "Date"]
+    const tableHeads = ["Code", "Description", "Dosage", "Date"]
     const [tableBody, setTableBody] = useState<string[][]>([])
 
     useEffect(()=>{

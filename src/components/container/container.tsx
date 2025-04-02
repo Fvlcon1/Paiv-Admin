@@ -7,7 +7,7 @@ interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
     children?: ReactNode;
     className?: string;
     isVisible: boolean;
-    close: () => void;
+    close?: () => void;
     closable?: boolean;
     onClose?: () => void;
 }
@@ -22,7 +22,7 @@ const Container = ({
     ...divProps
 }: ContainerProps) => {
     const handleClose = () => {
-        close();
+        if(close) close();
         if (onClose) onClose();
     };
 
