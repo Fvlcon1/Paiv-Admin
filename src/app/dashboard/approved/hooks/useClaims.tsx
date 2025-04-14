@@ -15,7 +15,7 @@ const useApprovedClaims = () => {
 
     const getApprovedClaims = async () => {
         setSelectedClaims([])
-        const response = await protectedApi.GET("/approved")
+        const response = await protectedApi.GET("/claims/approved")
         console.log({response})
         return response.reverse()
     }
@@ -58,7 +58,7 @@ const useApprovedClaims = () => {
 
     const convertToClaimsDetails = (claim:any) : IClaimsDetailType => {
         return {
-            reasons : claim.reason,
+            reasons : JSON.parse(claim.reason),
             totalPayout : claim.total_payout,
             diagnosis : [{
                 description : claim.diagnosis,
@@ -68,7 +68,7 @@ const useApprovedClaims = () => {
             }],
             drugs : claim.drugs.map((drug:any) => ({
                 code : drug.code,
-                dosage : drug.dosage,
+                dosage : `${drug.frequency} hourly for ${drug.duration} day(s)`,
                 description : drug.code,
                 date : new Date()
             }))

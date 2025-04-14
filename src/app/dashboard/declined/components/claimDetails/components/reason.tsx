@@ -18,16 +18,18 @@ const Reason = ({
 
             <div className="flex w-full flex-col gap-4 px-2 pb-4 pt-2">
                 {
-                    // reasons.map((reason, index) => (
-                    //     <div key={index} className="flex gap-2 w-full">
-                    //         <div className="bg-bg-quantinary rounded-full w-[25px] h-[25px] flex justify-center items-center">
-                    //             <Text>{index}</Text>
-                    //         </div>
-                    //         <Text>
-                    //             {reason}
-                    //         </Text>
-                    //     </div>
-                    // ))
+                    Array.isArray((reasons)) ?
+                    reasons.map((reason, index) => (
+                        <div key={index} className="flex gap-2 w-full items-center">
+                            <div className="bg-bg-quantinary rounded-full w-[25px] h-[25px] flex justify-center items-center">
+                                <Text>{index + 1}</Text>
+                            </div>
+                            <Text>
+                                {reason}
+                            </Text>
+                        </div>
+                    ))
+                    :
                     <div className="flex gap-2 w-full items-center">
                         <div className="bg-bg-quantinary rounded-full w-[25px] h-[25px] flex justify-center items-center">
                             <Text>{1}</Text>

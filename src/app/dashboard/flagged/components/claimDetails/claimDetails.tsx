@@ -81,7 +81,7 @@ const ClaimDetails = ({
                                     <Text
                                         textColor={theme.colors.text.tetiary}
                                     >
-                                        Total Payout:
+                                        Expected Payout:
                                     </Text>
                                     <Text
                                         bold={TypographyBold.md2}

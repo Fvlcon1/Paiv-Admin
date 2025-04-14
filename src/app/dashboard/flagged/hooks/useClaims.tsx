@@ -15,8 +15,7 @@ const useApprovedClaims = () => {
 
     const getApprovedClaims = async () => {
         setSelectedClaims([])
-        const response = await protectedApi.GET("/flagged")
-        console.log({response})
+        const response = await protectedApi.GET("/claims/flagged")
         return response.reverse()
     }
 
@@ -58,7 +57,7 @@ const useApprovedClaims = () => {
 
     const convertToClaimsDetails = (claim:any) : IClaimsDetailType => {
         return {
-            reasons : claim.reason,
+            reasons : JSON.parse(claim.reason),
             totalPayout : claim.total_payout,
             diagnosis : [{
                 description : claim.diagnosis,
