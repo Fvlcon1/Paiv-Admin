@@ -7,10 +7,26 @@ export interface IClaimsTableType {
 }
 
 export interface IClaimsDetailType {
-    totalPayout : number
+    totalPayout? : number
+    expectedPayout? : number
     reasons? : string[]
     diagnosis : IDiagonosisType[],
-    drugs : IDrugsType[]
+    drugs : IDrugsType[],
+    serviceOutcome: string;
+    serviceType1: string;
+    serviceType2: string;
+    specialties: string[];
+    typeofAttendance: string;
+    medicalProcedures: string[];
+    labTests: string[];
+    medicalProceduresTotal : number
+    labTestsTotal : number
+    drugsTotal : number
+    hospitalName : string
+    patientName : string
+    location : string
+    pharmacy : string
+    status : string
 }
 
 export interface IDrugsType {
@@ -18,6 +34,9 @@ export interface IDrugsType {
     description : string
     dosage : string
     date : Date
+    quantity : number
+    tariff : number
+    total : number
 }
 export interface IDiagonosisType {
     GRDG : string

@@ -8,12 +8,12 @@ import NoData from "@components/NoData/noData";
 import { useApprovedContext } from "../context/context";
 import useApprovedClaims from "../hooks/useClaims";
 import useClaimsTable from "../hooks/useClaimsTable";
-import ClaimDetails from "./claimDetails/claimDetails";
 import { useState, useEffect } from "react";
 import { IClaimsDetailType } from "../../utils/types";
+import ClaimDetails from "../../components/claimDetails/claimDetails";
 
 const Table = () => {
-    const { setShowClaimDetail, tableData, isApprovedClaimsPending: isLoading } = useApprovedContext();
+    const { setShowClaimDetail, showClaimDetail, tableData, isApprovedClaimsPending: isLoading } = useApprovedContext();
     const { columns } = useClaimsTable();
     const [claimDetails, setClaimDetails] = useState<IClaimsDetailType | null>(null);
     const [containerHeight, setContainerHeight] = useState(500)
@@ -37,7 +37,14 @@ const Table = () => {
 
     return (
         <>
-            {claimDetails && <ClaimDetails claimDetails={claimDetails} />}
+            {
+                claimDetails && 
+                <ClaimDetails 
+                    claimDetails={claimDetails}
+                    isVisible={showClaimDetail}
+                    close={() => setShowClaimDetail(false)}
+                />
+            }
             
             {tableData.length > 0 && !isLoading ? (
                 <table className="w-full min-w-[800px] border-separate border-spacing-0">

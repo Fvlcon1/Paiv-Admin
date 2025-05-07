@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { FaSquareCheck } from 'react-icons/fa6';
 import theme, { colors } from '../../../styles/theme';
 import { IClaimsDetailType } from '../../utils/types';
+import convertToClaimsDetails from '../../utils/convert-to-claims-details';
 
 const useApprovedClaims = () => {
     const [selectedClaims, setSelectedClaims] = useState<string[]>([])
@@ -56,25 +57,6 @@ const useApprovedClaims = () => {
         setSelectedClaims([])
     }
 
-    const convertToClaimsDetails = (claim:any) : IClaimsDetailType => {
-        return {
-            reasons : JSON.parse(claim.reason),
-            totalPayout : claim.total_payout,
-            diagnosis : [{
-                description : claim.diagnosis,
-                diagnosis : claim.diagnosis,
-                ICD10 : "L03.9",
-                GRDG : "MEDI31A"
-            }],
-            drugs : claim.drugs.map((drug:any) => ({
-                code : drug.code,
-                dosage : drug.dosage,
-                description : drug.code,
-                date : new Date()
-            }))
-        }
-    }
-
     const convertToApprovedTableData = (data:any[]) => {
         const approvedTableData = data.map((item) => ({
             id: item.encounter_token,
@@ -100,11 +82,23 @@ const useApprovedClaims = () => {
             hospitalName: item.hospital_name,
             patientName: item.patient_name,
             location: item.location,
-            diagnosis: item.diagnosis,
+            diagnosis: `${item.diagnosis.map((diagnosis:any) => `${diagnosis.ICD10} - ${diagnosis.description}`).join(", ")}`,
             drugs: item.drugs.map((drug : any) => `${drug.code} - (${drug.dosage})`),
+            expectedPayout : item.adjusted_amount,
+            reasons : item.reason,
+            serviceOutcome : item.service_outcome,
+            serviceType1 : item.service_type_1,
+            serviceType2 : item.service_type_2,
+            specialties : item.specialties,
+            typeofAttendance : item.typeofAttendance,
+            medicalProcedures : item.medical_procedures,
+            labTests : item.lab_tests,
+            medicalProceduresTotal : item.medical_procedures_total,
+            labTestsTotal : item.lab_tests_total,
+            drugsTotal : item.drugs_total,
             details : convertToClaimsDetails(item)
         }));
-      
+        console.log({approvedTableData})
         setTableData(approvedTableData);
     }
 

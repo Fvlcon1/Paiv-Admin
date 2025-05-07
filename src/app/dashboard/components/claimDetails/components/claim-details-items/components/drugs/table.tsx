@@ -1,19 +1,19 @@
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
 import { useState, useEffect } from "react"
-import { IDrugsType } from '../../../../../utils/types';
+import { IDrugsType } from "@/app/dashboard/utils/types"
 
 const Table = ({
     drugs
 } : {
     drugs : IDrugsType[]
 }) => {
-    const tableHeads = ["Code", "Description", "Dosage", "Date"]
+    const tableHeads = ["Code", "Description", "Dosage", "Quantity", "Tariff", "Total"]
     const [tableBody, setTableBody] = useState<string[][]>([])
 
     useEffect(()=>{
-        setTableBody(drugs.map((item) => [item.code, item.code, item.dosage, (new Date()).toDateString()]))
-    },[])
+        setTableBody(drugs.map((item) => [item.code, (item as any).generic_name, item.dosage, item.quantity?.toString(), `GHS ${item.tariff?.toString()}`, `GHS ${item.total?.toString()}`]))
+    },[drugs])
     
     return (
         <table>

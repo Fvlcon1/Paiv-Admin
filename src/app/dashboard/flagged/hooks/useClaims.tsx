@@ -6,7 +6,7 @@ import { IApprovedTableData } from '../utils/types';
 import { useEffect, useState } from 'react';
 import { FaSquareCheck } from 'react-icons/fa6';
 import theme, { colors } from '../../../styles/theme';
-import { IClaimsDetailType } from '../../utils/types';
+import convertToClaimsDetails from '../../utils/convert-to-claims-details';
 
 const useApprovedClaims = () => {
     const [selectedClaims, setSelectedClaims] = useState<string[]>([])
@@ -53,25 +53,6 @@ const useApprovedClaims = () => {
 
     const handleUnselectAllClaims = () => {
         setSelectedClaims([])
-    }
-
-    const convertToClaimsDetails = (claim:any) : IClaimsDetailType => {
-        return {
-            reasons : JSON.parse(claim.reason),
-            totalPayout : claim.total_payout,
-            diagnosis : [{
-                description : claim.diagnosis,
-                diagnosis : claim.diagnosis,
-                ICD10 : "L03.9",
-                GRDG : "MEDI31A"
-            }],
-            drugs : claim.drugs.map((drug:any) => ({
-                code : drug.code,
-                dosage : drug.dosage,
-                description : drug.code,
-                date : new Date()
-            }))
-        }
     }
 
     const convertToApprovedTableData = (data:any[]) => {
