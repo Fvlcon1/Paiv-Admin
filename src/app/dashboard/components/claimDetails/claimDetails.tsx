@@ -13,11 +13,13 @@ import Bottom from "./components/bottom";
 const ClaimDetails = ({
     claimDetails,
     isVisible,
-    close
+    close,
+    actions
 } : {
     claimDetails: IClaimsDetailType
     isVisible: boolean
     close: () => void
+    actions?: React.ReactNode
 }) => {
     const [maxHeight, setMaxHeight] = useState<number | null>(null);
 
@@ -65,6 +67,7 @@ const ClaimDetails = ({
                             <Bottom
                                 expectedPayout={claimDetails.expectedPayout}
                                 totalPayout={claimDetails.totalPayout}
+                                actions={actions}
                             />
                         </div>
                     </Container>

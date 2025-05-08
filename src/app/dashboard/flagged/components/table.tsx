@@ -8,15 +8,20 @@ import NoData from "@components/NoData/noData";
 import { useApprovedContext } from "../context/context";
 import useApprovedClaims from "../hooks/useClaims";
 import useClaimsTable from "../hooks/useClaimsTable";
-import ClaimDetails from "./claimDetails/claimDetails";
 import { useState, useEffect } from "react";
 import { IClaimsDetailType } from "../../utils/types";
+import ReasonForDeclining from "@/app/dashboard/components/reason/reason";
+import useStatus from "../hooks/useStatus";
+import ClaimDetails from "../../components/claimDetails/claimDetails";
+import Button from "@components/button/button";
 
 const Table = () => {
-    const { setShowClaimDetail, tableData, isApprovedClaimsPending: isLoading } = useApprovedContext();
+    const { setShowClaimDetail, showClaimDetail, tableData, isApprovedClaimsPending: isLoading } = useApprovedContext();
     const { columns } = useClaimsTable();
     const [claimDetails, setClaimDetails] = useState<IClaimsDetailType | null>(null);
     const [containerHeight, setContainerHeight] = useState(500)
+    const [isReasonVisible, setIsReasonVisible] = useState(false)
+    const {handleApproveMutation, isApprovePending, approveError, approveSuccess, handleReasonForDecliningMutation, isReasonForDecliningPending, reasonForDecliningError, reasonForDecliningSuccess} = useStatus()
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -35,9 +40,49 @@ const Table = () => {
         setShowClaimDetail(true);
     };
 
+    {/* Actions */}
+    const actions = (
+        <div className="bg-[#1F1F28] border-solid border-t-[1px] border-border-secondary rounded-b-[20px] h-[55px] flex items-center pl-6">
+            <div className="w-full flex justify-end gap-2 items-center h-full px-6">
+                <Button
+                    text="Approve"
+                    className="!bg-[#36ba69] !border-none"
+                    onClick={()=>handleApproveMutation({encounterToken : claimDetails?.encounterToken!})}
+                    loading={isApprovePending}
+                />
+                <Button
+                    text="Decline"
+                    className="!bg-[#BA3D36] !border-none"
+                    onClick={()=>setIsReasonVisible(true)}
+                    loading={isReasonForDecliningPending}
+                />
+            </div>
+        </div>
+    )
+
     return (
         <>
-            {claimDetails && <ClaimDetails claimDetails={claimDetails} />}
+            {
+                claimDetails && (
+                    <>
+                        <ClaimDetails
+                            claimDetails={claimDetails}
+                            isVisible={showClaimDetail}
+                            close={() => setShowClaimDetail(false)}
+                            actions={actions}
+                        />
+
+                        <ReasonForDeclining
+                            isVisible={isReasonVisible}
+                            close={() => setIsReasonVisible(false)}
+                            handleSubmit={(value)=>handleReasonForDecliningMutation({encounterToken : claimDetails?.encounterToken, reason : value})}
+                            isLoading={isReasonForDecliningPending}
+                            error={reasonForDecliningError}
+                            success={reasonForDecliningSuccess}
+                        />
+                    </>
+                )
+            }
             
             {tableData.length > 0 && !isLoading ? (
                 <table className="w-full min-w-[800px] border-separate border-spacing-0">

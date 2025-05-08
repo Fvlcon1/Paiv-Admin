@@ -2,6 +2,7 @@ import { IClaimsDetailType } from './types'
 
 const convertToClaimsDetails = (data:any) : IClaimsDetailType => {
     return {
+        encounterToken : data.encounter_token,
         expectedPayout : data.expected_payout,
         reasons : data.reason,
         diagnosis : data.diagnosis,

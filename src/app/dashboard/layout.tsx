@@ -1,5 +1,6 @@
 import { ReactNode } from "react"
 import { DashboardContextProvider } from "./context/context"
+import WebSocketComponent from "./components/web-socket"
 
 const Layout = ({
     children
@@ -9,6 +10,7 @@ const Layout = ({
     return (
         <>
             <DashboardContextProvider>
+                <WebSocketComponent />
                 {children}
             </DashboardContextProvider>
         </>

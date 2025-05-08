@@ -3,11 +3,9 @@
 import { useEffect, useState } from "react"
 import Controls from "./components/controls"
 import Table from "./components/table"
-import ClaimDetails from "./components/claimDetails/claimDetails"
-import useApprovedClaims from "./hooks/useClaims"
 import { useApprovedContext } from "./context/context"
 
-const Pending = () => {
+const Declined = () => {
     const [pageSize, setPageSize] = useState(15)
     const [pageNumber, setPageNumber] = useState(1)
     const [view, setView] = useState<"list" | "grid">("list")
@@ -35,4 +33,4 @@ const Pending = () => {
         </>
     )
 }
-export default Pending
+export default Declined

@@ -4,6 +4,7 @@ import "./globals.css";
 import "./components/loader.css";
 import { Toaster } from "react-hot-toast";
 import QueryProvider from "./QueryProvider";
+import { AppContextProvider } from "./context/context";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -23,10 +24,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${montserrat.variable} antialiased`}>
-        <QueryProvider>
-          <Toaster />
-          {children}
-        </QueryProvider>
+        <AppContextProvider>
+          <QueryProvider>
+            <Toaster />
+            {children}
+          </QueryProvider>
+        </AppContextProvider>
       </body>
     </html>
   );

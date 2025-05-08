@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react"
 import Controls from "./components/controls"
 import Table from "./components/table"
-import ClaimDetails from "./components/claimDetails/claimDetails"
-import useApprovedClaims from "./hooks/useClaims"
 import { useApprovedContext } from "./context/context"
 
 const Pending = () => {

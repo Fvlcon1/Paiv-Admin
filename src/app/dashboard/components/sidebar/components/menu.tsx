@@ -1,3 +1,5 @@
+'use client'
+
 import Divider from "@components/divider/divider"
 import Text from "@styles/components/text"
 import { TypographyBold, TypographySize } from "@styles/style.types"
@@ -8,33 +10,41 @@ import { FaFlag } from "react-icons/fa"
 import { FaCediSign, FaCircleCheck } from "react-icons/fa6"
 import { GiCancel } from "react-icons/gi"
 import { MdOutlinePendingActions } from "react-icons/md"
+import { useAppContext } from "@/app/context/context"
+import { useEffect } from "react"
 
 const Menu = () => {
     const pathname = usePathname()
+    const { numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined } = useAppContext()
 
     const claimsMenuItems = [
         {
             title : "Approved",
             icon : FaCircleCheck,
             path : "/dashboard/approved",
-            notifications : 10,
+            notifications : numberOfApproved,
             badgeColor : "bg-[green]"
         },
         {
             title : "Flagged",
             icon : FaFlag,
             path : '/dashboard/flagged',
-            notifications : 0,
+            notifications : numberOfFlagged,
             badgeColor : "bg-[#d19017]"
         },
         {
             title : "Declined",
             icon : GiCancel,
             path : '/dashboard/declined',
-            notifications : 0,
+            notifications : numberOfDeclined,
             badgeColor : "bg-[#c94c30]"
         },
     ]
+
+    useEffect(() => {
+        console.log({numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined})
+    }, [numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined])
+    
     return (
         <div className="flex gap-1 flex-col pt-1">
             <Link 
@@ -53,14 +63,20 @@ const Menu = () => {
                         {"Pending"}
                     </Text>
                 </div>
-                <div className={`px-[6px] py-[2px] rounded-full bg-cyan-800 flex justify-center items-center`}>
-                    <Text
-                        size={TypographySize.xs}
-                        textColor={theme.colors.text.primary}
-                    >
-                        99+
-                    </Text>
-                </div>
+                {
+                    numberOfPending > 0 ? (
+                        <div className={`px-[6px] py-[2px] min-w-[20px] h-[20px] rounded-full bg-cyan-800 flex justify-center items-center`}>
+                            <Text
+                                size={TypographySize.xs}
+                                textColor={theme.colors.text.primary}
+                            >
+                                {numberOfPending}
+                            </Text>
+                        </div>
+                    ) : (
+                        <></>
+                    )
+                }
             </Link>
 
             <Divider />
@@ -85,8 +101,8 @@ const Menu = () => {
                                 </Text>
                             </div>
                             {
-                                item.notifications ?
-                                <div className={`px-[6px] py-[2px] rounded-full ${item.badgeColor} flex justify-center items-center`}>
+                                item.notifications > 0 ?
+                                <div className={`px-[6px] py-[2px] min-w-[20px] h-[20px] rounded-full ${item.badgeColor} flex justify-center items-center`}>
                                     <Text
                                         size={TypographySize.xs}
                                         textColor={theme.colors.text.primary}
@@ -120,7 +136,7 @@ const Menu = () => {
                         {"Paid"}
                     </Text>
                 </div>
-                <div className="px-[6px] py-[2px] rounded-full bg-main-primary flex justify-center items-center">
+                <div className="px-[6px] py-[2px] min-w-[20px] h-[20px] rounded-full bg-main-primary flex justify-center items-center">
                     <Text
                         size={TypographySize.xs}
                         textColor={theme.colors.text.primary}

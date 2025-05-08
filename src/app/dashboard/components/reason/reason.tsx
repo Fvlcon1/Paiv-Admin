@@ -11,11 +11,17 @@ import { useState } from "react"
 const Reason = ({
     isVisible = true,
     close,
-    handleSubmit
+    handleSubmit,
+    isLoading,
+    error,
+    success
 } : {
     isVisible? : boolean
     close? : ()=>void
     handleSubmit? : (value:string)=>void
+    isLoading? : boolean
+    error? : any
+    success? : boolean
 }) => {
     const [inputFocus, setInputFocus] = useState<boolean>(false);
     const [hover, setHover] = useState<boolean>(false);
@@ -23,7 +29,7 @@ const Reason = ({
     return (
         <AnimatePresence>
             {
-                isVisible ?
+                !success && isVisible ?
                 <Overlay onClick={close} key={0}>
                     <PopupAnimation>
                         <Container
@@ -72,6 +78,19 @@ const Reason = ({
                                     </div>
                                 </div>
 
+                                {
+                                    error && (
+                                        <div className="w-full flex justify-center items-center h-full">
+                                            <Text
+                                                textColor={"orange"}
+                                                bold={TypographyBold.md}
+                                            >
+                                                {error}
+                                            </Text>
+                                        </div>
+                                    )
+                                }
+
                                 {/* Actions */}
                                 <div className="bg-[#1F1F28] border-solid border-t-[1px] border-border-secondary rounded-b-[20px] h-[55px] flex items-center pl-6">
                                     <div className="w-full flex justify-end gap-2 items-center h-full px-6">
@@ -84,6 +103,7 @@ const Reason = ({
                                             text="Approve"
                                             className="!bg-[#2D7F41] !border-none"
                                             onClick={handleSubmit ? ()=>handleSubmit(value) : ()=>{}}
+                                            loading={isLoading}
                                         />
                                     </div>
                                 </div>

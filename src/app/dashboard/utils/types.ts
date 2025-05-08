@@ -7,6 +7,7 @@ export interface IClaimsTableType {
 }
 
 export interface IClaimsDetailType {
+    encounterToken : string
     totalPayout? : number
     expectedPayout? : number
     reasons? : string[]
