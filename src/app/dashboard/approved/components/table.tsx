@@ -42,8 +42,8 @@ const Table = () => {
 
     {/* Actions */}
     const actions = (
-        <div className="bg-[#1F1F28] border-solid border-t-[1px] border-border-secondary rounded-b-[20px] h-[55px] flex items-center pl-6">
-            <div className="w-full flex justify-end gap-2 items-center h-full px-6">
+        <div className="h-hull flex items-center">
+            <div className="w-full flex justify-end gap-2 items-center h-full">
                 <Button 
                     text="Decline"
                     className="!bg-[#BA3D36] !border-none"

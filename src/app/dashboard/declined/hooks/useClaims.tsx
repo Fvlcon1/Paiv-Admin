@@ -57,37 +57,49 @@ const useApprovedClaims = () => {
     }
 
     const convertToApprovedTableData = (data:any[]) => {
-        const approvedTableData = data.map((item) => ({
-            id: item.encounter_token,
-            selectable: (
-                selectedClaims.includes(item.encounter_token)
-                ? <FaSquareCheck 
-                    size={20}
-                    color={theme.colors.main.primary}
-                    className="rounded-[6px] mt-2 overflow-hidden relative w-[20px] h-[20px] bg-bg-tetiary"
-                    onClick={(e)=>{
-                        e.stopPropagation()
-                        handleUnselectClaim(item.encounter_token)
-                    }} 
-                />
-                : <div 
-                    onClick={(e)=>{
-                        e.stopPropagation()
-                        handleSelectClaim(item.encounter_token)
-                    }} 
-                    className="rounded-[6px] mt-2 overflow-hidden relative w-[20px] h-[20px] bg-bg-tetiary"
-                />
-            ),
-            hospitalName: item.hospital_name,
-            patientName: item.patient_name,
-            location: item.location,
-            diagnosis: item.diagnosis,
-            drugs: item.drugs.map((drug : any) => `${drug.code} - (${drug.dosage})`),
-            details : convertToClaimsDetails(item)
-        }));
-      
-        setTableData(approvedTableData);
-    }
+            const approvedTableData = data.map((item) => ({
+                id: item.encounter_token,
+                selectable: (
+                    selectedClaims.includes(item.encounter_token)
+                    ? <FaSquareCheck 
+                        size={20}
+                        color={theme.colors.main.primary}
+                        className="rounded-[6px] mt-2 overflow-hidden relative w-[20px] h-[20px] bg-bg-tetiary"
+                        onClick={(e)=>{
+                            e.stopPropagation()
+                            handleUnselectClaim(item.encounter_token)
+                        }} 
+                    />
+                    : <div 
+                        onClick={(e)=>{
+                            e.stopPropagation()
+                            handleSelectClaim(item.encounter_token)
+                        }} 
+                        className="rounded-[6px] mt-2 overflow-hidden relative w-[20px] h-[20px] bg-bg-tetiary"
+                    />
+                ),
+                hospitalName: item.hospital_name,
+                patientName: item.patient_name,
+                location: item.location,
+                diagnosis: `${item.diagnosis.map((diagnosis:any) => `${diagnosis.ICD10} - ${diagnosis.description}`).join(", ")}`,
+                drugs: item.drugs.map((drug : any) => `${drug.code} - (${drug.dosage})`),
+                expectedPayout : item.adjusted_amount,
+                reasons : item.reason,
+                serviceOutcome : item.service_outcome,
+                serviceType1 : item.service_type_1,
+                serviceType2 : item.service_type_2,
+                specialties : item.specialties,
+                typeofAttendance : item.typeofAttendance,
+                medicalProcedures : item.medical_procedures,
+                labTests : item.lab_tests,
+                medicalProceduresTotal : item.medical_procedures_total,
+                labTestsTotal : item.lab_tests_total,
+                drugsTotal : item.drugs_total,
+                details : convertToClaimsDetails(item)
+            }));
+            console.log({approvedTableData})
+            setTableData(approvedTableData);
+        }
 
     const {mutate : getApprovedClaimsMutation, data : approvedClaims, isPending : isApprovedClaimsPending} = useMutation({
         mutationFn : getApprovedClaims,
