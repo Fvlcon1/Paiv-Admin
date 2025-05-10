@@ -3,6 +3,7 @@
 import { protectedApi } from '@/app/utils/apis/api';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 const useClaims = () => {
 
@@ -23,6 +24,35 @@ const useClaims = () => {
         console.log({response})
         return response
     }
+
+    const handleStatusUpdate = async ({
+        status,
+        encounterToken,
+        reason
+    }: {
+        status : string,
+        encounterToken : string,
+        reason : string
+    }) => {
+        const response = await protectedApi.PATCH(`/claims/update-status/${encounterToken}`, {
+            status,
+            reason
+        })
+        console.log({response})
+        return response
+    }
+
+    const {
+        mutate : handleStatusUpdateMutation,
+        isPending : isStatusUpdatePending,
+        error : statusUpdateError,
+        isSuccess : statusUpdateSuccess
+    } = useMutation({
+        mutationFn : handleStatusUpdate,
+        onSuccess : () => {
+            toast.success("Claim Status Updated Successfully")
+        }
+    })
 
     const {mutate : getApprovedClaimsMutation, data : approvedClaims} = useMutation({
         mutationFn : getApprovedClaims,
@@ -48,7 +78,11 @@ const useClaims = () => {
         getDeclinedClaimsMutation,
         approvedClaims,
         flaggedClaims,
-        declinedClaims
+        declinedClaims,
+        handleStatusUpdateMutation,
+        isStatusUpdatePending,
+        statusUpdateError,
+        statusUpdateSuccess
     }
 }
 export default useClaims

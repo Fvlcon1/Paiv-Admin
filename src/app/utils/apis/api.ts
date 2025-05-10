@@ -33,5 +33,14 @@ export const protectedApi = {
         } catch (error) {
             throw error;
         }
+    },
+    PATCH: async (url: string, body?: any) => {
+        try {
+            const headers = getHeaders();
+            const response = await axiosInstance.patch(url, body, { headers });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
     }
 };

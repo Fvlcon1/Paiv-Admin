@@ -22,6 +22,7 @@ export interface IClaimsDetailType {
     labTests: string[];
     medicalProceduresTotal : number
     labTestsTotal : number
+    diagnosisTotal : number
     drugsTotal : number
     hospitalName : string
     patientName : string
@@ -44,4 +45,5 @@ export interface IDiagonosisType {
     description : string
     diagnosis : string
     ICD10 : string
+    tariff : number
 }

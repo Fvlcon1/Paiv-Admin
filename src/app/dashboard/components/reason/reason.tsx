@@ -96,12 +96,12 @@ const Reason = ({
                                     <div className="w-full flex justify-end gap-2 items-center h-full px-6">
                                         <Button
                                             text="Cancel"
-                                            className="!bg-[#BA3D36] !border-none"
+                                            className="!border-none"
                                             onClick={close}
                                         />
                                         <Button 
-                                            text="Approve"
-                                            className="!bg-[#2D7F41] !border-none"
+                                            text="Decline"
+                                            className="!bg-[#BA3D36] !border-none"
                                             onClick={handleSubmit ? ()=>handleSubmit(value) : ()=>{}}
                                             loading={isLoading}
                                         />

@@ -13,7 +13,29 @@ const Bottom = ({
 }) => {
     return (
         <div className="bg-bg-tetiary border-solid border-t-[1px] justify-between border-border-secondary rounded-b-[20px] h-[55px] flex items-center pl-6">
-            <ExpectedPayout expectedPayout={expectedPayout}/>
+            <div className="flex gap-6 items-center">   
+                {
+                    expectedPayout && (
+                        <Payout
+                            title="Expected Payout:"
+                            amount={expectedPayout}
+                        />
+                    )
+                }
+                {
+                    totalPayout && (
+                        <>
+                            <Text textColor={theme.colors.text.tetiary}>
+                                |
+                            </Text>
+                            <Payout
+                                title="Total Payout:"
+                                amount={totalPayout}
+                            />
+                        </>
+                    )
+                }
+            </div>
             <div className="flex gap-2 items-center h-full px-6">
                 {actions}
             </div>
@@ -22,24 +44,24 @@ const Bottom = ({
 }
 export default Bottom
 
-const ExpectedPayout = ({
-    expectedPayout,
-    totalPayout
+const Payout = ({
+    title,
+    amount
 } : {
-    expectedPayout?: number
-    totalPayout? : number
+    title: string
+    amount?: number
 }) => {
     return (
         <div className="flex gap-2 items-center">
             <Text
                 textColor={theme.colors.text.tetiary}
             >
-                {totalPayout ? "Total Payou:t" : 'Expected Payout:'}
+                {title}
             </Text>
             <Text
-                bold={TypographyBold.md2}
+                bold={TypographyBold.md}
             >
-                GHS {totalPayout ??expectedPayout ?? 0}
+                GHS {amount ?? 0}
             </Text>
         </div>
     )

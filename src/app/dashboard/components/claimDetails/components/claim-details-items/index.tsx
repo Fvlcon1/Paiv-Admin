@@ -47,7 +47,9 @@ const ClaimDetailsItems = ({
                 label="Specialties" 
                 items={claimDetails.specialties} 
             />
-            <Diagnosis diagnosis={claimDetails.diagnosis} />
+            <WithTotal total={claimDetails.diagnosisTotal ?? 0}>
+                <Diagnosis diagnosis={claimDetails.diagnosis} />
+            </WithTotal>
             <WithTotal total={claimDetails.medicalProceduresTotal}>
                 <MedicalProcedures procedures={claimDetails.medicalProcedures} />
             </WithTotal>

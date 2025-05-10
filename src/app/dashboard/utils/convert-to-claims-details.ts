@@ -16,6 +16,7 @@ const convertToClaimsDetails = (data:any) : IClaimsDetailType => {
         labTests : data.lab_tests,
         medicalProceduresTotal : data.medical_procedures_total,
         labTestsTotal : data.lab_tests_total,
+        diagnosisTotal : data.diagnosis_total,
         drugsTotal : data.drugs_total,
         hospitalName : data.hospital_name,
         patientName : data.patient_name,

@@ -5,29 +5,19 @@ import { useEffect, useRef } from 'react'
 
 const WebSocketComponent = () => {
   const socketRef = useRef<any>(null)
-  const {setNumberOfPending, setNumberOfApproved, setNumberOfFlagged, setNumberOfDeclined} = useAppContext()
+  const {setNumberOfPending, setNumberOfApproved, setNumberOfFlagged, setNumberOfDeclined, numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined} = useAppContext()
 
   const processMessage = (message: string) => {
-    const messageSplit = message.split(":")
-    const state = messageSplit[0]
-    const value = messageSplit[1]
-    switch (state) {
-      case "pending":
-        setNumberOfPending(Number(value))
-        break;
-      case "approved":
-        setNumberOfApproved(Number(value))
-        break;
-      case "flagged":
-        setNumberOfFlagged(Number(value))
-        break;
-      case "declined":
-        setNumberOfDeclined(Number(value))
-        break;
-      default:
-        break;
-    }
+    const {pending, approved, flagged, declined} = JSON.parse(message)
+    setNumberOfPending(Number(pending))
+    setNumberOfApproved(Number(approved))
+    setNumberOfFlagged(Number(flagged))
+    setNumberOfDeclined(Number(declined))
   }
+
+  useEffect(() => {
+    console.log({numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined})
+  }, [numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined])
 
   useEffect(() => {
     // Create WebSocket connection

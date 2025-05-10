@@ -39,6 +39,7 @@ export interface baseProps {
   
   export interface ButtonProps extends ButtonStyleProps {
     loading?: boolean;
+    loadingColor?: string
     type?: ButtonTypes;
     text?: string;
     icon?: ReactNode;

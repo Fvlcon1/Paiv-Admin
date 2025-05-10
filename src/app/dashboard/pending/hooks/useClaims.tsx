@@ -83,6 +83,7 @@ const useApprovedClaims = () => {
             patientName: item.patient_name,
             location: item.location,
             diagnosis: `${item.diagnosis.map((diagnosis:any) => `${diagnosis.ICD10} - ${diagnosis.description}`).join(", ")}`,
+            diagnosisTotal : item.diagnosis_total,
             drugs: item.drugs.map((drug : any) => `${drug.code} - (${drug.dosage})`),
             expectedPayout : item.adjusted_amount,
             reasons : item.reason,

@@ -3,7 +3,6 @@ import theme, { colors } from "@styles/theme";
 import { ButtonProps } from "@/utils/@types";
 import Text from "@styles/components/text";
 import { useState } from "react";
-import Flex from "@styles/components/flex";
 import { TypographyBold } from "@styles/style.types";
 
 const Button = ({
@@ -33,68 +32,81 @@ const Button = ({
   disableElevation,
   hover,
   text,
-  icon
+  icon,
+  loadingColor
 }: ButtonProps) => {
 
   const [onHover, setOnHover] = useState<boolean>(false)
   const [onPress, setOnPress] = useState<boolean>(false)
 
-  return (
-    <button
-      style={{
-        background : (onHover && !disabled)
-                      ? hover?.background 
-                      ?? background 
-                      ?? theme.colors.bg.quantinary
-                      : theme.colors.bg.tetiary,
+  const getBackground = () => {
+    return (onHover && !disabled)
+      ?  hover?.background 
+      ?? background 
+      ?? theme.colors.bg.quantinary
+      :  background 
+      ?? theme.colors.bg.quantinary
+  }
+
+  const getOpacity = () => {
+    return (onHover && !disabled)
+      ?  hover?.opacity 
+      ?? 0.8
+      :  disabled 
+      ?  0.5 : 1
+  }
+
+  const getTextColor = () => {
+    return onHover ? hover?.color
+      ? hover.color
+      : color ?? theme.colors.text.primary
+      : color ?? theme.colors.text.primary
+  }
+
+  const getButtonStyle = () => {
+    return {
+      background : getBackground(),
         padding : padding ?? '7px 15px',
         border : border,
         borderRadius : radius ? `${radius}px` : '7px',
         maxWidth,
         width : size?.width ?? 'fit-content',
         height : size?.height ?? '35px',
-        opacity : (onHover && !disabled)
-                  ? hover?.opacity 
-                  ?? 0.8
-                  : disabled 
-                  ? 0.5 : 1,
-        transform : `scale(${onPress ? 0.97 : 1})`,
-      }}
+        opacity : getOpacity(),
+        transform : `scale(${onPress ? 0.97 : 1})`
+    }
+  }
+
+  return (
+    <button
+      style={getButtonStyle()}
       onClick={onClick}
       onMouseOver={()=>setOnHover(true)}
       onMouseLeave={()=>setOnHover(false)}
       onMouseDown={()=>setOnPress(true)}
       onMouseUp={()=>setOnPress(false)}
-      className={`${className} duration-200 border-[1px] cursor-pointer border-solid border-border-tetiary ${disabled && 'cursor-not-allowed'}`}
+      className={`${className} duration-200 ${disabled && 'cursor-not-allowed'}`}
       disabled={disabled ?? loading}
       type={type ?? 'submit'}
     >
       <div className="w-full justify-center items-center flex gap-[8px]">
         {
           loading ?
-          <div className="normal-loader !w-[20px]"></div>
+          <div className={`normal-loader ${loadingColor ? `!bg-[${loadingColor}]` : "!bg-white"} !w-[20px]`}>
+          </div>
           :
           <Text
             size={textSize}
             bold={textBold ?? TypographyBold.md}
-            textColor={
-              onHover ? hover?.color
-                ? hover.color
-                : color ?? theme.colors.text.primary
-                : theme.colors.text.primary
-            }
+            textColor={getTextColor()}
             maxLines={1}
             ellipsis
             whiteSpace="nowrap"
           >
-            <Flex 
-                width="fit-content"
-                align="center"
-                gap={8}
-            >
+            <div className="flex w-fit gap-[8px]">
                 {icon}
                 {text ?? 'Button'}
-            </Flex>
+            </div>
           </Text>
         }
       </div>

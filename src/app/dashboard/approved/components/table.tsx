@@ -14,10 +14,12 @@ import ClaimDetails from "../../components/claimDetails/claimDetails";
 import Button from "@components/button/button";
 import ReasonForDeclining from '@/app/dashboard/components/reason/reason';
 import useReasonForDeclining from "../hooks/useReason";
+import useClaims from "../../hooks/useClaims";
 
 const Table = () => {
-    const { setShowClaimDetail, showClaimDetail, tableData, isApprovedClaimsPending: isLoading } = useApprovedContext();
+    const { setShowClaimDetail, showClaimDetail, tableData, isApprovedClaimsPending: isLoading, getApprovedClaimsMutation } = useApprovedContext();
     const { columns } = useClaimsTable();
+    const {handleStatusUpdateMutation, isStatusUpdatePending, statusUpdateError, statusUpdateSuccess} = useClaims()
     const [claimDetails, setClaimDetails] = useState<IClaimsDetailType | null>(null);
     const [containerHeight, setContainerHeight] = useState(500)
     const [isReasonVisible, setIsReasonVisible] = useState(false)
@@ -40,6 +42,17 @@ const Table = () => {
         setShowClaimDetail(true);
     };
 
+    const onDeclineSuccess = () => {
+        getApprovedClaimsMutation()
+        setShowClaimDetail(false)
+    }
+
+    useEffect(() => {
+        if(statusUpdateSuccess){
+            onDeclineSuccess()
+        }
+    }, [statusUpdateSuccess])
+
     {/* Actions */}
     const actions = (
         <div className="h-hull flex items-center">
@@ -48,6 +61,7 @@ const Table = () => {
                     text="Decline"
                     className="!bg-[#BA3D36] !border-none"
                     onClick={()=>setIsReasonVisible(true)}
+                    loadingColor={theme.colors.text.primary}
                 />
             </div>
         </div>
@@ -68,10 +82,14 @@ const Table = () => {
                         <ReasonForDeclining
                             isVisible={isReasonVisible}
                             close={() => setIsReasonVisible(false)}
-                            handleSubmit={(value)=>handleReasonForDecliningMutation({encounterToken : claimDetails?.encounterToken, reason : value})}
-                            isLoading={isReasonForDecliningPending}
-                            error={reasonForDecliningError}
-                            success={reasonForDecliningSuccess}
+                            handleSubmit={(value)=>handleStatusUpdateMutation({
+                                encounterToken : claimDetails?.encounterToken,
+                                reason : value,
+                                status : "rejected"
+                            })}
+                            isLoading={isStatusUpdatePending}
+                            error={statusUpdateError}
+                            success={statusUpdateSuccess}
                         />
                     </>
                 )
