@@ -31,7 +31,7 @@ const Profile = () => {
                     }}
                 >
                     <div className="w-[25px] h-[25px] rounded-full bg-main-primary flex justify-center items-center">
-                        <Text bold={TypographyBold.md} textColor={theme.colors.text.primary}>
+                        <Text bold={TypographyBold.md} textColor={theme.colors.bg.primary}>
                             PN
                         </Text>
                     </div>

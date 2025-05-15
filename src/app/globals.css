@@ -1,26 +1,29 @@
 @import "tailwindcss";
 
 :root {
-	--text-primary : #E7E7EB;
-  --text-secondary : #C6C6C8;
-  --text-tetiary : #7C7C88;
-
-  --bg-primary : #15151F;
-  --bg-secondary : #191923;
-  --bg-tetiary : #25252E;
-  --bg-quantinary : #32323e;
-
-  --border-primary : #272737;
-  --border-secondary : #2C2C3F;
-  --border-tetiary : #3A3A46;
-  --border-quantinary : #2f2f39;
-
-  --main-primary : #6060D0;
+  --text-primary: #0A2540;
+  --text-secondary: #425466;
+  --text-tetiary: #8E98A3;
+  
+  /* Background colors */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F7F7FA;
+  --bg-tetiary: #EDEDF2;
+  --bg-quantinary: #DADAE0;
+  
+  /* Border colors */
+  --border-primary: #E0E0E7;
+  --border-secondary: #D0D0D8;
+  --border-tetiary: #BDBDC7;
+  --border-quantinary: #C6C6D0;
+  
+  /* Accent colors */
+  --main-primary: #5c5bb8;  
 }
 
 body {
-  background-image: url('/assets/prod/bg-gradient.webp');
-  background-color: #15151F;
+  /* background-image: url('/assets/prod/bg-gradient.webp'); */
+  background-color: var(--bg-primary);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -83,19 +86,19 @@ input:-webkit-autofill:active{
 }
 
 @theme {
-	--color-text-primary : #E7E7EB;
-  --color-text-secondary : #C6C6C8;
-  --color-text-tetiary : #7C7C88;
+	--color-text-primary : var(--text-primary);
+  --color-text-secondary : var(--text-secondary);
+  --color-text-tetiary : var(--text-tetiary);
 
-  --color-bg-primary : #15151F;
-  --color-bg-secondary : #191923;
-  --color-bg-tetiary : #25252E;
-  --color-bg-quantinary : #32323e;
+  --color-bg-primary : var(--bg-primary);
+  --color-bg-secondary : var(--bg-secondary);
+  --color-bg-tetiary : var(--bg-tetiary);
+  --color-bg-quantinary : var(--bg-quantinary);
 
-  --color-border-primary : #272737;
-  --color-border-secondary : #2C2C3F;
-  --color-border-tetiary : #3A3A46;
-  --color-border-quantinary : #2f2f39;
+  --color-border-primary : var(--border-primary);
+  --color-border-secondary : var(--border-secondary);
+  --color-border-tetiary : var(--border-tetiary);
+  --color-border-quantinary : var(--border-quantinary);
 
-  --color-main-primary : #6060D0;
+  --color-main-primary : var(--main-primary);
 }

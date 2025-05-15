@@ -7,15 +7,11 @@ import { TypographyBold } from "@styles/style.types";
 
 const Button = ({
   className,
-  children,
   id,
   color,
-  colorTheme,
   background,
   border,
   type,
-  PreIcon,
-  PostIcon,
   onClick,
   radius,
   maxWidth,
@@ -28,8 +24,6 @@ const Button = ({
   opacity,
   disabled,
   showLoader,
-  variant,
-  disableElevation,
   hover,
   text,
   icon,
@@ -85,7 +79,7 @@ const Button = ({
       onMouseLeave={()=>setOnHover(false)}
       onMouseDown={()=>setOnPress(true)}
       onMouseUp={()=>setOnPress(false)}
-      className={`${className} duration-200 ${disabled && 'cursor-not-allowed'}`}
+      className={`${className} duration-200 ${disabled && 'cursor-not-allowed'} ${loading && 'cursor-wait'} cursor-pointer`}
       disabled={disabled ?? loading}
       type={type ?? 'submit'}
     >

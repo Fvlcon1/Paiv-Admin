@@ -41,6 +41,19 @@ const Menu = () => {
         },
     ]
 
+    const getMenuTextStyle = (path : string) => {
+        return {
+            textColor : path === pathname ? theme.colors.main.primary : theme.colors.text.secondary,
+            bold : path === pathname ? TypographyBold.md : TypographyBold.sm
+        }
+    }
+
+    const getLinkClassName = (path : string) => {
+        return {
+            className : `flex gap-2 items-center ${pathname === path ? "bg-[#6969ce23]" : "hover:bg-bg-tetiary"} justify-between duration-200 px-4 py-2 cursor-pointer`
+        }
+    }
+
     useEffect(() => {
         console.log({numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined})
     }, [numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined])
@@ -48,17 +61,17 @@ const Menu = () => {
     return (
         <div className="flex gap-1 flex-col pt-1">
             <Link 
-                className={`flex gap-2 items-center ${pathname === "/dashboard/pending" ? "bg-[#6969ce23]" : "hover:bg-bg-tetiary"} justify-between duration-200 px-4 py-2 cursor-pointer`}
-                href={"pending"}
+                className={getLinkClassName("/dashboard/pending").className}
+                href={"/dashboard/pending"}
             >
                 <div className="flex items-center gap-2">
                     <MdOutlinePendingActions
-                        color={pathname === "/dashboard/pending" ? theme.colors.text.primary : theme.colors.text.tetiary}
+                        color={getMenuTextStyle("/dashboard/pending").textColor}
                         size={"15px"}
                     />
                     <Text
-                        textColor={pathname === "/dashboard/pending" ? theme.colors.text.primary : theme.colors.text.tetiary}
-                        bold={pathname === "/dashboard/pending" ? TypographyBold.md : TypographyBold.sm}
+                        textColor={getMenuTextStyle("/dashboard/pending").textColor}
+                        bold={getMenuTextStyle("/dashboard/pending").bold}
                     >
                         {"Pending"}
                     </Text>
@@ -68,7 +81,7 @@ const Menu = () => {
                         <div className={`px-[6px] py-[2px] min-w-[20px] h-[20px] rounded-full bg-cyan-800 flex justify-center items-center`}>
                             <Text
                                 size={TypographySize.xs}
-                                textColor={theme.colors.text.primary}
+                                textColor={theme.colors.bg.primary}
                             >
                                 {numberOfPending}
                             </Text>
@@ -85,17 +98,18 @@ const Menu = () => {
                 {
                     claimsMenuItems.map((item, index) => (
                         <Link 
-                            className={`flex gap-2 items-center justify-between ${pathname === item.path ? "bg-[#6969ce23]" : "hover:bg-bg-tetiary"} duration-200 px-4 py-2 cursor-pointer`}
+                            className={getLinkClassName(item.path).className}
                             href={item.path}
                             key={index}
                         >
                             <div className="flex items-center gap-2">
                                 <item.icon 
-                                    color={pathname === item.path ? theme.colors.text.primary : theme.colors.text.tetiary}
+                                    color={getMenuTextStyle(item.path).textColor}
                                     size={"13px"}
                                 />
                                 <Text
-                                    textColor={pathname === item.path ? theme.colors.text.primary : theme.colors.text.tetiary}
+                                    textColor={getMenuTextStyle(item.path).textColor}
+                                    bold={getMenuTextStyle(item.path).bold}
                                 >
                                     {item.title}
                                 </Text>
@@ -105,7 +119,7 @@ const Menu = () => {
                                 <div className={`px-[6px] py-[2px] min-w-[20px] h-[20px] rounded-full ${item.badgeColor} flex justify-center items-center`}>
                                     <Text
                                         size={TypographySize.xs}
-                                        textColor={theme.colors.text.primary}
+                                        textColor={theme.colors.bg.primary}
                                     >
                                         {item.notifications}
                                     </Text>
@@ -121,17 +135,17 @@ const Menu = () => {
             <Divider />
 
             <Link 
-                className={`flex gap-2 items-center ${pathname === "/dashboard/paid" ? "bg-[#6969ce23]" : "hover:bg-bg-tetiary"} justify-between duration-200 px-4 py-2 cursor-pointer`}
-                href={"paid"}
+                className={getLinkClassName("/dashboard/paid").className}
+                href={"/dashboard/paid"}
             >
                 <div className="flex items-center gap-2">
                     <FaCediSign
-                        color={pathname === "/dashboard/paid" ? theme.colors.text.primary : theme.colors.text.tetiary}
+                        color={getMenuTextStyle("/dashboard/paid").textColor}
                         size={"15px"}
                     />
                     <Text
-                        textColor={pathname === "/dashboard/paid" ? theme.colors.text.primary : theme.colors.text.tetiary}
-                        bold={pathname === "/dashboard/paid" ? TypographyBold.md : TypographyBold.sm}
+                        textColor={getMenuTextStyle("/dashboard/paid").textColor}
+                        bold={getMenuTextStyle("/dashboard/paid").bold}
                     >
                         {"Paid"}
                     </Text>
@@ -139,7 +153,7 @@ const Menu = () => {
                 <div className="px-[6px] py-[2px] min-w-[20px] h-[20px] rounded-full bg-main-primary flex justify-center items-center">
                     <Text
                         size={TypographySize.xs}
-                        textColor={theme.colors.text.primary}
+                        textColor={theme.colors.bg.primary}
                     >
                         33
                     </Text>

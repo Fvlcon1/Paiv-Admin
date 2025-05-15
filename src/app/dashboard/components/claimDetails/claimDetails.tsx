@@ -51,7 +51,7 @@ const ClaimDetails = ({
                         <div
                             className="md:w-[800px] w-full flex flex-col"
                         >
-                            <div className="bg-[#1F1F28] border-solid border-b-[1px] border-border-secondary rounded-t-[20px] h-[55px] flex items-center pl-6">
+                            <div className="bg-bg-tetiary border-solid border-b-[1px] border-border-secondary rounded-t-[20px] h-[55px] flex items-center pl-6">
                                 <Text bold={TypographyBold.md}>
                                     Claim Details
                                 </Text>

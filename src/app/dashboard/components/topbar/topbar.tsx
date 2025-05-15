@@ -22,7 +22,7 @@ const Topbar = () => {
         <div className={`fixed top-0 z-10 h-[60px] px-4 flex items-center ml-[250px] border-b-[1px] border-solid border-b-border-primary w-full ${isScrolled ? "bg-bg-secondary" : "bg-transparent"}`}>
             <Link className="flex items-center gap-1" href={'/'}>
                 <Image
-                    src={"/assets/prod/logo.png"}
+                    src={"/assets/prod/logo-main.png"}
                     alt="logo"
                     width={25}
                     height={25}
