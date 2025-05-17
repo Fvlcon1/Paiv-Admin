@@ -59,7 +59,8 @@ const Table = () => {
             <div className="w-full flex justify-end gap-2 items-center h-full">
                 <Button 
                     text="Decline"
-                    className="!bg-[#BA3D36] !border-none"
+                    className="!bg-[#db4138] !border-none"
+                    color={theme.colors.bg.primary}
                     onClick={()=>setIsReasonVisible(true)}
                     loadingColor={theme.colors.text.primary}
                 />

@@ -38,7 +38,7 @@ const Reason = ({
                         >
                             <div className="w-[450px] flex flex-col gap-2">
                                 {/* Title */}
-                                <div className="bg-[#1F1F28] border-solid border-b-[1px] border-border-secondary rounded-t-[20px] h-[55px] flex items-center pl-6">
+                                <div className="bg-bg-secondary border-solid border-b-[1px] border-bg-tetiary rounded-t-[20px] h-[55px] flex items-center pl-6">
                                     <Text bold={TypographyBold.md}>
                                         Confirmation
                                     </Text>
@@ -50,7 +50,7 @@ const Reason = ({
                                         Reason
                                     </Text>
                                     <div
-                                        className={`flex w-full h-fit min-h-[100px] flex-1 gap-2 px-3 py-[10px] rounded-xl bg-bg-tetiary border-border-tetiary border-[1px] border-solid duration-200`}
+                                        className={`flex w-full h-fit min-h-[100px] flex-1 gap-2 px-3 py-[10px] rounded-xl bg-bg-secondary border-bg-tetiary border-[1px] border-solid duration-200`}
                                         style={{
                                             borderColor: (inputFocus || hover) ? theme.colors.main.primary : theme.colors.border.secondary
                                         }}
@@ -92,7 +92,7 @@ const Reason = ({
                                 }
 
                                 {/* Actions */}
-                                <div className="bg-[#1F1F28] border-solid border-t-[1px] border-border-secondary rounded-b-[20px] h-[55px] flex items-center pl-6">
+                                <div className="bg-bg-secondary border-solid border-t-[1px] border-bg-tetiary rounded-b-[20px] h-[55px] flex items-center pl-6">
                                     <div className="w-full flex justify-end gap-2 items-center h-full px-6">
                                         <Button
                                             text="Cancel"
@@ -102,8 +102,10 @@ const Reason = ({
                                         <Button 
                                             text="Decline"
                                             className="!bg-[#BA3D36] !border-none"
+                                            color={theme.colors.bg.primary}
                                             onClick={handleSubmit ? ()=>handleSubmit(value) : ()=>{}}
                                             loading={isLoading}
+                                            loadingColor={theme.colors.bg.primary}
                                         />
                                     </div>
                                 </div>

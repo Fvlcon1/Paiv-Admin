@@ -8,8 +8,8 @@ const Reason = ({
     reasons : string[]
 }) => {
     return (
-        <div className="w-full border-solid border-[1px] border-border-tetiary rounded-xl bg-bg-tetiary flex flex-col gap-2">
-            <div className="flex w-full border-solid border-b-[1px] border-border-tetiary h-[55px] items-center pl-4">
+        <div className="w-full border-solid border-[1px] border-bg-tetiary rounded-xl flex flex-col gap-2">
+            <div className="flex w-full border-solid border-b-[1px] border-bg-tetiary bg-bg-secondary h-[55px] items-center pl-4">
                 <Text
                     bold={TypographyBold.md}
                 >
@@ -23,7 +23,7 @@ const Reason = ({
                     reasons.length ?
                     reasons.map((reason, index) => (
                         <div key={index} className="flex gap-2 w-full items-center">
-                            <div className="bg-bg-quantinary rounded-full w-[25px] h-[25px] flex justify-center items-center">
+                            <div className="rounded-full w-[25px] h-[25px] flex justify-center bg-bg-tetiary items-center">
                                 <Text>{index + 1}</Text>
                             </div>
                             <Text>
@@ -35,7 +35,7 @@ const Reason = ({
                     <Text textColor={theme.colors.text.tetiary} className="pl-2">No comments</Text>
                     :
                     <div className="flex gap-2 w-full items-center">
-                        <div className="bg-bg-quantinary rounded-full w-[25px] h-[25px] flex justify-center items-center">
+                        <div className="rounded-full w-[25px] h-[25px] flex justify-center bg-bg-tetiary items-center">
                             <Text>{1}</Text>
                         </div>
                         <Text>

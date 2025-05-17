@@ -59,9 +59,10 @@ const Table = () => {
                 <Button
                     text="Approve"
                     className="!bg-[#36ba69] !border-none"
+                    color={theme.colors.bg.primary}
                     onClick={()=>handleStatusUpdateMutation({encounterToken : claimDetails?.encounterToken!, reason : "", status : "approved"})}
                     loading={isStatusUpdatePending}
-                    loadingColor={theme.colors.text.primary}
+                    loadingColor={theme.colors.bg.primary}
                 />
             </div>
         </div>
