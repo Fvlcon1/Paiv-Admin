@@ -15,15 +15,15 @@ const Bottom = ({
         <div className="bg-bg-secondary border-solid border-t-[1px] justify-between border-bg-tetiary rounded-b-[20px] h-[55px] flex items-center pl-6">
             <div className="flex gap-6 items-center">   
                 {
-                    expectedPayout && (
+                    expectedPayout ? (
                         <Payout
                             title="Expected Payout:"
                             amount={expectedPayout}
                         />
-                    )
+                    ) : <></>
                 }
                 {
-                    totalPayout && (
+                    totalPayout ? (
                         <>
                             <Text textColor={theme.colors.text.tetiary}>
                                 |
@@ -33,7 +33,7 @@ const Bottom = ({
                                 amount={totalPayout}
                             />
                         </>
-                    )
+                    ) : <></>
                 }
             </div>
             <div className="flex gap-2 items-center h-full px-6">

@@ -8,11 +8,11 @@ const WebSocketComponent = () => {
   const {setNumberOfPending, setNumberOfApproved, setNumberOfFlagged, setNumberOfDeclined, numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined} = useAppContext()
 
   const processMessage = (message: string) => {
-    const {pending, approved, flagged, declined} = JSON.parse(message)
+    const {pending, approved, flagged, rejected} = JSON.parse(message)
     setNumberOfPending(Number(pending))
     setNumberOfApproved(Number(approved))
     setNumberOfFlagged(Number(flagged))
-    setNumberOfDeclined(Number(declined))
+    setNumberOfDeclined(Number(rejected))
   }
 
   useEffect(() => {
