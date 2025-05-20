@@ -10,13 +10,20 @@ import useApprovedClaims from "../hooks/useClaims";
 import useClaimsTable from "../hooks/useClaimsTable";
 import { useState, useEffect, useRef } from "react";
 import { IClaimsDetailType } from "../../utils/types";
+import ReasonForDeclining from "@/app/dashboard/components/reason/reason";
+import useStatus from "../hooks/useStatus";
 import ClaimDetails from "../../components/claimDetails/claimDetails";
+import Button from "@components/button/button";
+import useClaims from "../../hooks/useClaims";
 
 const Table = () => {
     const { setShowClaimDetail, showClaimDetail, tableData, isApprovedClaimsPending: isLoading } = useApprovedContext();
     const { columns } = useClaimsTable();
     const [claimDetails, setClaimDetails] = useState<IClaimsDetailType | null>(null);
-    const [containerHeight, setContainerHeight] = useState(500);
+    const [containerHeight, setContainerHeight] = useState(500)
+    const [isReasonVisible, setIsReasonVisible] = useState(false)
+    const {handleStatusUpdateMutation, isStatusUpdatePending, statusUpdateError, statusUpdateSuccess} = useClaims()
+    const {handleApproveMutation, isApprovePending, approveError, approveSuccess, handleReasonForDecliningMutation, isReasonForDecliningPending, reasonForDecliningError, reasonForDecliningSuccess} = useStatus()
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const [isScrolling, setIsScrolling] = useState(false);
 
@@ -37,17 +44,59 @@ const Table = () => {
         setShowClaimDetail(true);
     };
 
+    {/* Actions */}
+    const actions = (
+        <div className="h-full flex items-center">
+            <div className="w-full flex justify-end gap-2 items-center h-full">
+                <Button
+                    text="Approve"
+                    className="!bg-[#36ba69] !border-none"
+                    onClick={()=>handleApproveMutation({encounterToken : claimDetails?.encounterToken!})}
+                    loading={isApprovePending}
+                    loadingColor={theme.colors.bg.primary}
+                    color={theme.colors.bg.primary}
+                />
+                <Button
+                    text="Decline"
+                    className="!bg-[#BA3D36] !border-none"
+                    onClick={()=>setIsReasonVisible(true)}
+                    loading={isReasonForDecliningPending}
+                    loadingColor={theme.colors.bg.primary}
+                    color={theme.colors.bg.primary}
+                />
+            </div>
+        </div>
+    )
+
     return (
         <>
-            {claimDetails && 
-                <ClaimDetails 
-                    claimDetails={claimDetails}
-                    isVisible={showClaimDetail}
-                    close={() => setShowClaimDetail(false)}
-                />
+            {
+                claimDetails && (
+                    <>
+                        <ClaimDetails
+                            claimDetails={claimDetails}
+                            isVisible={showClaimDetail}
+                            close={() => setShowClaimDetail(false)}
+                            actions={actions}
+                        />
+
+                        <ReasonForDeclining
+                            isVisible={isReasonVisible}
+                            close={() => setIsReasonVisible(false)}
+                            handleSubmit={(value)=>handleReasonForDecliningMutation({
+                                encounterToken : claimDetails?.encounterToken,
+                                reason : value,
+                            })}
+                            isLoading={isReasonForDecliningPending}
+                            error={reasonForDecliningError}
+                            success={reasonForDecliningSuccess}
+                        />
+                    </>
+                )
             }
             
-            <div className="relative w-full overflow-hidden">
+            {tableData.length > 0 && !isLoading ? (
+                <div className="relative w-full overflow-hidden">
                 {tableData.length > 0 && !isLoading ? (
                     <div 
                         ref={tableContainerRef}
@@ -137,6 +186,24 @@ const Table = () => {
                     </div>
                 ) : null}
             </div>
+            ) : null}
+
+            {/* Loader or No Data */}
+            {isLoading ? (
+                <div 
+                    className="w-full justify-center flex items-center"
+                    style={{ height: `${containerHeight}px` }}
+                >
+                    <div className="normal-loader"></div>
+                </div>
+            ) : tableData.length === 0 ? (
+                <div 
+                    className="w-full justify-center flex items-center"
+                    style={{ height: `${containerHeight}px` }}
+                >
+                    <NoData />
+                </div>
+            ) : null}
         </>
     );
 };

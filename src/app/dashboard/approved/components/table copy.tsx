@@ -11,18 +11,12 @@ import useClaimsTable from "../hooks/useClaimsTable";
 import { useState, useEffect, useRef } from "react";
 import { IClaimsDetailType } from "../../utils/types";
 import ClaimDetails from "../../components/claimDetails/claimDetails";
-import ReasonForDeclining from '@/app/dashboard/components/reason/reason';
-import Button from "@components/button/button";
-import useApprove from "../hooks/useApprove";
-import useClaims from "../../hooks/useClaims";
 
 const Table = () => {
-    const { setShowClaimDetail, tableData, showClaimDetail, isApprovedClaimsPending: isLoading, getApprovedClaimsMutation } = useApprovedContext();
+    const { setShowClaimDetail, showClaimDetail, tableData, isApprovedClaimsPending: isLoading } = useApprovedContext();
     const { columns } = useClaimsTable();
-    const {handleStatusUpdateMutation, isStatusUpdatePending, statusUpdateError, statusUpdateSuccess} = useClaims()
     const [claimDetails, setClaimDetails] = useState<IClaimsDetailType | null>(null);
-    const [containerHeight, setContainerHeight] = useState(500)
-    const [isReasonVisible, setIsReasonVisible] = useState(false)
+    const [containerHeight, setContainerHeight] = useState(500);
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const [isScrolling, setIsScrolling] = useState(false);
 
@@ -43,50 +37,17 @@ const Table = () => {
         setShowClaimDetail(true);
     };
 
-    const onApproveSuccess = () => {
-        getApprovedClaimsMutation()
-        setShowClaimDetail(false)
-    }
-
-    useEffect(() => {
-        if(statusUpdateSuccess){
-            onApproveSuccess()
-        }
-    }, [statusUpdateSuccess])
-
-    {/* Actions */}
-    const actions = (
-        <div className="h-full flex items-center">
-            <div className="w-full flex justify-end gap-2 items-center h-full">
-                <Button
-                    text="Approve"
-                    className="!bg-[#36ba69] !border-none"
-                    color={theme.colors.bg.primary}
-                    onClick={()=>handleStatusUpdateMutation({encounterToken : claimDetails?.encounterToken!, reason : "", status : "approved"})}
-                    loading={isStatusUpdatePending}
-                    loadingColor={theme.colors.bg.primary}
-                />
-            </div>
-        </div>
-    )
-
     return (
         <>
-            {
-                claimDetails && (
-                    <>
-                        <ClaimDetails
-                            claimDetails={claimDetails}
-                            isVisible={showClaimDetail}
-                            close={() => setShowClaimDetail(false)}
-                            actions={actions}
-                        />
-                    </>
-                )
+            {claimDetails && 
+                <ClaimDetails 
+                    claimDetails={claimDetails}
+                    isVisible={showClaimDetail}
+                    close={() => setShowClaimDetail(false)}
+                />
             }
             
-            {tableData.length > 0 && !isLoading ? (
-                <div className="relative w-full overflow-hidden">
+            <div className="relative w-full overflow-hidden">
                 {tableData.length > 0 && !isLoading ? (
                     <div 
                         ref={tableContainerRef}
@@ -176,24 +137,6 @@ const Table = () => {
                     </div>
                 ) : null}
             </div>
-            ) : null}
-
-            {/* Loader or No Data */}
-            {isLoading ? (
-                <div 
-                    className="w-full justify-center flex items-center"
-                    style={{ height: `${containerHeight}px` }}
-                >
-                    <div className="normal-loader"></div>
-                </div>
-            ) : tableData.length === 0 ? (
-                <div 
-                    className="w-full justify-center flex items-center"
-                    style={{ height: `${containerHeight}px` }}
-                >
-                    <NoData />
-                </div>
-            ) : null}
         </>
     );
 };

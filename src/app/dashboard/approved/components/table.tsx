@@ -11,12 +11,19 @@ import useClaimsTable from "../hooks/useClaimsTable";
 import { useState, useEffect, useRef } from "react";
 import { IClaimsDetailType } from "../../utils/types";
 import ClaimDetails from "../../components/claimDetails/claimDetails";
+import Button from "@components/button/button";
+import ReasonForDeclining from '@/app/dashboard/components/reason/reason';
+import useReasonForDeclining from "../hooks/useReason";
+import useClaims from "../../hooks/useClaims";
 
 const Table = () => {
-    const { setShowClaimDetail, showClaimDetail, tableData, isApprovedClaimsPending: isLoading } = useApprovedContext();
+    const { setShowClaimDetail, showClaimDetail, tableData, isApprovedClaimsPending: isLoading, getApprovedClaimsMutation } = useApprovedContext();
     const { columns } = useClaimsTable();
+    const {handleStatusUpdateMutation, isStatusUpdatePending, statusUpdateError, statusUpdateSuccess} = useClaims()
     const [claimDetails, setClaimDetails] = useState<IClaimsDetailType | null>(null);
-    const [containerHeight, setContainerHeight] = useState(500);
+    const [containerHeight, setContainerHeight] = useState(500)
+    const [isReasonVisible, setIsReasonVisible] = useState(false)
+    const {handleReasonForDecliningMutation, isReasonForDecliningPending, reasonForDecliningError, reasonForDecliningSuccess} = useReasonForDeclining()
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const [isScrolling, setIsScrolling] = useState(false);
 
@@ -37,17 +44,62 @@ const Table = () => {
         setShowClaimDetail(true);
     };
 
+    const onDeclineSuccess = () => {
+        getApprovedClaimsMutation()
+        setShowClaimDetail(false)
+    }
+
+    useEffect(() => {
+        if(statusUpdateSuccess){
+            onDeclineSuccess()
+        }
+    }, [statusUpdateSuccess])
+
+    {/* Actions */}
+    const actions = (
+        <div className="h-hull flex items-center">
+            <div className="w-full flex justify-end gap-2 items-center h-full">
+                <Button 
+                    text="Decline"
+                    className="!bg-[#db4138] !border-none"
+                    color={theme.colors.bg.primary}
+                    onClick={()=>setIsReasonVisible(true)}
+                    loadingColor={theme.colors.text.primary}
+                />
+            </div>
+        </div>
+    )
+
     return (
         <>
-            {claimDetails && 
-                <ClaimDetails 
-                    claimDetails={claimDetails}
-                    isVisible={showClaimDetail}
-                    close={() => setShowClaimDetail(false)}
-                />
+            {
+                claimDetails && (
+                    <>
+                        <ClaimDetails
+                            claimDetails={claimDetails}
+                            isVisible={showClaimDetail}
+                            close={() => setShowClaimDetail(false)}
+                            actions={actions}
+                        />
+
+                        <ReasonForDeclining
+                            isVisible={isReasonVisible}
+                            close={() => setIsReasonVisible(false)}
+                            handleSubmit={(value)=>handleStatusUpdateMutation({
+                                encounterToken : claimDetails?.encounterToken,
+                                reason : value,
+                                status : "rejected"
+                            })}
+                            isLoading={isStatusUpdatePending}
+                            error={statusUpdateError}
+                            success={statusUpdateSuccess}
+                        />
+                    </>
+                )
             }
             
-            <div className="relative w-full overflow-hidden">
+            {tableData.length > 0 && !isLoading ? (
+                <div className="relative w-full overflow-hidden">
                 {tableData.length > 0 && !isLoading ? (
                     <div 
                         ref={tableContainerRef}
@@ -137,6 +189,24 @@ const Table = () => {
                     </div>
                 ) : null}
             </div>
+            ) : null}
+
+            {/* Loader or No Data */}
+            {isLoading ? (
+                <div 
+                    className="w-full justify-center flex items-center"
+                    style={{ height: `${containerHeight}px` }}
+                >
+                    <div className="normal-loader"></div>
+                </div>
+            ) : tableData.length === 0 ? (
+                <div 
+                    className="w-full justify-center flex items-center"
+                    style={{ height: `${containerHeight}px` }}
+                >
+                    <NoData />
+                </div>
+            ) : null}
         </>
     );
 };
