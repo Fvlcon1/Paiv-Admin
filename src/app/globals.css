@@ -7,14 +7,15 @@
   
   /* Background colors */
   --bg-primary: #FFFFFF;
+  --bg-primary-light : #FBFBFB;
   --bg-secondary: #F7F7FA;
   --bg-tetiary: #EDEDF2;
   --bg-quantinary: #DADAE0;
   
   /* Border colors */
-  --border-primary: #E0E0E7;
-  --border-secondary: #D0D0D8;
-  --border-tetiary: #BDBDC7;
+  --border-primary: #E4E4E4;
+  --border-secondary: #F2F2F2;
+  --border-tetiary: #DDDDDD;
   --border-quantinary: #C6C6D0;
   
   /* Accent colors */
@@ -91,6 +92,7 @@ input:-webkit-autofill:active{
   --color-text-tetiary : var(--text-tetiary);
 
   --color-bg-primary : var(--bg-primary);
+  --color-bg-primary-light : var(--bg-primary-light);
   --color-bg-secondary : var(--bg-secondary);
   --color-bg-tetiary : var(--bg-tetiary);
   --color-bg-quantinary : var(--bg-quantinary);

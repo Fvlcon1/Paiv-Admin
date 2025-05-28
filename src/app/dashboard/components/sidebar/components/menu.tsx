@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation"
 import { FaFlag } from "react-icons/fa"
 import { FaCediSign, FaCircleCheck } from "react-icons/fa6"
 import { GiCancel } from "react-icons/gi"
-import { MdOutlinePendingActions } from "react-icons/md"
+import { MdOutlinePendingActions, MdSpaceDashboard } from "react-icons/md"
 import { useAppContext } from "@/app/context/context"
 import { useEffect } from "react"
 
@@ -18,6 +18,13 @@ const Menu = () => {
     const { numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined } = useAppContext()
 
     const claimsMenuItems = [
+        {
+            title : "Pending",
+            icon : MdOutlinePendingActions,
+            path : "/dashboard/pending",
+            notifications : numberOfPending,
+            badgeColor : "bg-[green]"
+        },
         {
             title : "Approved",
             icon : FaCircleCheck,
@@ -44,7 +51,7 @@ const Menu = () => {
     const getMenuTextStyle = (path : string) => {
         return {
             textColor : path === pathname ? theme.colors.main.primary : theme.colors.text.secondary,
-            bold : path === pathname ? TypographyBold.md : TypographyBold.sm
+            bold : path === pathname ? TypographyBold.md : TypographyBold.sm2
         }
     }
 
@@ -61,35 +68,21 @@ const Menu = () => {
     return (
         <div className="flex gap-1 flex-col pt-1">
             <Link 
-                className={getLinkClassName("/dashboard/pending").className}
-                href={"/dashboard/pending"}
+                className={getLinkClassName("/dashboard").className}
+                href={"/dashboard"}
             >
                 <div className="flex items-center gap-2">
-                    <MdOutlinePendingActions
-                        color={getMenuTextStyle("/dashboard/pending").textColor}
+                    <MdSpaceDashboard
+                        color={getMenuTextStyle("/dashboard").textColor}
                         size={"15px"}
                     />
                     <Text
-                        textColor={getMenuTextStyle("/dashboard/pending").textColor}
-                        bold={getMenuTextStyle("/dashboard/pending").bold}
+                        textColor={getMenuTextStyle("/dashboard").textColor}
+                        bold={getMenuTextStyle("/dashboard").bold}
                     >
-                        {"Pending"}
+                        {"Dashboard"}
                     </Text>
                 </div>
-                {
-                    numberOfPending > 0 ? (
-                        <div className={`px-[6px] py-[2px] min-w-[20px] h-[20px] rounded-full bg-cyan-800 flex justify-center items-center`}>
-                            <Text
-                                size={TypographySize.xs}
-                                textColor={theme.colors.bg.primary}
-                            >
-                                {numberOfPending}
-                            </Text>
-                        </div>
-                    ) : (
-                        <></>
-                    )
-                }
             </Link>
 
             <Divider />
@@ -105,7 +98,7 @@ const Menu = () => {
                             <div className="flex items-center gap-2">
                                 <item.icon 
                                     color={getMenuTextStyle(item.path).textColor}
-                                    size={"13px"}
+                                    size={"14px"}
                                 />
                                 <Text
                                     textColor={getMenuTextStyle(item.path).textColor}

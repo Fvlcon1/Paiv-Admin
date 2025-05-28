@@ -8,14 +8,15 @@ export const colors = {
 	},
 	bg: {
 		primary: '#FFFFFF',
+		primaryLight : "#FBFBFB",
 		secondary: '#F7F7FA',
 		tetiary: '#EDEDF2',
 		quantinary: '#DADAE0',
 	},
 	border: {
-		primary: '#E0E0E7',
-		secondary: '#D0D0D8',
-		tetiary: '#BDBDC7',
+		primary: '#E4E4E4',
+		secondary: '#F2F2F2',
+		tetiary: '#DDDDDD',
 		quantinary: '#C6C6D0',
 	},
 	main: {
@@ -24,15 +25,24 @@ export const colors = {
 };
 
 export const theme = {
-    colors,
-    typography: {
-        size: { 
-            body: TypographySize.body,
-            HL: TypographySize.HL,
-            HM: TypographySize.HM,
-        },
-        bold: { sm: TypographyBold.sm, md: TypographyBold.md, lg: TypographyBold.lg },
-      },
+	colors,
+	typography: {
+		size: {
+			body: TypographySize.body,
+			HL: TypographySize.HL,
+			HM: TypographySize.HM,
+			body2 : TypographySize.body2,
+			xs2 : TypographySize.xs2,
+			xs : TypographySize.xs,
+		},
+		bold: {
+			md : TypographyBold.md,
+			md2 : TypographyBold.md2,
+			sm : TypographyBold.sm,
+			sm2 : TypographyBold.sm2,
+			lg : TypographyBold.lg,
+		},
+	},
 }
 
 export default theme
