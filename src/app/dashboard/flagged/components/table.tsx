@@ -14,7 +14,7 @@ import ReasonForDeclining from "@/app/dashboard/components/reason/reason";
 import useStatus from "../hooks/useStatus";
 import ClaimDetails from "../../components/claimDetails/claimDetails";
 import Button from "@components/button/button";
-import useClaims from "../../hooks/useClaims";
+
 
 const Table = () => {
     const { setShowClaimDetail, showClaimDetail, tableData, isApprovedClaimsPending: isLoading } = useApprovedContext();
@@ -22,7 +22,6 @@ const Table = () => {
     const [claimDetails, setClaimDetails] = useState<IClaimsDetailType | null>(null);
     const [containerHeight, setContainerHeight] = useState(500)
     const [isReasonVisible, setIsReasonVisible] = useState(false)
-    const {handleStatusUpdateMutation, isStatusUpdatePending, statusUpdateError, statusUpdateSuccess} = useClaims()
     const {handleApproveMutation, isApprovePending, approveError, approveSuccess, handleReasonForDecliningMutation, isReasonForDecliningPending, reasonForDecliningError, reasonForDecliningSuccess} = useStatus()
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const [isScrolling, setIsScrolling] = useState(false);

@@ -14,12 +14,11 @@ import ClaimDetails from "../../components/claimDetails/claimDetails";
 import ReasonForDeclining from '@/app/dashboard/components/reason/reason';
 import Button from "@components/button/button";
 import useApprove from "../hooks/useApprove";
-import useClaims from "../../hooks/useClaims";
 
 const Table = () => {
     const { setShowClaimDetail, tableData, showClaimDetail, isApprovedClaimsPending: isLoading, getApprovedClaimsMutation } = useApprovedContext();
     const { columns } = useClaimsTable();
-    const {handleStatusUpdateMutation, isStatusUpdatePending, statusUpdateError, statusUpdateSuccess} = useClaims()
+    const {handleApproveMutation, isApprovePending, approveError, approveSuccess} = useApprove()
     const [claimDetails, setClaimDetails] = useState<IClaimsDetailType | null>(null);
     const [containerHeight, setContainerHeight] = useState(500)
     const [isReasonVisible, setIsReasonVisible] = useState(false)
@@ -49,10 +48,10 @@ const Table = () => {
     }
 
     useEffect(() => {
-        if(statusUpdateSuccess){
+        if(approveSuccess){
             onApproveSuccess()
         }
-    }, [statusUpdateSuccess])
+    }, [approveSuccess])
 
     {/* Actions */}
     const actions = (
@@ -62,8 +61,8 @@ const Table = () => {
                     text="Approve"
                     className="!bg-[#36ba69] !border-none"
                     color={theme.colors.bg.primary}
-                    onClick={()=>handleStatusUpdateMutation({encounterToken : claimDetails?.encounterToken!, reason : "", status : "approved"})}
-                    loading={isStatusUpdatePending}
+                    onClick={()=>handleApproveMutation({encounterToken : claimDetails?.encounterToken!})}
+                    loading={isApprovePending}
                     loadingColor={theme.colors.bg.primary}
                 />
             </div>

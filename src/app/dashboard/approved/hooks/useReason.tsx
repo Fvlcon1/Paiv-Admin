@@ -13,7 +13,8 @@ const useReasonForDeclining = () => {
     }) => {
         const response = await protectedApi.POST("/claims/decline", {
             encounter_token : encounterToken,
-            reason
+            reason,
+            status : "rejected"
         })
         console.log({response})
         return response

@@ -4,10 +4,10 @@ import Text from "@styles/components/text"
 import theme from "@styles/theme"
 import { hexOpacity } from "@/utils/hexOpacity"
 import SlideIn from "@styles/components/slidein"
-import { TiCancel } from "react-icons/ti"
-import { TbCancel } from "react-icons/tb"
+import RightMetricSkeleton from "./components/right-metric-skeleton"
+import useRightMetrics from "./hooks/useRightMetrics"
 
-interface IMetrics {
+export interface IMetrics {
     title: string
     value: string
     icon: any,
@@ -15,32 +15,14 @@ interface IMetrics {
 }
 
 const RightMetrics = () => {
-    const metrics: IMetrics[] = [
-        {
-            title: "Total Payout",
-            value: "22,000",
-            icon: FaMoneyBills,
-            color: "6060D0"
-        },
-        {
-            title: "Total Amount Saved",
-            value: "7,000",
-            icon: RiBankFill,
-            color: "299B46"
-        },
-        {
-            title: "% of flagged claims",
-            value: "15%",
-            icon: FaFlag,
-            color: "E48908"
-        },
-        {
-            title: "% of declined claims",
-            value: "9%",
-            icon: TbCancel,
-            color: "eb4034"
-        },
-    ]
+    const {metrics, isDashboardDataPending} = useRightMetrics()
+
+    if(isDashboardDataPending) {
+        return (
+            <RightMetricSkeleton />
+        )
+    }
+    
     return (
         <div className="flex flex-col gap-3">
             {

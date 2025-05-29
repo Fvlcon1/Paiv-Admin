@@ -1,6 +1,6 @@
 'use client'
 
-import Controls from "./components/controls"
+import Controls from "../components/controls"
 import MetricCards from "./components/metric-cards/metric-cards"
 import Chart from "./components/chart/chart"
 import RightChart from "./components/chart/right-chart"

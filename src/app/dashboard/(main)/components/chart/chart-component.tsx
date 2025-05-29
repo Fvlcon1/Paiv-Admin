@@ -1,8 +1,17 @@
 import React from 'react';
-import Chart from 'react-apexcharts';
 import theme from '@styles/theme';
+import { useDashboardContext } from '../../context/context';
+import ChartSkeleton from './chart-skeleton';
+import dynamic from 'next/dynamic';
+
+const Chart = dynamic(() => import('react-apexcharts'), {
+    ssr: false,
+    loading: () => <ChartSkeleton />
+});
 
 const ClaimsTimelineChart = () => {
+    const { isDashboardDataPending } = useDashboardContext()
+
     const series = [
         {
             name: 'Submitted',
@@ -15,7 +24,11 @@ const ClaimsTimelineChart = () => {
         {
             name: 'Flagged',
             data: [5, 8, 3, 9, 8, 17, 10, 20, 12, 11, 10, 15]
-        }
+        },
+        {
+            name: 'Declined',
+            data: [2, 4, 2, 6, 4, 10, 6, 12, 8, 10, 12, 18]
+        },
     ];
 
     const options = {
@@ -25,7 +38,7 @@ const ClaimsTimelineChart = () => {
             toolbar: { show: false },
             foreColor: '#9CA3AF'
         },
-        colors: ['#6366F1', '#10B981', '#EF4444'],
+        colors: ['#6366F1', '#10B981', '#EF4444', '#FF9500'],
         dataLabels: { enabled: false },
         stroke: { curve: 'smooth', width: 2 },
         fill: {

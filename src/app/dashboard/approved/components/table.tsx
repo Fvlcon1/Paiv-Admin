@@ -14,12 +14,10 @@ import ClaimDetails from "../../components/claimDetails/claimDetails";
 import Button from "@components/button/button";
 import ReasonForDeclining from '@/app/dashboard/components/reason/reason';
 import useReasonForDeclining from "../hooks/useReason";
-import useClaims from "../../hooks/useClaims";
 
 const Table = () => {
     const { setShowClaimDetail, showClaimDetail, tableData, isApprovedClaimsPending: isLoading, getApprovedClaimsMutation } = useApprovedContext();
     const { columns } = useClaimsTable();
-    const {handleStatusUpdateMutation, isStatusUpdatePending, statusUpdateError, statusUpdateSuccess} = useClaims()
     const [claimDetails, setClaimDetails] = useState<IClaimsDetailType | null>(null);
     const [containerHeight, setContainerHeight] = useState(500)
     const [isReasonVisible, setIsReasonVisible] = useState(false)
@@ -50,10 +48,10 @@ const Table = () => {
     }
 
     useEffect(() => {
-        if(statusUpdateSuccess){
+        if(reasonForDecliningSuccess){
             onDeclineSuccess()
         }
-    }, [statusUpdateSuccess])
+    }, [reasonForDecliningSuccess])
 
     {/* Actions */}
     const actions = (
@@ -85,14 +83,13 @@ const Table = () => {
                         <ReasonForDeclining
                             isVisible={isReasonVisible}
                             close={() => setIsReasonVisible(false)}
-                            handleSubmit={(value)=>handleStatusUpdateMutation({
+                            handleSubmit={(value)=>handleReasonForDecliningMutation({
                                 encounterToken : claimDetails?.encounterToken,
                                 reason : value,
-                                status : "rejected"
                             })}
-                            isLoading={isStatusUpdatePending}
-                            error={statusUpdateError}
-                            success={statusUpdateSuccess}
+                            isLoading={isReasonForDecliningPending}
+                            error={reasonForDecliningError}
+                            success={reasonForDecliningSuccess}
                         />
                     </>
                 )
