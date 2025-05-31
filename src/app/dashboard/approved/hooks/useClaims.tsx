@@ -8,6 +8,7 @@ import { FaSquareCheck } from 'react-icons/fa6';
 import theme, { colors } from '../../../styles/theme';
 import { IClaimsDetailType } from '../../utils/types';
 import convertToClaimsDetails from '../../utils/convert-to-claims-details';
+import getDate from '@/utils/getDate';
 
 const useApprovedClaims = () => {
     const [selectedClaims, setSelectedClaims] = useState<string[]>([])
@@ -17,29 +18,29 @@ const useApprovedClaims = () => {
     const getApprovedClaims = async () => {
         setSelectedClaims([])
         const response = await protectedApi.GET("/claims/approved")
-        console.log({response})
+        console.log({ response })
         return response.reverse()
     }
 
-    const handleSelectClaim = (id:string) => {
+    const handleSelectClaim = (id: string) => {
         setSelectedClaims(prev => {
-            if(!prev.find((claimId) => id === claimId))
+            if (!prev.find((claimId) => id === claimId))
                 return [...prev, id]
             return prev
         })
     }
 
-    const handleUnselectClaim = (id:string) => {
+    const handleUnselectClaim = (id: string) => {
         setSelectedClaims(prev => {
             return prev.filter((claimId) => id !== claimId)
         })
     }
 
     const checkIsAllClaimsSelected = () => {
-        if(approvedClaims?.length){
+        if (approvedClaims?.length) {
             let isAllClaimsSelected = true
-            approvedClaims?.forEach((claim:any) => {
-                if(!selectedClaims.includes(claim.id)){
+            approvedClaims?.forEach((claim: any) => {
+                if (!selectedClaims.includes(claim.id)) {
                     return isAllClaimsSelected = false
                 }
             })
@@ -48,8 +49,8 @@ const useApprovedClaims = () => {
     }
 
     const handleSelectAllClaims = () => {
-        const selectedClaims : string[] = []
-        approvedClaims.forEach((claim:any) => selectedClaims.push(claim.id))
+        const selectedClaims: string[] = []
+        approvedClaims.forEach((claim: any) => selectedClaims.push(claim.id))
         setSelectedClaims(selectedClaims)
     }
 
@@ -57,63 +58,66 @@ const useApprovedClaims = () => {
         setSelectedClaims([])
     }
 
-    const convertToApprovedTableData = (data:any[]) => {
-            const approvedTableData = data.map((item) => ({
-                id: item.encounter_token,
-                selectable: (
-                    selectedClaims.includes(item.encounter_token)
-                    ? <FaSquareCheck 
+    const convertToApprovedTableData = (data: any[]) => {
+        const approvedTableData = data.map((item) => ({
+            id: item.encounter_token,
+            selectable: (
+                selectedClaims.includes(item.encounter_token)
+                    ? <FaSquareCheck
                         size={20}
                         color={theme.colors.main.primary}
                         className="rounded-[6px] mt-2 overflow-hidden relative w-[20px] h-[20px] bg-bg-tetiary"
-                        onClick={(e)=>{
+                        onClick={(e) => {
                             e.stopPropagation()
                             handleUnselectClaim(item.encounter_token)
-                        }} 
+                        }}
                     />
-                    : <div 
-                        onClick={(e)=>{
+                    : <div
+                        onClick={(e) => {
                             e.stopPropagation()
                             handleSelectClaim(item.encounter_token)
-                        }} 
+                        }}
                         className="rounded-[6px] mt-2 overflow-hidden relative w-[20px] h-[20px] bg-bg-tetiary"
                     />
-                ),
-                hospitalName: item.hospital_name,
-                patientName: item.patient_name,
-                location: item.location,
-                diagnosis: `${item.diagnosis.map((diagnosis:any) => `${diagnosis.ICD10} - ${diagnosis.description}`).join(", ")}`,
-                drugs: item.drugs.map((drug : any) => `${drug.code} - (${drug.dosage})`),
-                expectedPayout : item.adjusted_amount,
-                reasons : item.reason,
-                serviceOutcome : item.service_outcome,
-                serviceType1 : item.service_type_1,
-                serviceType2 : item.service_type_2,
-                specialties : item.specialties,
-                typeofAttendance : item.typeofAttendance,
-                medicalProcedures : item.medical_procedures,
-                labTests : item.lab_tests,
-                medicalProceduresTotal : item.medical_procedures_total,
-                labTestsTotal : item.lab_tests_total,
-                drugsTotal : item.drugs_total,
-                details : convertToClaimsDetails(item)
-            }));
-            console.log({approvedTableData})
-            setTableData(approvedTableData);
-        }
+            ),
+            hospitalName: item.hospital_name,
+            patientName: item.patient_name,
+            location: item.location,
+            diagnosis: `${item.diagnosis.map((diagnosis: any) => `${diagnosis.ICD10} - ${diagnosis.description}`).join(", ")}`,
+            drugs: item.drugs.map((drug: any) => `${drug.code} - (${drug.dosage})`),
+            expectedPayout: "GHS " + item.expected_payout,
+            reasons: item.reason,
+            serviceOutcome: item.service_outcome,
+            serviceType1: item.service_type_1,
+            serviceType2: item.service_type_2,
+            specialties: item.specialties,
+            typeofAttendance: item.typeofAttendance,
+            medicalProcedures: item.medical_procedures,
+            labTests: item.lab_tests,
+            medicalProceduresTotal: item.medical_procedures_total,
+            labTestsTotal: item.lab_tests_total,
+            drugsTotal: item.drugs_total,
+            claimSubmissionDate: getDate(new Date(item.created_at)),
+            claimProcessingDate: item.updated_at ? getDate(new Date(item.updated_at)) : "-",
+            claimStatus: item.status,
+            actualPayout: "GHS " + item.total_payout,
+            details: convertToClaimsDetails(item)
+        }));
+        setTableData(approvedTableData);
+    }
 
-    const {mutate : getApprovedClaimsMutation, data : approvedClaims, isPending : isApprovedClaimsPending} = useMutation({
-        mutationFn : getApprovedClaims,
-        onSuccess : (data) => {
+    const { mutate: getApprovedClaimsMutation, data: approvedClaims, isPending: isApprovedClaimsPending } = useMutation({
+        mutationFn: getApprovedClaims,
+        onSuccess: (data) => {
             convertToApprovedTableData(data)
         }
     })
 
-    useEffect(()=>{
+    useEffect(() => {
         checkIsAllClaimsSelected()
-        if(approvedClaims)
+        if (approvedClaims)
             convertToApprovedTableData(approvedClaims)
-    },[selectedClaims])
+    }, [selectedClaims])
 
     return {
         getApprovedClaimsMutation,

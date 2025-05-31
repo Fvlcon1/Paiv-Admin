@@ -1,17 +1,16 @@
 import React from 'react';
 import theme from '@styles/theme';
 import { useDashboardContext } from '../../context/context';
-import ChartSkeleton from './chart-skeleton';
+import BarChartSkeleton from './chart-skeleton';
 import dynamic from 'next/dynamic';
-import { ApexOptions } from 'apexcharts';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
     ssr: false,
-    loading: () => <ChartSkeleton />
+    loading: () => <BarChartSkeleton />
 });
 
-const ClaimsTimelineChart = () => {
-    const { isDashboardDataPending } = useDashboardContext()
+const BarChartComponent = () => {
+    const { isDashboardDataPending } = useDashboardContext();
 
     const series = [
         {
@@ -32,24 +31,30 @@ const ClaimsTimelineChart = () => {
         },
     ];
 
-    const options : ApexOptions = {
+    const options = {
         chart: {
+            type: 'bar',
             height: 350,
-            type: 'area',
+            stacked: true, // Change to false for side-by-side bars
             toolbar: { show: false },
             foreColor: '#9CA3AF'
         },
         colors: ['#6366F1', '#10B981', '#EF4444', '#FF9500'],
-        dataLabels: { enabled: false },
-        stroke: { curve: 'smooth', width: 2 },
-        fill: {
-            type: 'gradient',
-            gradient: {
-                shadeIntensity: 1,
-                opacityFrom: 0.7,
-                opacityTo: 0.2,
-                stops: [0, 90, 100]
-            }
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                endingShape: 'rounded',
+                borderRadius: 4,
+            },
+        },
+        dataLabels: { 
+            enabled: false 
+        },
+        stroke: { 
+            show: true,
+            width: 2,
+            colors: ['transparent'] // Remove for solid borders
         },
         xaxis: {
             categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -78,7 +83,7 @@ const ClaimsTimelineChart = () => {
             fontSize: '12px',
             fontWeight: 500,
             fontFamily: 'Montserrat',
-            markers: { shape: 'square' }
+            markers: { radius: 0 }
         },
         grid: {
             borderColor: theme.colors.border.primary,
@@ -92,10 +97,13 @@ const ClaimsTimelineChart = () => {
                     return value + ' claims';
                 }
             }
+        },
+        fill: {
+            opacity: 1
         }
     };
 
-    return <Chart options={options as any} series={series} type="area" height={450} />;
+    return <Chart options={options as any} series={series} type="bar" height={450} />;
 };
 
-export default ClaimsTimelineChart;
+export default BarChartComponent;

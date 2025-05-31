@@ -114,8 +114,8 @@ const Table = () => {
                                                     minWidth: colIndex === 0 ? '50px' : '150px',
                                                 }}
                                             >
-                                                <div className="py-[15px] mt-[-5px] pl-[30px]">
-                                                    <Text textColor={theme.colors.text.tetiary} bold={TypographyBold.md}>
+                                                <div className="py-[15px] mt-[-5px] px-[30px]">
+                                                    <Text ellipsis textColor={theme.colors.text.tetiary} bold={TypographyBold.md}>
                                                         {header.isPlaceholder
                                                             ? null
                                                             : flexRender(header.column.columnDef.header, header.getContext())}

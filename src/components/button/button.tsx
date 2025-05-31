@@ -19,11 +19,8 @@ const Button = ({
 	textSize,
 	textBold,
 	padding,
-	shadow,
 	loading,
-	opacity,
 	disabled,
-	showLoader,
 	hover,
 	text,
 	icon,
@@ -37,9 +34,9 @@ const Button = ({
 		return (onHover && !disabled)
 			? hover?.background
 			?? background
-			?? theme.colors.bg.quantinary
+			?? theme.colors.main.primary
 			: background
-			?? theme.colors.bg.quantinary
+			?? theme.colors.main.primary
 	}
 
 	const getOpacity = () => {
@@ -53,16 +50,16 @@ const Button = ({
 	const getTextColor = () => {
 		return onHover ? hover?.color
 			? hover.color
-			: color ?? theme.colors.text.primary
-			: color ?? theme.colors.text.primary
+			: color ?? theme.colors.bg.primary
+			: color ?? theme.colors.bg.primary
 	}
 
 	const getButtonStyle = () => {
 		return {
 			background: getBackground(),
-			padding: padding ?? '7px 15px',
+			padding: padding ?? '6px 12px',
 			border: border,
-			borderRadius: radius ? `${radius}px` : '7px',
+			borderRadius: radius ? `${radius}px` : '8px',
 			maxWidth,
 			width: size?.width ?? 'fit-content',
 			height: size?.height ?? '35px',
@@ -70,6 +67,31 @@ const Button = ({
 			transform: `scale(${onPress ? 0.97 : 1})`
 		}
 	}
+
+	const loader = (
+		<div className={`loader ${loadingColor ? `!bg-[${loadingColor}]` : "!bg-white"} !w-[15px] !h-[15px] !border-[2px]`} />
+	)
+	
+	const buttonText = (
+		<div 
+			className="flex w-fit gap-[6px] items-center"
+			style={{
+				color: getTextColor()
+			}}
+		>
+			{loading ? loader : icon}
+			<Text
+				size={textSize}
+				bold={textBold ?? TypographyBold.md}
+				textColor={getTextColor()}
+				maxLines={1}
+				ellipsis
+				whiteSpace="nowrap"
+			>
+				{text ?? 'Button'}
+			</Text>
+		</div>
+	)
 
 	return (
 		<button
@@ -82,35 +104,13 @@ const Button = ({
 			className={`${className} duration-200 ${disabled && 'cursor-not-allowed'} ${loading && 'cursor-wait'} cursor-pointer`}
 			disabled={disabled ?? loading}
 			type={type ?? 'submit'}
+			id={id}
 		>
 			<div className="w-full justify-center items-center flex gap-[8px]">
-				{
-					loading ?
-						<div
-							className={`normal-loader !w-[20px]`}
-							style={{
-								backgroundColor : loadingColor ?? theme.colors.main.primary
-							}}
-						/>
-						:
-						<Text
-							size={textSize}
-							bold={textBold ?? TypographyBold.md}
-							textColor={getTextColor()}
-							maxLines={1}
-							ellipsis
-							whiteSpace="nowrap"
-						>
-							<div className="flex w-fit gap-[8px]">
-								{icon}
-								{text ?? 'Button'}
-							</div>
-						</Text>
-				}
+				{buttonText}
 			</div>
 		</button>
 	)
 }
 
-type customPartial<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 export default Button

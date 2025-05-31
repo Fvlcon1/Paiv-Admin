@@ -1,11 +1,11 @@
 import SlideIn from "@styles/components/slidein"
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
-import ChartComponent from "./chart-component"
+import HeatmapChartComponent from "./heat-map-component"
 import { useDashboardContext } from "../../context/context"
-import ChartSkeleton from "./chart-skeleton"
+import ChartSkeleton from "./heat-map-skeleton"
 
-const Chart = () => {
+const HeatMap = () => {
     const {isDashboardDataPending} = useDashboardContext()
     
     if(isDashboardDataPending) {
@@ -24,19 +24,19 @@ const Chart = () => {
                         size={theme.typography.size.HM}
                         lineHeight={1}
                     >
-                        Claims Activity
+                        Claims Heatmap
                     </Text>
                     <Text textColor={theme.colors.text.tetiary}>
-                        Claims activity in the past year
+                        Claims Heatmap by Type and Month
                     </Text>
                 </div>
 
                 {/** Chart */}
                 <div className="ml-[-10px] mt-[-10px]">
-                    <ChartComponent />
+                    <HeatmapChartComponent />
                 </div>
             </div>
         </SlideIn>
     )
 }
-export default Chart
+export default HeatMap

@@ -1,10 +1,10 @@
 'use client'
 
-import Controls from "../components/controls"
+import Controls from "./components/controls/controls"
 import MetricCards from "./components/metric-cards/metric-cards"
-import Chart from "./components/chart/chart"
 import RightChart from "./components/chart/right-chart"
 import RecentClaimsTable from "./components/recent-claims-table/table"
+import ChartCarousel from "./components/chart-carousel"
 
 const Dashboard = () => {
     
@@ -14,7 +14,7 @@ const Dashboard = () => {
                 <Controls />
                 <MetricCards />
                 <div className="w-full flex gap-4 px-4">
-                    <Chart />
+                    <ChartCarousel />
                     <RightChart />
                 </div>
                 <RecentClaimsTable />

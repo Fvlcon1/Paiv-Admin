@@ -63,10 +63,10 @@ const Input = ({
 
     return (
         <div
-            className={`flex w-full h-fit flex-1 gap-2 px-[15px] py-[10px] items-center rounded-xl bg-bg-secondary border-border-tetiary border-[1px] border-solid duration-200 ${className}`}
+            className={`flex w-full h-fit flex-1 gap-2 px-[15px] py-[10px] items-center rounded-lg bg-bg-secondary border-[1px] duration-200 ${className}`}
             onClick={onClick}
             style={{
-                borderColor: (inputFocus || hover) ? theme.colors.main.primary : borderColor || theme.colors.border.secondary
+                borderColor: (inputFocus || hover) ? theme.colors.main.primary : borderColor || theme.colors.border.primary
             }}
         >
             {PreIcon && PreIcon}

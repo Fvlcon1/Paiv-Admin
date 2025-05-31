@@ -20,7 +20,7 @@ const useMetricCards = () => {
                 value: formatAmount(total?.count || "0"),
                 icon: FaMoneyBills,
                 color: "6060D0",
-                change: "",
+                change: formatAmount(total?.change || "0"),
                 changeType: "up"
             },
             {
@@ -28,7 +28,7 @@ const useMetricCards = () => {
                 value: formatAmount(approved?.count || "0"),
                 icon: RiBankFill,
                 color: "299B46",
-                change: "",
+                change: formatAmount(approved?.change || "0"),
                 changeType: "up"
             },
             {
@@ -36,7 +36,7 @@ const useMetricCards = () => {
                 value: formatAmount(flagged?.count || "0"),
                 icon: FaFlag,
                 color: "E48908",
-                change: "",
+                change: formatAmount(flagged?.change || "0"),
                 changeType: "up"
             },
             {
@@ -44,7 +44,7 @@ const useMetricCards = () => {
                 value: formatAmount(declined?.count || "0"),
                 icon: TbCancel,
                 color: "eb4034",
-                change: "",
+                change: formatAmount(declined?.change || "0"),
                 changeType: "up"
             },
         ]
@@ -52,8 +52,6 @@ const useMetricCards = () => {
     }
 
     useEffect(() => {
-        if(summary)
-            console.log({summary})
         if(summary)
             transformMetrics()
     }, [summary])

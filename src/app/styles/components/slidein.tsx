@@ -67,7 +67,6 @@ const SlideIn: React.FC<SlideInProps> = ({
 			initial="hidden"
 			whileInView="visible"
 			viewport={{ once, amount }}
-			exit="hidden"
 			variants={variants}
 			className={className}
 		>

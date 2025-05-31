@@ -1,11 +1,11 @@
 import SlideIn from "@styles/components/slidein"
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
-import ChartComponent from "./chart-component"
+import BarChartComponent from "./bar-chart-component"
 import { useDashboardContext } from "../../context/context"
 import ChartSkeleton from "./chart-skeleton"
 
-const Chart = () => {
+const BarChart = () => {
     const {isDashboardDataPending} = useDashboardContext()
     
     if(isDashboardDataPending) {
@@ -33,10 +33,10 @@ const Chart = () => {
 
                 {/** Chart */}
                 <div className="ml-[-10px] mt-[-10px]">
-                    <ChartComponent />
+                    <BarChartComponent />
                 </div>
             </div>
         </SlideIn>
     )
 }
-export default Chart
+export default BarChart

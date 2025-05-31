@@ -31,7 +31,7 @@ const useClaimsTable = () => {
             ),
             cell : ({getValue} : {getValue : any}) => {
                 return (
-                    <Text>
+                    <Text ellipsis>
                         {getValue()}
                     </Text>
                 )
@@ -42,18 +42,51 @@ const useClaimsTable = () => {
             header : 'Hospital Name',
             cell : ({getValue} : {getValue : any}) => {
                 return (
-                    <Text>
+                    <Text ellipsis>
                         {getValue()}
                     </Text>
                 )
             }
         },
         {
-            accessorKey : 'location',
-            header : 'Location',
+            accessorKey : 'claimSubmissionDate',
+            header : 'Claim Submission Date',
             cell : ({getValue} : {getValue : any}) => {
                 return (
-                    <Text>
+                    <Text ellipsis>
+                        {getValue()}
+                    </Text>
+                )
+            }
+        },
+        {
+            accessorKey : 'claimProcessingDate',
+            header : 'Claim Processing Date',
+            cell : ({getValue} : {getValue : any}) => {
+                return (
+                    <Text ellipsis>
+                        {getValue()}
+                    </Text>
+                )
+            }
+        },
+        {
+            accessorKey : 'expectedPayout',
+            header : 'Expected Payout',
+            cell : ({getValue} : {getValue : any}) => {
+                return (
+                    <Text ellipsis>
+                        {getValue()}
+                    </Text>
+                )
+            }
+        },
+        {
+            accessorKey : 'actualPayout',
+            header : 'Actual Payout',
+            cell : ({getValue} : {getValue : any}) => {
+                return (
+                    <Text ellipsis>
                         {getValue()}
                     </Text>
                 )
@@ -64,7 +97,7 @@ const useClaimsTable = () => {
             header : 'Patient Name',
             cell : ({getValue} : {getValue : any}) => {
                 return (
-                    <Text>
+                    <Text ellipsis>
                         {getValue()}
                     </Text>
                 )
@@ -75,7 +108,7 @@ const useClaimsTable = () => {
             header : 'Diagnosis',
             cell : ({getValue} : {getValue : any}) => {
                 return (
-                    <Text>
+                    <Text ellipsis>
                         {getValue()}
                     </Text>
                 )
@@ -86,7 +119,7 @@ const useClaimsTable = () => {
             header : 'Drugs',
             cell : ({getValue} : {getValue : any}) => {
                 return (
-                    <Text>
+                    <Text ellipsis>
                         {getValue()}
                     </Text>
                 )

@@ -12,29 +12,29 @@ const useRightMetrics = () => {
     const summary = dashboardData?.summary
 
     const transformMetrics = () => {
-        const {total_payout, amount_saved, flagged, declined} = summary
+        const {total_payout, amount_saved, flagged_percentage, declined_percentage} = summary
         const metrics: IMetrics[] = [
             {
                 title: "Total Payout",
-                value: formatAmount(total_payout?.value || "0"),
+                value: 'GHS ' + formatAmount(total_payout?.value || "0"),
                 icon: FaMoneyBills,
                 color: "6060D0"
             },
             {
                 title: "Total Amount Saved",
-                value: formatAmount(amount_saved?.value || "0"),
+                value: 'GHS ' + formatAmount(amount_saved?.value || "0"),
                 icon: RiBankFill,
                 color: "299B46"
             },
             {
                 title: "% of flagged claims",
-                value: flagged?.percentage || "0%",
+                value: (flagged_percentage?.percent || "0") + "%",
                 icon: FaFlag,
                 color: "E48908"
             },
             {
                 title: "% of declined claims",
-                value: declined?.percentage || "0%",
+                value: (declined_percentage?.percent || "0") + "%",
                 icon: TbCancel,
                 color: "eb4034"
             },
