@@ -20,7 +20,7 @@ const getStatusClass = (status: string) => {
             return `bg-[#FF950033]`
         case "approved":
             return `bg-[#00C85133]`
-        case "declined":
+        case "rejected":
             return `bg-[#FF000033]`
         case "flagged":
             return `bg-[#FF950033]`
@@ -33,7 +33,7 @@ const getStatusTextColor = (status: string) => {
             return "#FF9500"
         case "approved":
             return "#058e3c"
-        case "declined":
+        case "rejected":
             return "#FF0000"
         case "flagged":
             return "#FF9500"
@@ -45,7 +45,7 @@ const RecentClaimsTable = () => {
     const [isScrolling, setIsScrolling] = useState(false)
     const [claimDetails, setClaimDetails] = useState<IClaimsDetailType | null>(null);
     const [showClaimDetail, setShowClaimDetail] = useState(false)
-    const tableHeads = ["Hospital Name", "Date", "Patient Name", "Diagnosis", "Drugs", "Status", "Expected Payout", "Actual Payout"]
+    const tableHeads = ["Hospital Name", "Date", "Patient Name", "Status", "Expected Payout", "Actual Payout", "Diagnosis", "Drugs",]
     const { handleReasonForDecliningMutation, isReasonForDecliningPending, reasonForDecliningError, reasonForDecliningSuccess } = useReasonForDeclining()
     const [isReasonVisible, setIsReasonVisible] = useState(false)
 
@@ -151,7 +151,7 @@ const RecentClaimsTable = () => {
                                             onClick={() => handleRowClick(index)}
                                         >
                                             <td
-                                                className={`px-4 py-4 border-b-[1px] border-border-secondary min-w-[200px] sticky left-0
+                                                className={`px-4 py-4 border-b-[1px] border-border-secondary min-w-[200px] sticky left-0 bg-bg-primary
                                                         ${isScrolling ? 'after:content-[""] after:absolute after:top-0 after:right-[-8px] duration-1000 after:h-full after:w-2 after:bg-gradient-to-r after:from-black/15 after:to-transparent' : ''}
                                                     `}
                                             >
@@ -181,7 +181,7 @@ const RecentClaimsTable = () => {
                                                         whiteSpace="nowrap"
                                                         textColor={getStatusTextColor(item.details.status)}
                                                     >
-                                                        {item.details.status}
+                                                        {item.details.status.charAt(0).toUpperCase() + item.details.status.slice(1)}
                                                     </Text>
                                                 </div>
                                             </td>
@@ -196,7 +196,7 @@ const RecentClaimsTable = () => {
                                                 <Text
                                                     whiteSpace="nowrap"
                                                 >
-                                                    {`GHS ${item.details.totalPayout}`}
+                                                    {item.details.totalPayout ? `GHS ${item.details.totalPayout}` : "-"}
                                                 </Text>
                                             </td>
                                             <td className="px-4 py-4">

@@ -1,11 +1,11 @@
 import SlideIn from "@styles/components/slidein"
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
-import BarChartComponent from "./bar-chart-component"
+import DiagnosisBarChartComponent from "./diagnosis-bar-chart-component"
 import { useDashboardContext } from "../../context/context"
 import ChartSkeleton from "./chart-skeleton"
 
-const BarChart = () => {
+const DiagnosisBarChart = () => {
     const {isDashboardDataPending} = useDashboardContext()
     
     if(isDashboardDataPending) {
@@ -24,19 +24,19 @@ const BarChart = () => {
                         size={theme.typography.size.HM}
                         lineHeight={1}
                     >
-                        Top 10 Prescribed Medications
+                        Top 10 Diagnosis
                     </Text>
                     <Text textColor={theme.colors.text.tetiary}>
-                        Top 10 prescribed medications in the past year
+                        Top 10 diagnosis in the past year
                     </Text>
                 </div>
 
                 {/** Chart */}
                 <div className="ml-[-10px] mt-[-10px]">
-                    <BarChartComponent />
+                    <DiagnosisBarChartComponent />
                 </div>
             </div>
         </SlideIn>
     )
 }
-export default BarChart
+export default DiagnosisBarChart

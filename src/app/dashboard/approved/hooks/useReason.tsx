@@ -2,6 +2,7 @@
 
 import { protectedApi } from '@/app/utils/apis/api';
 import { useMutation } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 const useReasonForDeclining = () => {
     const handleReasonForDeclining = async ({
@@ -11,12 +12,10 @@ const useReasonForDeclining = () => {
         encounterToken : string,
         reason : string
     }) => {
-        const response = await protectedApi.POST("/claims/decline", {
-            encounter_token : encounterToken,
+        const response = await protectedApi.PATCH(`/claims/update-status/${encounterToken}`, {
             reason,
             status : "rejected"
         })
-        console.log({response})
         return response
     }
 
@@ -26,7 +25,10 @@ const useReasonForDeclining = () => {
         error : reasonForDecliningError,
         isSuccess : reasonForDecliningSuccess
     } = useMutation({
-        mutationFn : handleReasonForDeclining
+        mutationFn : handleReasonForDeclining,
+        onSuccess : () => {
+            toast.success("Claim declined successfully")
+        }
     })
 
     return {

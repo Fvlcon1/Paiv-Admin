@@ -12,8 +12,8 @@ const useDashboard = () => {
     const getDashboardData = async () => {
         const response = await protectedApi.GET("/analytics/dashboard-summary", {
             params : {
-                start_date : startDate,
-                end_date : endDate,
+                from_date : startDate,
+                to_date : endDate,
                 hospital : selectedHospital,
                 region : selectedRegion,
                 district : selectedDistrict

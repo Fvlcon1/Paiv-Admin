@@ -1,6 +1,6 @@
 import { protectedApi } from "@/app/utils/apis/api";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
+import toast from 'react-hot-toast';
 
 const useApprove = () => {
     const handleApprove = async ({
@@ -8,10 +8,9 @@ const useApprove = () => {
     }: {
         encounterToken : string
     }) => {
-        const response = await protectedApi.POST("/claims/approve", {
-            encounter_token : encounterToken
+        const response = await protectedApi.PATCH(`/claims/update-status/${encounterToken}`, {
+            status : "approved"
         })
-        console.log({response})
         return response
     }
 

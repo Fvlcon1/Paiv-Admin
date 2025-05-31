@@ -69,11 +69,16 @@ const Button = ({
 	}
 
 	const loader = (
-		<div className={`loader ${loadingColor ? `!bg-[${loadingColor}]` : "!bg-white"} !w-[15px] !h-[15px] !border-[2px]`} />
+		<div
+			className={`normal-loader !w-[20px]`}
+			style={{
+				backgroundColor: loadingColor ?? theme.colors.main.primary
+			}}
+		/>
 	)
-	
+
 	const buttonText = (
-		<div 
+		<div
 			className="flex w-fit gap-[6px] items-center"
 			style={{
 				color: getTextColor()

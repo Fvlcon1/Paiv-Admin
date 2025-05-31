@@ -101,7 +101,7 @@ const useApprovedClaims = () => {
             claimSubmissionDate: getDate(new Date(item.created_at)),
             claimProcessingDate: item.updated_at ? getDate(new Date(item.updated_at)) : "-",
             claimStatus : item.status,
-            actualPayout : "GHS " + item.total_payout,
+            actualPayout : item.total_payout ? "GHS " + item.total_payout : "-",
             details : convertToClaimsDetails(item)
         }));
         console.log({approvedTableData})

@@ -9,7 +9,7 @@ const Chart = dynamic(() => import('react-apexcharts'), {
     loading: () => <BarChartSkeleton />
 });
 
-const BarChartComponent = () => {
+const DiagnosisBarChartComponent = () => {
     const { isDashboardDataPending } = useDashboardContext();
 
     const series = [
@@ -34,7 +34,6 @@ const BarChartComponent = () => {
                 columnWidth: '55%',
                 endingShape: 'rounded',
                 borderRadius: 4,
-                distributed: true,
             },
         },
         dataLabels: { 
@@ -90,4 +89,4 @@ const BarChartComponent = () => {
     return <Chart options={options as any} series={series} type="bar" height={450} />;
 };
 
-export default BarChartComponent;
+export default DiagnosisBarChartComponent;

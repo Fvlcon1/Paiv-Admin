@@ -54,8 +54,8 @@ const StatusDistributionChart = () => {
         })
     }
 
-    useEffect(()=>{
-        console.log({chartOptions})
+    useEffect(() => {
+        console.log({ chartOptions })
     }, [chartOptions])
 
     const legends = [
@@ -74,7 +74,7 @@ const StatusDistributionChart = () => {
     ]
 
     useEffect(() => {
-        if(metrics.length) 
+        if (metrics.length)
             inititializeChartOptions()
     }, [metrics])
 
@@ -85,64 +85,68 @@ const StatusDistributionChart = () => {
     }
 
     return (
-        chartOptions && (
-            <SlideIn
-                delay={0.3}
-                direction="bottom"
-                className="w-[300px] relative  h-[205px] flex-col rounded-xl border-[1px] border-border-secondary bg-bg-primary-light px-4 items-center flex py-4"
-            >
-                <Text
-                    textColor={theme.colors.main.primary}
-                    bold={theme.typography.bold.md2}
-                >
-                    Status Distribution
-                </Text>
-                <ReactApexChart
-                    options={chartOptions as any}
-                    series={(chartOptions as any).series}
-                    type="donut"
-                    height={200}
-                />
-                <div className="absolute bottom-[60px] flex flex-col gap-1 items-center">
-                    <Text
-                        textColor={theme.colors.main.primary}
-                        bold={theme.typography.bold.md2}
-                        size='30px'
-                        lineHeight={1}
-                    >
-                        {metrics.length && metrics[0].value}
-                    </Text>
-                    <Text
-                        textColor={theme.colors.main.primary}
-                        bold={theme.typography.bold.md}
-                    >
-                        Claims
-                    </Text>
-                </div>
-                <div className="absolute bottom-4 flex items-center gap-2">
-                    {
-                        legends.map((legend, index) => (
-                            <div
-                                key={index}
-                                className="flex items-center gap-2"
+        <SlideIn
+            delay={0.3}
+            direction="bottom"
+            className="w-[300px] relative  h-[205px] flex-col rounded-xl border-[1px] border-border-secondary bg-bg-primary-light px-4 items-center flex py-4"
+        >
+            {
+                chartOptions && (
+                    <>
+                        <Text
+                            textColor={theme.colors.main.primary}
+                            bold={theme.typography.bold.md2}
+                        >
+                            Status Distribution
+                        </Text>
+                        <ReactApexChart
+                            options={chartOptions as any}
+                            series={(chartOptions as any).series}
+                            type="donut"
+                            height={200}
+                        />
+                        <div className="absolute bottom-[60px] flex flex-col gap-1 items-center">
+                            <Text
+                                textColor={theme.colors.main.primary}
+                                bold={theme.typography.bold.md2}
+                                size='30px'
+                                lineHeight={1}
                             >
-                                <div
-                                    className="rounded-[3px] w-[12px] h-[12px]"
-                                    style={{
-                                        backgroundColor: legend.color
-                                    }}
-                                />
-                                <Text
-                                    textColor={theme.colors.text.secondary}
-                                >
-                                    {legend.name}
-                                </Text>
-                            </div>
-                        ))
-                    }
-                </div>
-            </SlideIn>
-        )
+                                {metrics.length && metrics[0].value}
+                            </Text>
+                            <Text
+                                textColor={theme.colors.main.primary}
+                                bold={theme.typography.bold.md}
+                            >
+                                Claims
+                            </Text>
+                        </div>
+                        <div className="absolute bottom-4 flex items-center gap-2">
+                            {
+                                legends.map((legend, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <div
+                                            className="rounded-[3px] w-[12px] h-[12px]"
+                                            style={{
+                                                backgroundColor: legend.color
+                                            }}
+                                        />
+                                        <Text
+                                            textColor={theme.colors.text.secondary}
+                                        >
+                                            {legend.name}
+                                        </Text>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </>
+                )
+            }
+        </SlideIn>
     );
 };
 

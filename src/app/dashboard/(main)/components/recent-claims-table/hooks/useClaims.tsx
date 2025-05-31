@@ -5,12 +5,22 @@ import { useQuery } from '@tanstack/react-query';
 import { IRecentTableData } from '../utils/types';
 import convertToClaimsDetails from '@/app/dashboard/utils/convert-to-claims-details';
 import { useEffect, useState } from 'react';
+import { useDashboardContext } from '@/app/dashboard/(main)/context/context';
 
 const useRecentClaims = () => {
     const [tableData, setTableData] = useState<IRecentTableData[]>([])
+    const {startDate, endDate, selectedHospital, selectedRegion, selectedDistrict} = useDashboardContext()
 
     const getClaims = async () => {
-        const response = await protectedApi.GET("/claims/approved")
+        const response = await protectedApi.GET("/claims", {
+            params : {
+                from_date : startDate,
+                to_date : endDate,
+                hospital : selectedHospital,
+                region : selectedRegion,
+                district : selectedDistrict
+            }
+        })
         convertToRecentTableData(response.reverse())
         return response.reverse()
     }

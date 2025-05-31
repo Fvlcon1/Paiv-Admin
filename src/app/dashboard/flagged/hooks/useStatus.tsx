@@ -1,6 +1,6 @@
 import { protectedApi } from "@/app/utils/apis/api";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
+import toast from 'react-hot-toast';
 
 const useStatus = () => {
     const handleApprove = async ({
@@ -8,10 +8,9 @@ const useStatus = () => {
     }: {
         encounterToken : string
     }) => {
-        const response = await protectedApi.POST("/claims/approve", {
-            encounter_token : encounterToken
+        const response = await protectedApi.PATCH(`/claims/update-status/${encounterToken}`, {
+            status : "approved"
         })
-        console.log({response})
         return response
     }
 
@@ -34,11 +33,10 @@ const useStatus = () => {
         encounterToken : string,
         reason : string
     }) => {
-        const response = await protectedApi.POST("/claims/decline", {
-            encounter_token : encounterToken,
-            reason
+        const response = await protectedApi.PATCH(`/claims/update-status/${encounterToken}`, {
+            reason,
+            status : "rejected"
         })
-        console.log({response})
         return response
     }
 

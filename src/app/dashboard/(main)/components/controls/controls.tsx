@@ -27,21 +27,25 @@ const Controls = () => {
         setEndDate(dayjs(value).endOf("month").format("YYYY-MM-DD"))
     }
 
-    const handleSelectedMonthChange = (value : string) => {
-        setSelectedMonth(value)
-        setSelectedDate("")
+    const handleSelectedMonthChange = (value: string) => {
+        setSelectedMonth(value);
+        setSelectedDate("");
         
-        if(value === "This Month"){
-            const startDate = dayjs().startOf("month").format("YYYY-MM-DD")
-            const endDate = dayjs().endOf("month").format("YYYY-MM-DD")
-            setStartDate(startDate)
-            setEndDate(endDate)
-            return
+        let startDate, endDate;
+        
+        if (value === "This Month") {
+            startDate = dayjs().startOf("month").format("YYYY-MM-DD");
+            endDate = dayjs().endOf("month").format("YYYY-MM-DD");
+        } else {
+            const currentYear = dayjs().year();
+            const monthIndex = dayjs(`${currentYear}-${value}`).month();
+            
+            startDate = dayjs().year(currentYear).month(monthIndex).startOf("month").format("YYYY-MM-DD");
+            endDate = dayjs().year(currentYear).month(monthIndex).endOf("month").format("YYYY-MM-DD");
         }
         
-        const formattedMonth = value ? value.toLowerCase() : ''
-        setStartDate(dayjs(formattedMonth).startOf("month").format("YYYY-MM-DD"))
-        setEndDate(dayjs(formattedMonth).endOf("month").format("YYYY-MM-DD"))
+        setStartDate(startDate);
+        setEndDate(endDate);
     }
     
     return (
@@ -60,6 +64,7 @@ const Controls = () => {
                         <Text
                             bold={selectedMonth === month ? theme.typography.bold.md : theme.typography.bold.sm2}
                             textColor={selectedMonth === month ? theme.colors.main.primary : theme.colors.text.secondary}
+                            whiteSpace="nowrap"
                         >
                             {month}
                         </Text>
@@ -96,10 +101,10 @@ const Controls = () => {
                 icon={<LiaBroomSolid />}
                 className="!h-[32px]"
                 onClick={() => {
-                    setSelectedMonth(undefined)
+                    setSelectedMonth("This Month")
                     setSelectedDate("")
-                    setStartDate("")
-                    setEndDate("")
+                    setStartDate(dayjs().startOf("month").format("YYYY-MM-DD"))
+                    setEndDate(dayjs().endOf("month").format("YYYY-MM-DD"))
                 }}
             />
         </div>
