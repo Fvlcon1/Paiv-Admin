@@ -2,18 +2,17 @@
 
 import { protectedApi } from '@/app/utils/apis/api';
 import { useMutation } from '@tanstack/react-query';
-import { IApprovedTableData } from '../utils/types';
 import { useEffect, useState } from 'react';
 import { FaSquareCheck } from 'react-icons/fa6';
-import theme, { colors } from '../../../styles/theme';
-import { IClaimsDetailType } from '../../utils/types';
-import convertToClaimsDetails from '../../utils/convert-to-claims-details';
+import theme from '@/app/styles/theme';
+import { ITableData } from '@/app/dashboard/utils/types';
+import convertToClaimsDetails from '@/app/dashboard/utils/convert-to-claims-details';
 import getDate from '@/utils/getDate';
 
 const useApprovedClaims = () => {
     const [selectedClaims, setSelectedClaims] = useState<string[]>([])
     const [isAllClaimsSelected, setIsAllClaimsSelected] = useState(false)
-    const [tableData, setTableData] = useState<IApprovedTableData[]>([])
+    const [tableData, setTableData] = useState<ITableData[]>([])
 
     const getApprovedClaims = async () => {
         setSelectedClaims([])

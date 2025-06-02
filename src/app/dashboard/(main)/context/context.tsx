@@ -15,7 +15,8 @@ const DashboardContext = createContext<{
     setEndDate : (endDate : string) => void,
     setSelectedHospital : (hospital : string) => void,
     setSelectedRegion : (region : string) => void,
-    setSelectedDistrict : (district : string) => void
+    setSelectedDistrict : (district : string) => void,
+    setDashboardData : (dashboardData : any) => void
 }>({
     dashboardData : null,
     isDashboardDataPending : false,
@@ -28,11 +29,12 @@ const DashboardContext = createContext<{
     setEndDate : () => {},
     setSelectedHospital : () => {},
     setSelectedRegion : () => {},
-    setSelectedDistrict : () => {}
+    setSelectedDistrict : () => {},
+    setDashboardData : () => {}
 });
 
 export const DashboardContextProvider = ({ children }: { children: ReactNode }) => {
-    const {dashboardData, isDashboardDataPending, startDate, endDate, selectedHospital, selectedRegion, selectedDistrict, setStartDate, setEndDate, setSelectedHospital, setSelectedRegion, setSelectedDistrict} = useDashboard()
+    const {dashboardData, isDashboardDataPending, startDate, endDate, selectedHospital, selectedRegion, selectedDistrict, setStartDate, setEndDate, setSelectedHospital, setSelectedRegion, setSelectedDistrict, setDashboardData} = useDashboard()
 
     return (
         <DashboardContext.Provider
@@ -48,7 +50,8 @@ export const DashboardContextProvider = ({ children }: { children: ReactNode }) 
                 setEndDate,
                 setSelectedHospital,
                 setSelectedRegion,
-                setSelectedDistrict
+                setSelectedDistrict,
+                setDashboardData
              }}
         >
             {children}

@@ -2,18 +2,9 @@ import SlideIn from "@styles/components/slidein"
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
 import ChartComponent from "./chart-component"
-import { useDashboardContext } from "../../context/context"
 import ChartSkeleton from "./chart-skeleton"
 
 const Chart = () => {
-    const {isDashboardDataPending} = useDashboardContext()
-    
-    if(isDashboardDataPending) {
-        return (
-            <ChartSkeleton />
-        )
-    }
-    
     return (
         <SlideIn direction="bottom" className="flex flex-1">
             <div className="w-full h-full flex flex-col gap-2 px-4 pr-0">

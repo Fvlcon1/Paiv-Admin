@@ -1,5 +1,7 @@
 import { ReactNode } from "react"
 import WebSocketComponent from "./components/web-socket"
+import Siderbar from "./components/sidebar/sidebar"
+import Topbar from "./components/topbar/topbar"
 
 const Layout = ({
     children
@@ -8,8 +10,12 @@ const Layout = ({
 }) => {
     return (
         <>
+            <Siderbar />
+            <Topbar />
             <WebSocketComponent />
-            {children}
+            <div className="ml-[250px] mt-[60px]">
+                {children}
+            </div>
         </>
     )
 }

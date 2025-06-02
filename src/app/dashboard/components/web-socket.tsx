@@ -1,56 +1,70 @@
 'use client'
 
 import { useAppContext } from '@/app/context/context'
+import { useDashboardContext } from '../(main)/context/context'
 import { useEffect, useRef } from 'react'
 
 const WebSocketComponent = () => {
-  const socketRef = useRef<any>(null)
-  const {setNumberOfPending, setNumberOfApproved, setNumberOfFlagged, setNumberOfDeclined, numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined} = useAppContext()
+	const socketRef = useRef<any>(null)
+	const { setDashboardData } = useDashboardContext()
+	const { setNumberOfPending, setNumberOfApproved, setNumberOfFlagged, setNumberOfDeclined, numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined } = useAppContext()
 
-  const processMessage = (message: string) => {
-    const {pending, approved, flagged, rejected} = JSON.parse(message)
-    setNumberOfPending(Number(pending))
-    setNumberOfApproved(Number(approved))
-    setNumberOfFlagged(Number(flagged))
-    setNumberOfDeclined(Number(rejected))
-  }
+	const processMessage = (message: string) => {
+		const { type, payload } = JSON.parse(message)
+		if (type === "counter_update")
+			processCounterUpdate(payload)
+		if (type === "dashboard_summary")
+			processDashboardSummary(payload)
+	}
 
-  useEffect(() => {
-    console.log({numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined})
-  }, [numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined])
+	const processCounterUpdate = (payload: any) => {
+		const { pending, approved, flagged, rejected } = payload
+		setNumberOfPending(Number(pending))
+		setNumberOfApproved(Number(approved))
+		setNumberOfFlagged(Number(flagged))
+		setNumberOfDeclined(Number(rejected))
+	}
 
-  useEffect(() => {
-    // Create WebSocket connection
-    const socket = new WebSocket(process.env.NEXT_PUBLIC_STATUS_SOCKET_URL || "")
-    socketRef.current = socket
+	const processDashboardSummary = (payload: any) => {
+		setDashboardData(payload)
+	}
 
-    // Connection opened
-    socket.addEventListener('open', (event) => {
-      socket.send('Hello Server!')
-    })
+	useEffect(() => {
+		console.log({ numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined })
+	}, [numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined])
 
-    // Listen for messages
-    socket.addEventListener('message', (event) => {
-      processMessage(event.data)
-    })
+	useEffect(() => {
+		// Create WebSocket connection
+		const socket = new WebSocket(process.env.NEXT_PUBLIC_STATUS_SOCKET_URL || "")
+		socketRef.current = socket
 
-    // Connection closed
-    socket.addEventListener('close', (event) => {
-    })
+		// Connection opened
+		socket.addEventListener('open', (event) => {
+			socket.send('Hello Server!')
+		})
 
-    // Error handling
-    socket.addEventListener('error', (error) => {
-    })
+		// Listen for messages
+		socket.addEventListener('message', (event) => {
+			processMessage(event.data)
+		})
 
-    // Clean up on unmount
-    return () => {
-      if (socket.readyState === WebSocket.OPEN) {
-        socket.close()
-      }
-    }
-  }, [])
+		// Connection closed
+		socket.addEventListener('close', (event) => {
+		})
 
-  return <></>
+		// Error handling
+		socket.addEventListener('error', (error) => {
+		})
+
+		// Clean up on unmount
+		return () => {
+			if (socket.readyState === WebSocket.OPEN) {
+				socket.close()
+			}
+		}
+	}, [])
+
+	return <></>
 }
 
 export default WebSocketComponent

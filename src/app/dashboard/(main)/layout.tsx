@@ -10,7 +10,6 @@ const Layout = ({
     return (
         <>
             <DashboardContextProvider>
-                <WebSocketComponent />
                 {children}
             </DashboardContextProvider>
         </>

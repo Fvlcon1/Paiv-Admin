@@ -8,6 +8,7 @@ const useDashboard = () => {
     const [selectedHospital, setSelectedHospital] = useState<string>()
     const [selectedRegion, setSelectedRegion] = useState<string>()
     const [selectedDistrict, setSelectedDistrict] = useState<string>()
+    const [dashboardData, setDashboardData] = useState<any>()
     
     const getDashboardData = async () => {
         const response = await protectedApi.GET("/analytics/dashboard-summary", {
@@ -19,10 +20,11 @@ const useDashboard = () => {
                 district : selectedDistrict
             }
         })
+        setDashboardData(response)
         return response
     }
 
-    const {data : dashboardData, isPending : isDashboardDataPending} = useQuery({
+    const {isPending : isDashboardDataPending} = useQuery({
         queryFn : getDashboardData,
         queryKey : ["dashboard-data", startDate, endDate, selectedHospital, selectedRegion, selectedDistrict],
         refetchOnMount: true,
@@ -30,6 +32,7 @@ const useDashboard = () => {
 
     return {
         dashboardData,
+        setDashboardData,
         isDashboardDataPending,
         startDate,
         endDate,

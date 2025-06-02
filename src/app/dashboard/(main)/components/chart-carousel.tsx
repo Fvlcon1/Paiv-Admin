@@ -14,8 +14,8 @@ const ChartCarousel = () => {
     const {isDashboardDataPending} = useDashboardContext()
     const charts = [
         { id: 1, component: <Chart />, label: "Timeline" },
-        { id: 2, component: <BarChart />, label: "Prescriptions" },
-        { id: 3, component: <DiagnosisBarChart />, label: "Diagnosis" },
+        { id: 2, component: <DiagnosisBarChart />, label: "Diagnosis" },
+        { id: 3, component: <BarChart />, label: "Prescriptions" },
         // { id: 4, component: <RadarChart />, label: "Patterns" },
         // { id: 5, component: <HeatMap />, label: "Intensity" },
     ];

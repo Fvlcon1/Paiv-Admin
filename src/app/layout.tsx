@@ -5,32 +5,35 @@ import "./components/loader.css";
 import { Toaster } from "react-hot-toast";
 import QueryProvider from "./QueryProvider";
 import { AppContextProvider } from "./context/context";
+import { AuthProvider } from "./context/authContext";
 
 const montserrat = Montserrat({
-  variable: "--font-montserrat",
-  subsets: ["latin"],
+	variable: "--font-montserrat",
+	subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "PAIV Admin",
-  description: "PAIV Admin",
+	title: "PAIV Admin",
+	description: "PAIV Admin",
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body className={`${montserrat.variable} antialiased`}>
-        <AppContextProvider>
-          <QueryProvider>
-            <Toaster />
-            {children}
-          </QueryProvider>
-        </AppContextProvider>
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<body className={`${montserrat.variable} antialiased`}>
+				<AuthProvider>
+					<AppContextProvider>
+						<QueryProvider>
+							<Toaster />
+							{children}
+						</QueryProvider>
+					</AppContextProvider>
+				</AuthProvider>
+			</body>
+		</html>
+	);
 }

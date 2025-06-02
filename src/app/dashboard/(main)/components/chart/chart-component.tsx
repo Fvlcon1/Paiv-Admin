@@ -1,9 +1,9 @@
 import React from 'react';
 import theme from '@styles/theme';
-import { useDashboardContext } from '../../context/context';
 import ChartSkeleton from './chart-skeleton';
 import dynamic from 'next/dynamic';
 import { ApexOptions } from 'apexcharts';
+import useLineChart from './hooks/useLineChart';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
     ssr: false,
@@ -11,9 +11,13 @@ const Chart = dynamic(() => import('react-apexcharts'), {
 });
 
 const ClaimsTimelineChart = () => {
-    const { isDashboardDataPending } = useDashboardContext()
+    const { lineChartSeries, isLineChartDataPending } = useLineChart()
 
-    const series = [
+    if (isLineChartDataPending) {
+        return <ChartSkeleton />
+    }
+
+    const series = lineChartSeries ?? [
         {
             name: 'Submitted',
             data: [31, 40, 28, 51, 42, 109, 100, 120, 82, 91, 110, 95]

@@ -3,14 +3,14 @@
 import { createContext, useContext, useState, ReactNode, SetStateAction, Dispatch } from 'react';
 import useApprovedClaims from '../hooks/useClaims';
 import { UseMutateFunction } from '@tanstack/react-query';
-import { IApprovedTableData } from '../utils/types';
+import { ITableData } from '../../utils/types';
 
 const approvedContext = createContext<{
     setShowClaimDetail: Dispatch<SetStateAction<boolean>>
     showClaimDetail: boolean
     getApprovedClaimsMutation: UseMutateFunction<any, Error, void, unknown>
     isApprovedClaimsPending: boolean
-    tableData: IApprovedTableData[]
+    tableData: ITableData[]
     selectedClaims: string[]
     isAllClaimsSelected: boolean
     handleSelectAllClaims: () => void
