@@ -3,22 +3,52 @@
 import { protectedApi } from '@/app/utils/apis/api';
 import { useMutation } from '@tanstack/react-query';
 import { ITableData } from '@/app/dashboard/utils/types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { FaSquareCheck } from 'react-icons/fa6';
 import theme from '@/app/styles/theme';
 import convertToClaimsDetails from '@/app/dashboard/utils/convert-to-claims-details';
 import getDate from '@/utils/getDate';
+import { SortingState } from '@tanstack/react-table';
 
 const useApprovedClaims = () => {
     const [selectedClaims, setSelectedClaims] = useState<string[]>([])
     const [isAllClaimsSelected, setIsAllClaimsSelected] = useState(false)
     const [tableData, setTableData] = useState<ITableData[]>([])
+    const [sorting, setSorting] = useState<SortingState>([]);
+    
+    const getSorting = (id: string) => {
+        switch (id) {
+            case "hospitalName":
+                return "hospital_name"
+            case "patientName":
+                return "patient_name"
+            case "expectedPayout":
+                return "expected_payout"
+            case "actualPayout":
+                return "total_payout"
+            case "claimSubmissionDate":
+                return "created_at"
+            case "claimProcessingDate":
+                return "processed_at"
+            default:
+                return id
+        }
+    }
+
+    const getSortOrder = (desc: boolean) => {
+        return desc ? "desc" : "asc"
+    }
 
     const getApprovedClaims = async () => {
         setSelectedClaims([])
-        const response = await protectedApi.GET("/claims/approved")
-        console.log({ response })
-        return response.reverse()
+        const params : any = {}
+
+        if(sorting.length){
+            params.sort_by = getSorting(sorting[0].id)
+            params.sort_order = getSortOrder(sorting[0].desc)
+        }
+        const response = await protectedApi.GET("/claims/approved", { ...params })
+        return response
     }
 
     const handleSelectClaim = (id: string) => {
@@ -125,6 +155,8 @@ const useApprovedClaims = () => {
         tableData,
         selectedClaims,
         isAllClaimsSelected,
+        sorting,
+        setSorting,
         handleSelectAllClaims,
         handleUnselectAllClaims
     }

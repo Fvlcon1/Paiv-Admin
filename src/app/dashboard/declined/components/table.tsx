@@ -12,9 +12,10 @@ import ClaimDetails from "../../components/claimDetails/claimDetails";
 import Button from "@components/button/button";
 import useApprove from "../hooks/useApprove";
 import useClaimsTable from "../../hooks/useClaimsTable";
+import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 
 const Table = () => {
-    const { setShowClaimDetail, tableData, showClaimDetail, isApprovedClaimsPending: isLoading, getApprovedClaimsMutation, isAllClaimsSelected, handleSelectAllClaims, handleUnselectAllClaims } = useApprovedContext();
+    const { setShowClaimDetail, tableData, showClaimDetail, isApprovedClaimsPending: isLoading, sorting, setSorting, getApprovedClaimsMutation, isAllClaimsSelected, handleSelectAllClaims, handleUnselectAllClaims } = useApprovedContext();
     const { columns } = useClaimsTable({
         isAllClaimsSelected,
         handleSelectAllClaims,
@@ -37,6 +38,11 @@ const Table = () => {
         data: tableData,
         columns: columns,
         getCoreRowModel: getCoreRowModel(),
+        manualSorting: true,
+        onSortingChange: setSorting,
+        state: {
+            sorting
+        },
     });
 
     const handleRowClick = (index: number) => {
@@ -86,115 +92,115 @@ const Table = () => {
                 )
             }
 
-            {tableData.length > 0 && !isLoading ? (
+            {tableData.length ? (
                 <div className="relative w-full overflow-hidden">
-                    {tableData.length > 0 && !isLoading ? (
-                        <div
-                            ref={tableContainerRef}
-                            className="w-full overflow-x-auto h-[calc(100vh-100px)]"
-                            onScroll={(e) => {
-                                if (isScrolling) return;
-                                setIsScrolling(true);
-                                setTimeout(() => {
-                                    setIsScrolling(false);
-                                }, 2000);
-                            }}
-                        >
-                            <table className="w-full min-w-[800px] border-separate border-spacing-0">
-                                {/* Table Head */}
-                                <thead className="px-2">
-                                    {getHeaderGroups().map((headerGroup) => (
-                                        <tr key={headerGroup.id}>
-                                            {headerGroup.headers.map((header, colIndex) => (
-                                                <th
-                                                    key={header.id}
-                                                    className={`text-left border-b-[1px] border-r-[1px] border-solid border-border-primary 
-                                                    ${colIndex === 0 ? 'sticky left-0 bg-white max-w-[35px]' : ''}
-                                                    ${colIndex === 0 && isScrolling ? 'after:content-[""] after:absolute after:top-0 after:right-[-8px] duration-1000 after:h-full after:w-2 after:bg-gradient-to-r after:from-black/15 after:to-transparent' : ''}
-                                                `}
-                                                    style={{
-                                                        minWidth: colIndex === 0 ? '35px' : '150px',
-                                                    }}
-                                                >
-                                                    <div className="py-[15px] px-[30px] flex h-full items-center">
-                                                        <Text ellipsis textColor={theme.colors.text.tetiary} bold={TypographyBold.md}>
-                                                            {header.isPlaceholder
-                                                                ? null
-                                                                : flexRender(header.column.columnDef.header, header.getContext())}
-                                                        </Text>
-                                                    </div>
-                                                </th>
-                                            ))}
-                                        </tr>
-                                    ))}
-                                </thead>
-
-                                {/* Table Body */}
-                                {!isLoading && tableData.length > 0 && (
-                                    <tbody>
-                                        {getRowModel().rows.map((row, index) => (
-                                            <tr
-                                                key={row.id}
-                                                className="hover:bg-bg-secondary cursor-pointer duration-200"
-                                                onClick={() => handleRowClick(index)}
+                    <div
+                        ref={tableContainerRef}
+                        className="w-full overflow-x-auto h-[calc(100vh-100px)]"
+                        onScroll={(e) => {
+                            if (isScrolling) return;
+                            setIsScrolling(true);
+                            setTimeout(() => {
+                                setIsScrolling(false);
+                            }, 2000);
+                        }}
+                    >
+                        <table className="w-full min-w-[800px] border-separate border-spacing-0">
+                            {/* Table Head */}
+                            <thead className="px-2">
+                                {getHeaderGroups().map((headerGroup) => (
+                                    <tr key={headerGroup.id}>
+                                        {headerGroup.headers.map((header, colIndex) => (
+                                            <th
+                                                key={header.id}
+                                                className={`text-left border-b-[1px] cursor-pointer border-r-[1px] border-solid border-border-primary 
+                                                        ${colIndex === 0 ? 'sticky left-0 bg-white max-w-[50px]' : ''}
+                                                        ${colIndex === 0 && isScrolling ? 'after:content-[""] after:absolute after:top-0 after:right-[-8px] duration-1000 after:h-full after:w-2 after:bg-gradient-to-r after:from-black/15 after:to-transparent' : ''}`
+                                                }
+                                                onClick={header.column.getToggleSortingHandler()}
+                                                style={{
+                                                    minWidth: colIndex === 0 ? '50px' : '150px',
+                                                }}
                                             >
-                                                {row.getVisibleCells().map((cell, colIndex) => (
-                                                    <td
-                                                        key={cell.id}
-                                                        className={`border-b-[1px] border-r-[1px] border-solid border-border-primary py-[10px] px-[30px] duration-1000
-                                                        ${colIndex === 0 ? 'sticky left-0 z-10 bg-white max-w-[35px]' : ''}
+                                                <div className={`py-[15px] ${colIndex === 0 ? 'justify-center' : 'px-[30px]'} flex h-full items-center gap-1`}>
+                                                    <Text
+                                                        ellipsis
+                                                        textColor={header.column.getIsSorted() ? theme.colors.main.primary : theme.colors.text.tetiary}
+                                                        bold={TypographyBold.md}
+                                                    >
+                                                        {
+                                                            header.isPlaceholder
+                                                                ? null
+                                                                : flexRender(header.column.columnDef.header, header.getContext())
+                                                        }
+                                                    </Text>
+                                                    {
+                                                        colIndex !== 0 && (
+                                                            {
+                                                                asc: <FaSortUp size={13} color={theme.colors.main.primary} />,
+                                                                desc: <FaSortDown size={13} color={theme.colors.main.primary} />,
+                                                            }[header.column.getIsSorted() as string]
+                                                            ??
+                                                            <FaSort size={13} color={theme.colors.bg.quantinary} />
+                                                        )
+                                                    }
+                                                </div>
+                                            </th>
+                                        ))}
+                                    </tr>
+                                ))}
+                            </thead>
+
+                            {/* Table Body */}
+                            <tbody className={isLoading ? "opacity-50" : ""}>
+                                {getRowModel().rows.map((row, index) => (
+                                    <tr
+                                        key={row.id}
+                                        className={`${isLoading ? "cursor-wait" : "cursor-pointer"} hover:bg-bg-secondary duration-200`}
+                                        onClick={() => !isLoading && handleRowClick(index)}
+                                    >
+                                        {row.getVisibleCells().map((cell, colIndex) => (
+                                            <td
+                                                key={cell.id}
+                                                className={`border-b-[1px] border-r-[1px] border-solid border-border-primary py-[15px] duration-1000
+                                                        ${colIndex === 0 ? 'sticky left-0 z-10 bg-white max-w-[50px] px-0' : ''}
                                                         ${colIndex === 0 && isScrolling ? 'after:content-[""] after:absolute after:top-0 after:right-[-8px] duration-1000 after:h-full after:w-2 after:bg-gradient-to-r after:from-black/15 after:to-transparent' : ''}
                                                     `}
-                                                        style={{
-                                                            minWidth: colIndex === 0 ? '35px' : '150px',
-                                                        }}
-                                                    >
-                                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                                    </td>
-                                                ))}
-                                            </tr>
+                                                style={{
+                                                    minWidth: colIndex === 0 ? '50px' : '150px',
+                                                }}
+                                            >
+                                                <div className={`${colIndex === 0 ? 'justify-center' : 'px-[30px]'} w-full flex h-full items-center`}>
+                                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                </div>
+                                            </td>
                                         ))}
-                                    </tbody>
-                                )}
-                            </table>
-                        </div>
-                    ) : null}
-
-                    {/* Loader or No Data */}
-                    {isLoading ? (
-                        <div
-                            className="w-full justify-center flex items-center"
-                            style={{ height: `${containerHeight}px` }}
-                        >
-                            <div className="normal-loader"></div>
-                        </div>
-                    ) : tableData.length === 0 ? (
-                        <div
-                            className="w-full justify-center flex items-center"
-                            style={{ height: `${containerHeight}px` }}
-                        >
-                            <NoData />
-                        </div>
-                    ) : null}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             ) : null}
 
             {/* Loader or No Data */}
-            {isLoading ? (
-                <div
-                    className="w-full justify-center flex items-center"
-                    style={{ height: `${containerHeight}px` }}
-                >
-                    <div className="normal-loader"></div>
-                </div>
-            ) : tableData.length === 0 ? (
-                <div
-                    className="w-full justify-center flex items-center"
-                    style={{ height: `${containerHeight}px` }}
-                >
-                    <NoData />
-                </div>
-            ) : null}
+            {
+                isLoading ? (
+                    <div
+                        className="w-full justify-center flex items-center"
+                        style={{ height: `${containerHeight}px` }}
+                    >
+                        <div className="normal-loader"></div>
+                    </div>
+                ) : tableData.length === 0 ? (
+                    <div
+                        className="w-full justify-center flex items-center"
+                        style={{ height: `${containerHeight}px` }}
+                    >
+                        <NoData />
+                    </div>
+                ) : null
+            }
         </>
     );
 };

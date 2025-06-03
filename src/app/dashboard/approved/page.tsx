@@ -5,15 +5,15 @@ import Controls from "./components/controls"
 import Table from "./components/table"
 import { useApprovedContext } from "./context/context"
 
-const Pending = () => {
+const Approved = () => {
     const [pageSize, setPageSize] = useState(15)
     const [pageNumber, setPageNumber] = useState(1)
     const [view, setView] = useState<"list" | "grid">("list")
-    const {getApprovedClaimsMutation, tableData} = useApprovedContext()
+    const {getApprovedClaimsMutation, tableData, sorting} = useApprovedContext()
 
     useEffect(()=>{
         getApprovedClaimsMutation()
-    }, [])
+    }, [sorting])
 
     return (
         <>
@@ -33,4 +33,4 @@ const Pending = () => {
         </>
     )
 }
-export default Pending
+export default Approved

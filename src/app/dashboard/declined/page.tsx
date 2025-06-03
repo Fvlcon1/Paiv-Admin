@@ -9,11 +9,11 @@ const Declined = () => {
     const [pageSize, setPageSize] = useState(15)
     const [pageNumber, setPageNumber] = useState(1)
     const [view, setView] = useState<"list" | "grid">("list")
-    const {getApprovedClaimsMutation, tableData} = useApprovedContext()
+    const {getApprovedClaimsMutation, sorting} = useApprovedContext()
 
     useEffect(()=>{
         getApprovedClaimsMutation()
-    }, [])
+    }, [sorting])
 
     return (
         <>

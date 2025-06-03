@@ -9,17 +9,17 @@ const Pending = () => {
     const [pageSize, setPageSize] = useState(15)
     const [pageNumber, setPageNumber] = useState(1)
     const [view, setView] = useState<"list" | "grid">("list")
-    const {getApprovedClaimsMutation, tableData} = useApprovedContext()
+    const { getApprovedClaimsMutation, sorting } = useApprovedContext()
 
-    useEffect(()=>{
+    useEffect(() => {
         getApprovedClaimsMutation()
-    }, [])
+    }, [sorting])
 
     return (
         <>
             <div className="w-full flex flex-col">
                 <div className="w-full px-3 h-[60px] flex items-center border-b-[1px] border-solid border-b-border-primary">
-                    <Controls 
+                    <Controls
                         pageSize={pageSize}
                         setPageSize={setPageSize}
                         pageNumber={pageNumber}

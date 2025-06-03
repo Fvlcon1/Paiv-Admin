@@ -4,6 +4,7 @@ import { createContext, useContext, useState, ReactNode, SetStateAction, Dispatc
 import useApprovedClaims from '../hooks/useClaims';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { ITableData } from '@/app/dashboard/utils/types';
+import { SortingState } from '@tanstack/react-table';
 
 const approvedContext = createContext<{
     setShowClaimDetail: Dispatch<SetStateAction<boolean>>
@@ -13,6 +14,8 @@ const approvedContext = createContext<{
     tableData: ITableData[]
     selectedClaims: string[]
     isAllClaimsSelected: boolean
+    sorting: SortingState
+    setSorting: Dispatch<SetStateAction<SortingState>>
     handleSelectAllClaims: () => void
     handleUnselectAllClaims: () => void
 }>({
@@ -23,13 +26,15 @@ const approvedContext = createContext<{
     tableData : [],
     selectedClaims : [],
     isAllClaimsSelected: false,
+    sorting : [],
+    setSorting : ()=>{},
     handleSelectAllClaims : ()=>{},
     handleUnselectAllClaims : ()=>{}
 });
 
 export const ApprovedContextProvider = ({ children }: { children: ReactNode }) => {
     const [showClaimDetail, setShowClaimDetail] = useState(false)
-    const {getApprovedClaimsMutation, isApprovedClaimsPending, tableData, selectedClaims, isAllClaimsSelected, handleSelectAllClaims, handleUnselectAllClaims} = useApprovedClaims()
+    const {getApprovedClaimsMutation, isApprovedClaimsPending, tableData, selectedClaims, isAllClaimsSelected, sorting, setSorting, handleSelectAllClaims, handleUnselectAllClaims} = useApprovedClaims()
 
     return (
         <approvedContext.Provider
@@ -41,6 +46,8 @@ export const ApprovedContextProvider = ({ children }: { children: ReactNode }) =
                 tableData,
                 selectedClaims,
                 isAllClaimsSelected,
+                sorting,
+                setSorting,
                 handleSelectAllClaims,
                 handleUnselectAllClaims
             }}
