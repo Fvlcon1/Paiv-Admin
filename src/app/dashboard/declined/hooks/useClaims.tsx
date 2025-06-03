@@ -65,7 +65,7 @@ const useApprovedClaims = () => {
                     ? <FaSquareCheck 
                         size={20}
                         color={theme.colors.main.primary}
-                        className="rounded-[6px] mt-2 overflow-hidden relative w-[20px] h-[20px] bg-bg-tetiary"
+                        className="rounded-[6px] overflow-hidden relative w-[20px] h-[20px] bg-bg-tetiary"
                         onClick={(e)=>{
                             e.stopPropagation()
                             handleUnselectClaim(item.encounter_token)
@@ -76,7 +76,7 @@ const useApprovedClaims = () => {
                             e.stopPropagation()
                             handleSelectClaim(item.encounter_token)
                         }} 
-                        className="rounded-[6px] mt-2 overflow-hidden relative w-[20px] h-[20px] bg-bg-tetiary"
+                        className="rounded-[6px] overflow-hidden relative w-[20px] h-[20px] bg-bg-tetiary"
                     />
                 ),
                 hospitalName: item.hospital_name,

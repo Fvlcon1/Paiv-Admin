@@ -1,27 +1,20 @@
 'use client'
 
-import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import Text from "@styles/components/text";
-import theme from "@styles/theme";
-import { TypographyBold } from "@styles/style.types";
+import { useReactTable } from "@tanstack/react-table";
+import { flexRender, getCoreRowModel, getSortedRowModel } from "@tanstack/react-table";
+import Text from "@styles/components/text"
+import theme from "@styles/theme"
+import { data } from "./data";
+import useUAMColumns from "../hooks/useUAMColumns";
 import NoData from "@components/NoData/noData";
-import { useApprovedContext } from "../context/context";
-import { useState, useEffect, useRef } from "react";
-import { IClaimsDetailType } from "../../utils/types";
-import ClaimDetails from "../../components/claimDetails/claimDetails";
-import useClaimsTable from "../../hooks/useClaimsTable";
+import { useEffect, useState, useRef } from "react";
 
 const Table = () => {
-    const { setShowClaimDetail, showClaimDetail, tableData, isApprovedClaimsPending: isLoading, isAllClaimsSelected, handleSelectAllClaims, handleUnselectAllClaims } = useApprovedContext();
-    const { columns } = useClaimsTable({
-        isAllClaimsSelected,
-        handleSelectAllClaims,
-        handleUnselectAllClaims
-    });
-    const [claimDetails, setClaimDetails] = useState<IClaimsDetailType | null>(null);
-    const [containerHeight, setContainerHeight] = useState(500);
-    const tableContainerRef = useRef<HTMLDivElement>(null);
+    const { columns } = useUAMColumns();
     const [isScrolling, setIsScrolling] = useState(false);
+    const tableContainerRef = useRef<HTMLDivElement>(null);
+    const [containerHeight, setContainerHeight] = useState(500);
+    const isLoading = false;
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -30,38 +23,25 @@ const Table = () => {
     }, []);
 
     const { getHeaderGroups, getRowModel } = useReactTable({
-        data: tableData,
+        data: data,
         columns: columns,
         getCoreRowModel: getCoreRowModel(),
     });
 
-    const handleRowClick = (index: number) => {
-        setClaimDetails(tableData[index].details);
-        setShowClaimDetail(true);
-    };
-
     return (
-        <>
-            {claimDetails &&
-                <ClaimDetails
-                    claimDetails={claimDetails}
-                    isVisible={showClaimDetail}
-                    close={() => setShowClaimDetail(false)}
-                />
-            }
-
+        <div>
             <div className="relative w-full overflow-hidden">
-                {tableData.length > 0 && !isLoading ? (
+                {data.length > 0 ? (
                     <div
                         ref={tableContainerRef}
                         className="w-full overflow-x-auto h-[calc(100vh-100px)]"
-                        onScroll={(e) => {
-                            if (isScrolling) return;
-                            setIsScrolling(true);
-                            setTimeout(() => {
-                                setIsScrolling(false);
-                            }, 2000);
-                        }}
+                        // onScroll={(e) => {
+                        //     if (isScrolling) return;
+                        //     setIsScrolling(true);
+                        //     setTimeout(() => {
+                        //         setIsScrolling(false);
+                        //     }, 2000);
+                        // }}
                     >
                         <table className="w-full min-w-[800px] border-separate border-spacing-0">
                             {/* Table Head */}
@@ -72,15 +52,12 @@ const Table = () => {
                                             <th
                                                 key={header.id}
                                                 className={`text-left border-b-[1px] border-r-[1px] border-solid border-border-primary 
-                                                    ${colIndex === 0 ? 'sticky left-0 bg-white max-w-[35px]' : ''}
+                                                    ${colIndex === 0 ? 'sticky left-0 bg-white max-w-[50px]' : ''}
                                                     ${colIndex === 0 && isScrolling ? 'after:content-[""] after:absolute after:top-0 after:right-[-8px] duration-1000 after:h-full after:w-2 after:bg-gradient-to-r after:from-black/15 after:to-transparent' : ''}
                                                 `}
-                                                style={{
-                                                    minWidth: colIndex === 0 ? '35px' : '150px',
-                                                }}
                                             >
                                                 <div className="py-[15px] px-[30px] flex h-full items-center">
-                                                    <Text ellipsis textColor={theme.colors.text.tetiary} bold={TypographyBold.md}>
+                                                    <Text ellipsis textColor={theme.colors.text.tetiary} bold={theme.typography.bold.md}>
                                                         {header.isPlaceholder
                                                             ? null
                                                             : flexRender(header.column.columnDef.header, header.getContext())}
@@ -93,24 +70,20 @@ const Table = () => {
                             </thead>
 
                             {/* Table Body */}
-                            {!isLoading && tableData.length > 0 && (
+                            {!isLoading && data.length > 0 && (
                                 <tbody>
                                     {getRowModel().rows.map((row, index) => (
                                         <tr
                                             key={row.id}
                                             className="hover:bg-bg-secondary cursor-pointer duration-200"
-                                            onClick={() => handleRowClick(index)}
                                         >
                                             {row.getVisibleCells().map((cell, colIndex) => (
                                                 <td
                                                     key={cell.id}
                                                     className={`border-b-[1px] border-r-[1px] border-solid border-border-primary py-[10px] px-[30px] duration-1000
-                                                        ${colIndex === 0 ? 'sticky left-0 z-10 bg-white max-w-[35px]' : ''}
+                                                        ${colIndex === 0 ? 'sticky left-0 z-10 bg-white max-w-[50px]' : ''}
                                                         ${colIndex === 0 && isScrolling ? 'after:content-[""] after:absolute after:top-0 after:right-[-8px] duration-1000 after:h-full after:w-2 after:bg-gradient-to-r after:from-black/15 after:to-transparent' : ''}
                                                     `}
-                                                    style={{
-                                                        minWidth: colIndex === 0 ? '35px' : '150px',
-                                                    }}
                                                 >
                                                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                                 </td>
@@ -131,7 +104,7 @@ const Table = () => {
                     >
                         <div className="normal-loader"></div>
                     </div>
-                ) : tableData.length === 0 ? (
+                ) : data.length === 0 ? (
                     <div
                         className="w-full justify-center flex items-center"
                         style={{ height: `${containerHeight}px` }}
@@ -140,8 +113,7 @@ const Table = () => {
                     </div>
                 ) : null}
             </div>
-        </>
-    );
-};
-
-export default Table;
+        </div>
+    )
+}
+export default Table

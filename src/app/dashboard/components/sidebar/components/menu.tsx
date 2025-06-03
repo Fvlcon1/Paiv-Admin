@@ -6,12 +6,13 @@ import { TypographyBold, TypographySize } from "@styles/style.types"
 import theme from "@styles/theme"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { FaFlag } from "react-icons/fa"
+import { FaFlag, FaUserLock } from "react-icons/fa"
 import { FaCediSign, FaCircleCheck } from "react-icons/fa6"
 import { GiCancel } from "react-icons/gi"
 import { MdOutlinePendingActions, MdSpaceDashboard } from "react-icons/md"
 import { useAppContext } from "@/app/context/context"
 import { useEffect } from "react"
+import { Tooltip } from "antd"
 
 const Menu = () => {
     const pathname = usePathname()
@@ -19,55 +20,55 @@ const Menu = () => {
 
     const claimsMenuItems = [
         {
-            title : "Pending",
-            icon : MdOutlinePendingActions,
-            path : "/dashboard/pending",
-            notifications : numberOfPending,
-            badgeColor : "bg-[green]"
+            title: "Pending",
+            icon: MdOutlinePendingActions,
+            path: "/dashboard/pending",
+            notifications: numberOfPending,
+            badgeColor: "bg-[green]"
         },
         {
-            title : "Approved",
-            icon : FaCircleCheck,
-            path : "/dashboard/approved",
-            notifications : numberOfApproved,
-            badgeColor : "bg-[green]"
+            title: "Approved",
+            icon: FaCircleCheck,
+            path: "/dashboard/approved",
+            notifications: numberOfApproved,
+            badgeColor: "bg-[green]"
         },
         {
-            title : "Flagged",
-            icon : FaFlag,
-            path : '/dashboard/flagged',
-            notifications : numberOfFlagged,
-            badgeColor : "bg-[#d19017]"
+            title: "Flagged",
+            icon: FaFlag,
+            path: '/dashboard/flagged',
+            notifications: numberOfFlagged,
+            badgeColor: "bg-[#d19017]"
         },
         {
-            title : "Declined",
-            icon : GiCancel,
-            path : '/dashboard/declined',
-            notifications : numberOfDeclined,
-            badgeColor : "bg-[#c94c30]"
+            title: "Declined",
+            icon: GiCancel,
+            path: '/dashboard/declined',
+            notifications: numberOfDeclined,
+            badgeColor: "bg-[#c94c30]"
         },
     ]
 
-    const getMenuTextStyle = (path : string) => {
+    const getMenuTextStyle = (path: string) => {
         return {
-            textColor : path === pathname ? theme.colors.main.primary : theme.colors.text.secondary,
-            bold : path === pathname ? TypographyBold.md : TypographyBold.sm2
+            textColor: path === pathname ? theme.colors.main.primary : theme.colors.text.secondary,
+            bold: path === pathname ? TypographyBold.md : TypographyBold.sm2
         }
     }
 
-    const getLinkClassName = (path : string) => {
+    const getLinkClassName = (path: string) => {
         return {
-            className : `flex gap-2 items-center ${pathname === path ? "bg-[#6969ce23]" : "hover:bg-bg-tetiary"} justify-between duration-200 px-4 py-2 cursor-pointer`
+            className: `flex gap-2 items-center ${pathname === path ? "bg-[#6969ce23]" : "hover:bg-bg-tetiary"} justify-between duration-200 px-4 py-2 cursor-pointer`
         }
     }
 
     useEffect(() => {
-        console.log({numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined})
+        console.log({ numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined })
     }, [numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined])
-    
+
     return (
         <div className="flex gap-1 flex-col pt-1">
-            <Link 
+            <Link
                 className={getLinkClassName("/dashboard").className}
                 href={"/dashboard"}
             >
@@ -90,13 +91,13 @@ const Menu = () => {
             <div className="flex flex-col">
                 {
                     claimsMenuItems.map((item, index) => (
-                        <Link 
+                        <Link
                             className={getLinkClassName(item.path).className}
                             href={item.path}
                             key={index}
                         >
                             <div className="flex items-center gap-2">
-                                <item.icon 
+                                <item.icon
                                     color={getMenuTextStyle(item.path).textColor}
                                     size={"14px"}
                                 />
@@ -109,16 +110,16 @@ const Menu = () => {
                             </div>
                             {
                                 item.notifications > 0 ?
-                                <div className={`px-[6px] py-[2px] min-w-[20px] h-[20px] rounded-full ${item.badgeColor} flex justify-center items-center`}>
-                                    <Text
-                                        size={TypographySize.xs}
-                                        textColor={theme.colors.bg.primary}
-                                    >
-                                        {item.notifications}
-                                    </Text>
-                                </div>
-                                :
-                                <></>
+                                    <div className={`px-[6px] py-[2px] min-w-[20px] h-[20px] rounded-full ${item.badgeColor} flex justify-center items-center`}>
+                                        <Text
+                                            size={TypographySize.xs}
+                                            textColor={theme.colors.bg.primary}
+                                        >
+                                            {item.notifications}
+                                        </Text>
+                                    </div>
+                                    :
+                                    <></>
                             }
                         </Link>
                     ))
@@ -127,7 +128,7 @@ const Menu = () => {
 
             <Divider />
 
-            <Link 
+            <Link
                 className={getLinkClassName("/dashboard/paid").className}
                 href={"/dashboard/paid"}
             >
@@ -152,6 +153,31 @@ const Menu = () => {
                     </Text>
                 </div>
             </Link>
+
+            <Divider />
+
+            <Tooltip
+                title="Users and Access Management"
+                placement="right"
+            >
+                <Link
+                    className={getLinkClassName("/dashboard/uam").className}
+                    href={"/dashboard/uam"}
+                >
+                    <div className="flex items-center gap-2">
+                        <FaUserLock
+                            color={getMenuTextStyle("/dashboard/uam").textColor}
+                            size={"15px"}
+                        />
+                        <Text
+                            textColor={getMenuTextStyle("/dashboard/uam").textColor}
+                            bold={getMenuTextStyle("/dashboard/uam").bold}
+                        >
+                            {"UAM"}
+                        </Text>
+                    </div>
+                </Link>
+            </Tooltip>
 
             <Divider />
 

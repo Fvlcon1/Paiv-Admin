@@ -31,10 +31,11 @@ const RightMetrics = () => {
                         key={index}
                         delay={index * 0.1}
                         direction="bottom"
+                        className="w-full"
                     >
                         <div
                             key={index}
-                            className="flex items-center gap-2 p-2 rounded-xl border-[1px]"
+                            className="flex items-center gap-2 p-2 rounded-xl border-[1px] w-full"
                             style={{
                                 borderColor: "#" + metric.color + hexOpacity(20),
                                 backgroundColor: "#" + metric.color + hexOpacity(10)
@@ -51,8 +52,8 @@ const RightMetrics = () => {
                                     color={theme.colors.bg.primary}
                                 />
                             </div>
-                            <div className="flex flex-col gap-0">
-                                <div className="flex items-center gap-2">
+                            <div className="flex flex-col gap-0 flex-1">
+                                <div className="flex items-center w-full justify-between gap-2">
                                     <Text
                                         textColor={"#" + metric.color}
                                     >

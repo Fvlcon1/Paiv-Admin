@@ -1,29 +1,35 @@
 'use client'
 
-import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import { flexRender, getCoreRowModel, SortingState, useReactTable } from "@tanstack/react-table";
 import Text from "@styles/components/text";
 import theme from "@styles/theme";
 import { TypographyBold } from "@styles/style.types";
 import NoData from "@components/NoData/noData";
 import { useApprovedContext } from "../context/context";
 import useApprovedClaims from "../hooks/useClaims";
-import useClaimsTable from "../hooks/useClaimsTable";
+import useClaimsTable from "../../hooks/useClaimsTable";
 import { useState, useEffect, useRef } from "react";
 import { IClaimsDetailType } from "../../utils/types";
 import ClaimDetails from "../../components/claimDetails/claimDetails";
 import Button from "@components/button/button";
 import ReasonForDeclining from '@/app/dashboard/components/reason/reason';
 import useReasonForDeclining from "../hooks/useReason";
+import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 
 const Table = () => {
-    const { setShowClaimDetail, showClaimDetail, tableData, isApprovedClaimsPending: isLoading, getApprovedClaimsMutation } = useApprovedContext();
-    const { columns } = useClaimsTable();
+    const { setShowClaimDetail, showClaimDetail, tableData, isApprovedClaimsPending: isLoading, getApprovedClaimsMutation, isAllClaimsSelected, handleSelectAllClaims, handleUnselectAllClaims } = useApprovedContext();
+    const { columns } = useClaimsTable({
+        isAllClaimsSelected,
+        handleSelectAllClaims,
+        handleUnselectAllClaims
+    });
     const [claimDetails, setClaimDetails] = useState<IClaimsDetailType | null>(null);
     const [containerHeight, setContainerHeight] = useState(500)
     const [isReasonVisible, setIsReasonVisible] = useState(false)
     const { handleReasonForDecliningMutation, isReasonForDecliningPending, reasonForDecliningError, reasonForDecliningSuccess } = useReasonForDeclining()
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const [isScrolling, setIsScrolling] = useState(false);
+    const [sorting, setSorting] = useState<SortingState>([]);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -35,7 +41,16 @@ const Table = () => {
         data: tableData,
         columns: columns,
         getCoreRowModel: getCoreRowModel(),
+        manualSorting: true,
+        onSortingChange: setSorting,
+        state: {
+            sorting
+        },
     });
+
+    useEffect(() => {
+        console.log(sorting)
+    }, [sorting])
 
     const handleRowClick = (index: number) => {
         setClaimDetails(tableData[index].details);
@@ -117,20 +132,37 @@ const Table = () => {
                                             {headerGroup.headers.map((header, colIndex) => (
                                                 <th
                                                     key={header.id}
-                                                    className={`text-left border-b-[1px] border-r-[1px] border-solid border-border-primary 
-                                                    ${colIndex === 0 ? 'sticky left-0 bg-white' : ''}
-                                                    ${colIndex === 0 && isScrolling ? 'after:content-[""] after:absolute after:top-0 after:right-[-8px] duration-1000 after:h-full after:w-2 after:bg-gradient-to-r after:from-black/15 after:to-transparent' : ''}
-                                                `}
+                                                    className={`text-left border-b-[1px] cursor-pointer border-r-[1px] border-solid border-border-primary 
+                                                        ${colIndex === 0 ? 'sticky left-0 bg-white max-w-[50px]' : ''}
+                                                        ${colIndex === 0 && isScrolling ? 'after:content-[""] after:absolute after:top-0 after:right-[-8px] duration-1000 after:h-full after:w-2 after:bg-gradient-to-r after:from-black/15 after:to-transparent' : ''}`
+                                                    }
+                                                    onClick={header.column.getToggleSortingHandler()}
                                                     style={{
                                                         minWidth: colIndex === 0 ? '50px' : '150px',
                                                     }}
                                                 >
-                                                    <div className="py-[15px] mt-[-5px] px-[30px]">
-                                                        <Text ellipsis textColor={theme.colors.text.tetiary} bold={TypographyBold.md}>
-                                                            {header.isPlaceholder
-                                                                ? null
-                                                                : flexRender(header.column.columnDef.header, header.getContext())}
+                                                    <div className={`py-[15px] ${colIndex === 0 ? 'justify-center' : 'px-[30px]'} flex h-full items-center gap-1`}>
+                                                        <Text 
+                                                            ellipsis 
+                                                            textColor={header.column.getIsSorted() ? theme.colors.main.primary : theme.colors.text.tetiary} 
+                                                            bold={TypographyBold.md}
+                                                        >
+                                                            {
+                                                                header.isPlaceholder
+                                                                    ? null
+                                                                    : flexRender(header.column.columnDef.header, header.getContext())
+                                                            }
                                                         </Text>
+                                                        {
+                                                            colIndex !== 0 && (
+                                                                {
+                                                                    asc: <FaSortUp size={13} color={theme.colors.main.primary}/>,
+                                                                    desc: <FaSortDown size={13} color={theme.colors.main.primary}/>,
+                                                                }[header.column.getIsSorted() as string]
+                                                                ??
+                                                                <FaSort size={13} color={theme.colors.bg.quantinary}/>
+                                                            )
+                                                        }
                                                     </div>
                                                 </th>
                                             ))}
@@ -150,15 +182,17 @@ const Table = () => {
                                                 {row.getVisibleCells().map((cell, colIndex) => (
                                                     <td
                                                         key={cell.id}
-                                                        className={`border-b-[1px] border-r-[1px] border-solid border-border-primary py-[10px] px-[30px] duration-1000
-                                                        ${colIndex === 0 ? 'sticky left-0 z-10 bg-white' : ''}
+                                                        className={`border-b-[1px] border-r-[1px] border-solid border-border-primary py-[15px] duration-1000
+                                                        ${colIndex === 0 ? 'sticky left-0 z-10 bg-white max-w-[50px] px-0' : ''}
                                                         ${colIndex === 0 && isScrolling ? 'after:content-[""] after:absolute after:top-0 after:right-[-8px] duration-1000 after:h-full after:w-2 after:bg-gradient-to-r after:from-black/15 after:to-transparent' : ''}
                                                     `}
                                                         style={{
                                                             minWidth: colIndex === 0 ? '50px' : '150px',
                                                         }}
                                                     >
-                                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                        <div className={`${colIndex === 0 ? 'justify-center' : 'px-[30px]'} w-full flex h-full items-center`}>
+                                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                        </div>
                                                     </td>
                                                 ))}
                                             </tr>
