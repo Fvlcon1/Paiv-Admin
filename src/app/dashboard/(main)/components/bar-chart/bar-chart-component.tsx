@@ -3,6 +3,7 @@ import theme from '@styles/theme';
 import { useDashboardContext } from '../../context/context';
 import BarChartSkeleton from './chart-skeleton';
 import dynamic from 'next/dynamic';
+import { hexOpacity } from '@/utils/hexOpacity';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
     ssr: false,
@@ -19,6 +20,8 @@ const BarChartComponent = () => {
         },
     ];
 
+    const getShade = (opacity : number) => "#70018f" + hexOpacity(opacity)
+
     const options = {
         chart: {
             type: 'bar',
@@ -27,7 +30,7 @@ const BarChartComponent = () => {
             toolbar: { show: false },
             foreColor: '#9CA3AF'
         },
-        colors: ['#6366F1', '#10B981', '#EF4444', '#FF9500'],
+        colors: [getShade(10), getShade(20), getShade(30), getShade(40), getShade(50), getShade(60), getShade(70), getShade(80), getShade(90), getShade(100)],
         plotOptions: {
             bar: {
                 horizontal: false,

@@ -8,13 +8,15 @@ import { data } from "./data";
 import useUAMColumns from "../hooks/useUAMColumns";
 import NoData from "@components/NoData/noData";
 import { useEffect, useState, useRef } from "react";
+import { useUAMContext } from "../context/context";
+import TableSkeleton from "@components/loaders/table-skeleton";
 
 const Table = () => {
     const { columns } = useUAMColumns();
     const [isScrolling, setIsScrolling] = useState(false);
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const [containerHeight, setContainerHeight] = useState(500);
-    const isLoading = false;
+    const {accountsData, accountsLoading} = useUAMContext()
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -23,7 +25,7 @@ const Table = () => {
     }, []);
 
     const { getHeaderGroups, getRowModel } = useReactTable({
-        data: data,
+        data: accountsData,
         columns: columns,
         getCoreRowModel: getCoreRowModel(),
     });
@@ -31,7 +33,7 @@ const Table = () => {
     return (
         <div>
             <div className="relative w-full overflow-hidden">
-                {data.length > 0 ? (
+                {accountsData?.length > 0 ? (
                     <div
                         ref={tableContainerRef}
                         className="w-full overflow-x-auto h-[calc(100vh-100px)]"
@@ -52,7 +54,7 @@ const Table = () => {
                                             <th
                                                 key={header.id}
                                                 className={`text-left border-b-[1px] border-r-[1px] border-solid border-border-primary 
-                                                    ${colIndex === 0 ? 'sticky left-0 bg-white max-w-[50px]' : ''}
+                                                    ${colIndex === 0 ? 'sticky left-0 bg-white' : ''}
                                                     ${colIndex === 0 && isScrolling ? 'after:content-[""] after:absolute after:top-0 after:right-[-8px] duration-1000 after:h-full after:w-2 after:bg-gradient-to-r after:from-black/15 after:to-transparent' : ''}
                                                 `}
                                             >
@@ -70,18 +72,18 @@ const Table = () => {
                             </thead>
 
                             {/* Table Body */}
-                            {!isLoading && data.length > 0 && (
+                            {!accountsLoading && accountsData?.length > 0 && (
                                 <tbody>
                                     {getRowModel().rows.map((row, index) => (
                                         <tr
                                             key={row.id}
-                                            className="hover:bg-bg-secondary cursor-pointer duration-200"
+                                            className="hover:bg-bg-secondary bg-white cursor-pointer duration-200"
                                         >
                                             {row.getVisibleCells().map((cell, colIndex) => (
                                                 <td
                                                     key={cell.id}
                                                     className={`border-b-[1px] border-r-[1px] border-solid border-border-primary py-[10px] px-[30px] duration-1000
-                                                        ${colIndex === 0 ? 'sticky left-0 z-10 bg-white max-w-[50px]' : ''}
+                                                        ${colIndex === 0 ? 'sticky left-0 z-10' : ''}
                                                         ${colIndex === 0 && isScrolling ? 'after:content-[""] after:absolute after:top-0 after:right-[-8px] duration-1000 after:h-full after:w-2 after:bg-gradient-to-r after:from-black/15 after:to-transparent' : ''}
                                                     `}
                                                 >
@@ -97,14 +99,11 @@ const Table = () => {
                 ) : null}
 
                 {/* Loader or No Data */}
-                {isLoading ? (
-                    <div
-                        className="w-full justify-center flex items-center"
-                        style={{ height: `${containerHeight}px` }}
-                    >
-                        <div className="normal-loader"></div>
+                {accountsLoading ? (
+                    <div className="w-full mt-2">
+                        <TableSkeleton />
                     </div>
-                ) : data.length === 0 ? (
+                ) : accountsData?.length === 0 ? (
                     <div
                         className="w-full justify-center flex items-center"
                         style={{ height: `${containerHeight}px` }}

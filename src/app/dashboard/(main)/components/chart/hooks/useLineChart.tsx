@@ -3,16 +3,22 @@
 import { protectedApi } from "@/app/utils/apis/api"
 import { useQuery } from "@tanstack/react-query"
 import ChartSkeleton from "../chart-skeleton"
+import { useState } from "react"
+import { useDashboardContext } from "../../../context/context"
 
 const useLineChart = () => {
+    const {claimsActivityStartDate, claimsActivityEndDate} = useDashboardContext()
     const getLineChartData = async () => {
-        const response = await protectedApi.GET("/analytics/monthly-breakdown")
+        const response = await protectedApi.GET("/analytics/monthly-breakdown", {
+            from_date : claimsActivityStartDate,
+            to_date : claimsActivityEndDate
+        })
         const series = convertToLineChartData(response)
         return series
     }
     const { data: lineChartData, isPending: isLineChartDataPending } = useQuery({
         queryFn: getLineChartData,
-        queryKey: ["line-chart-data"],
+        queryKey: ["line-chart-data", claimsActivityStartDate, claimsActivityEndDate],
         refetchOnMount: true,
     })
 
@@ -55,8 +61,8 @@ const useLineChart = () => {
     }
 
     return {
-        lineChartSeries : lineChartData,
-        isLineChartDataPending
+        lineChartSeries: lineChartData,
+        isLineChartDataPending,
     }
 }
 export default useLineChart

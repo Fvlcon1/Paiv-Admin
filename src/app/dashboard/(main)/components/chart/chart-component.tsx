@@ -10,33 +10,20 @@ const Chart = dynamic(() => import('react-apexcharts'), {
     loading: () => <ChartSkeleton />
 });
 
-const ClaimsTimelineChart = () => {
-    const { lineChartSeries, isLineChartDataPending } = useLineChart()
-
+const ClaimsTimelineChart = ({
+    isLineChartDataPending,
+    lineChartSeries,
+}: {
+    isLineChartDataPending: boolean
+    lineChartSeries: any
+}) => {
     if (isLineChartDataPending) {
         return <ChartSkeleton />
     }
 
-    const series = lineChartSeries ?? [
-        {
-            name: 'Submitted',
-            data: [31, 40, 28, 51, 42, 109, 100, 120, 82, 91, 110, 95]
-        },
-        {
-            name: 'Approved',
-            data: [11, 32, 45, 32, 34, 52, 41, 80, 62, 71, 90, 65]
-        },
-        {
-            name: 'Flagged',
-            data: [5, 8, 3, 9, 8, 17, 10, 20, 12, 11, 10, 15]
-        },
-        {
-            name: 'Declined',
-            data: [2, 4, 2, 6, 4, 10, 6, 12, 8, 10, 12, 18]
-        },
-    ];
+    const series = lineChartSeries
 
-    const options : ApexOptions = {
+    const options: ApexOptions = {
         chart: {
             height: 350,
             type: 'area',
@@ -99,7 +86,14 @@ const ClaimsTimelineChart = () => {
         }
     };
 
-    return <Chart options={options as any} series={series} type="area" height={450} />;
+    return (
+        <Chart
+            options={options}
+            series={series}
+            type="area"
+            height={450}
+        />
+    )
 };
 
 export default ClaimsTimelineChart;

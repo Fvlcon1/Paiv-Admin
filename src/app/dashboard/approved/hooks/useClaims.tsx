@@ -9,6 +9,7 @@ import theme from '@/app/styles/theme';
 import convertToClaimsDetails from '@/app/dashboard/utils/convert-to-claims-details';
 import getDate from '@/utils/getDate';
 import { SortingState } from '@tanstack/react-table';
+import extractEncounterDetails from '../../components/outcome-page/utils/extract-encounter-details';
 
 const useApprovedClaims = () => {
     const [selectedClaims, setSelectedClaims] = useState<string[]>([])
@@ -130,7 +131,7 @@ const useApprovedClaims = () => {
             claimProcessingDate: item.updated_at ? getDate(new Date(item.updated_at)) : "-",
             claimStatus: item.status,
             actualPayout: item.total_payout ? "GHS " + item.total_payout : "-",
-            details: convertToClaimsDetails(item)
+            details: convertToClaimsDetails(item),
         }));
         setTableData(approvedTableData);
     }

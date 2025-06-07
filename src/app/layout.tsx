@@ -25,14 +25,14 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`${montserrat.variable} antialiased`}>
-				<AuthProvider>
-					<AppContextProvider>
-						<QueryProvider>
+				<QueryProvider>
+					<AuthProvider>
+						<AppContextProvider>
 							<Toaster />
 							{children}
-						</QueryProvider>
-					</AppContextProvider>
-				</AuthProvider>
+						</AppContextProvider>
+					</AuthProvider>
+				</QueryProvider>
 			</body>
 		</html>
 	);

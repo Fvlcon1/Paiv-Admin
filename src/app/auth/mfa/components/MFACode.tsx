@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Cookies from "universal-cookie";
 import { useAuth } from "@/app/context/authContext";
+import useProfile from "@/app/hooks/useProfile";
 
 const cookies = new Cookies()
 
@@ -31,15 +32,16 @@ const MFACode = ({
     const [canResend, setCanResend] = useState(false);
     const {setViewState} = useMFAContext()
     const router = useRouter()
-    const {userDetails} = useAuth()
+    const {userDetails, setUserDetails} = useAuth()
+    const {getProfileMutation} = useProfile()
 
     const enableEmailOtp = async () => {
-        const response = await protectedApi.POST("mfa/email/enable")
+        const response = await protectedApi.POST("mfa/admin/email/enable")
         return response
     }
 
     const sendEmailOtp = async () => {
-        const response = await protectedApi.POST("mfa/send-otp")
+        const response = await protectedApi.POST("mfa/admin/send-otp")
         return response
     }
 
@@ -127,7 +129,7 @@ const MFACode = ({
 
     const submitOTP = async (otp: string) => {
         console.log({ otp });
-        const response = await protectedApi.POST("mfa/verify-otp", {
+        const response = await protectedApi.POST("mfa/admin/verify-otp", {
             otp: otp
         });
         return response
@@ -137,6 +139,7 @@ const MFACode = ({
         mutationFn : submitOTP,
         onSuccess : (data)=>{
             cookies.set("accessToken", data.access_token, {path : "/"})
+            getProfileMutation()
             toast.success("Setup completed successfully")
             router.push("/")
         },

@@ -16,7 +16,7 @@ const useLogin = () => {
     const cookies = new Cookies()
 
     const handeleSubmit = async (values : LoginType) => {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/admin/login`, {
             hospital_id : "4",
             email: values.email,
             password: values.password,

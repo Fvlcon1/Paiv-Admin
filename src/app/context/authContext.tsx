@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Cookies from "universal-cookie";
 import SessionTimeoutAlert from "../components/sessionTimeoutAlert";
 import { setupInterceptors } from "../utils/apis/axiosInstance";
+import useProfile from "../hooks/useProfile";
 
 const AuthContext = createContext<{ 
     logout: (showAlert?: boolean) => void
@@ -19,7 +20,8 @@ const AuthContext = createContext<{
 const cookies = new Cookies();
 interface IUserDetails {
     email? : string
-    hospitalName? : string
+    name? : string
+    role? : string
 }
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -29,6 +31,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [showSessionAlert, setShowSessionAlert] = useState<boolean>(false);
     const [userDetails, setUserDetails] = useState<IUserDetails>()
     const logoutTimer = useRef<number | null>(null);
+    const {getProfileMutation} = useProfile()
+
+    useEffect(() => {
+        const profile = localStorage.getItem("profile");
+        getProfileMutation()
+        if (profile) {
+            setUserDetails(JSON.parse(profile));
+        }
+    }, []);
 
     // 🔹 Logout function (Prevents showing session alert on /auth pages)
     const logout = useCallback((showAlert = true) => {
@@ -36,7 +47,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         cookies.remove("accessToken");
 
         if (pathname.startsWith("/auth")) {
-            console.log({pathname})
             setShowSessionAlert(false); // Hide session alert immediately
             return;
         }

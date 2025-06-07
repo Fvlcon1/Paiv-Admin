@@ -13,8 +13,14 @@ const DualTable = ({
                 <tbody>
                     {
                         data.map((item, index) => (
-                            <tr className={`${index % 2 === 0 ? 'bg-bg-secondary' : ''}`} key={index}>
-                                <td className={`pl-[20px] py-[10px] rounded-l-lg`}>
+                            <tr
+                                className={`
+                                    ${index % 2 === 0 ? 'border-y-[1px] border-border-secondary' : ''}
+                                    ${index === data.length - 1 ? 'border-b-[0]' : ''}
+                                `}
+                                key={index}
+                            >
+                                <td className={`pl-[20px] py-[10px]`}>
                                     {
                                         typeof item[0] === 'string' ?
                                             <Text
@@ -27,7 +33,7 @@ const DualTable = ({
                                             item[0]
                                     }
                                 </td>
-                                <td className="rounded-r-lg">
+                                <td className="">
                                     <div className="flex gap-6 items-center">
                                         {
                                             typeof item[1] === 'string' ?

@@ -1,3 +1,4 @@
+import extractEncounterDetails from '../components/outcome-page/utils/extract-encounter-details'
 import { IClaimsDetailType } from './types'
 
 const convertToClaimsDetails = (data:any) : IClaimsDetailType => {
@@ -24,6 +25,7 @@ const convertToClaimsDetails = (data:any) : IClaimsDetailType => {
         pharmacy : data.pharmacy,
         status : data.status,
         totalPayout : data.total_payout,
+        encounterDetails : extractEncounterDetails(data)
     }
 }
 

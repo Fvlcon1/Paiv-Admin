@@ -11,43 +11,24 @@ import { DropdownItem } from "@/utils/@types"
 import Pressable from "@components/button/pressable"
 import { useRef } from "react"
 import { BiChevronDown } from "react-icons/bi"
+import useInvite from "./hooks/useInvite"
 
-const Form = () => {
+const Form = ({
+    close
+}: {
+    close: () => void
+}) => {
+    const { formik, isInvitePending, regionDropdown, searchRegion, setSearchRegion, districtDropdown, searchDistrict, setSearchDistrict } = useInvite({ close })
     const dropdownItems: DropdownItem[] = [
         { key: "1", label: "Admin", onClick: () => { formik.setFieldValue("role", "admin") } },
         { type: "divider", key: "divider-1" },
         { key: "2", label: "User", onClick: () => { formik.setFieldValue("role", "user") } },
+        { type: "divider", key: "divider-2" },
+        { key: "3", label: "Reviewer", onClick: () => { formik.setFieldValue("role", "reviewer") } },
     ]
 
-    const validationSchema = Yup.object({
-        email: Yup
-            .string()
-            .email("Invalid email address.")
-            .required("Email is required."),
-        firstname: Yup
-            .string()
-            .required("First name is required."),
-        lastname: Yup
-            .string()
-            .required("Last name is required."),
-        role: Yup
-            .string()
-            .required("Role is required."),
-    })
-
-    const formik = useFormik({
-        initialValues: {
-            email: "",
-            firstname: "",
-            lastname: "",
-            role: ""
-        },
-        validationSchema,
-        onSubmit: () => { }
-    })
-
     return (
-        <form className="flex flex-col gap-2">
+        <form onSubmit={formik.handleSubmit} className="flex flex-col gap-2">
             <FormInput
                 value={formik.values.email}
                 handleChange={formik.handleChange}
@@ -62,33 +43,43 @@ const Form = () => {
                 autoComplete="username"
             />
 
-            <FormInput
-                value={formik.values.email}
-                handleChange={formik.handleChange}
-                handleBlur={formik.handleBlur as any}
-                touched={formik.touched.firstname}
-                error={formik.errors.firstname}
-                PreIcon={<MdEmail color={theme.colors.text.tetiary} />}
-                name="firstname"
-                type="text"
-                placeholder="Eg: John"
-                label="First Name"
-                autoComplete="firstname"
-            />
+            <Dropdown
+                menuItems={regionDropdown}
+            >
+                <FormInput
+                    value={searchRegion}
+                    handleChange={(e) => setSearchRegion(e?.target.value ?? "")}
+                    handleBlur={formik.handleBlur as any}
+                    touched={formik.touched.region}
+                    error={formik.errors.region}
+                    PreIcon={<MdEmail color={theme.colors.text.tetiary} />}
+                    PostIcon={<BiChevronDown color={theme.colors.text.tetiary} />}
+                    name="region"
+                    type="text"
+                    placeholder="Enter region"
+                    label="Region"
+                    autoComplete="off"
+                />
+            </Dropdown>
 
-            <FormInput
-                value={formik.values.lastname}
-                handleChange={formik.handleChange}
-                handleBlur={formik.handleBlur as any}
-                touched={formik.touched.lastname}
-                error={formik.errors.lastname}
-                PreIcon={<MdEmail color={theme.colors.text.tetiary} />}
-                name="lastname"
-                type="text"
-                placeholder="Eg: Doe"
-                label="Last Name"
-                autoComplete="lastname"
-            />
+            <Dropdown
+                menuItems={districtDropdown}
+            >
+                <FormInput
+                    value={searchDistrict}
+                    handleChange={(e) => setSearchDistrict(e?.target.value ?? "")}
+                    handleBlur={formik.handleBlur as any}
+                    touched={formik.touched.district}
+                    error={formik.errors.district}
+                    PreIcon={<MdEmail color={theme.colors.text.tetiary} />}
+                    PostIcon={<BiChevronDown color={theme.colors.text.tetiary} />}
+                    name="district"
+                    type="text"
+                    placeholder="Enter district"
+                    label="District"
+                    autoComplete="off"
+                />
+            </Dropdown>
 
             <Dropdown
                 menuItems={dropdownItems}
@@ -113,7 +104,7 @@ const Form = () => {
                 text="Invite"
                 className="!w-full !h-[45px] mt-4"
                 icon={<RiUserAddLine />}
-                loading={false}
+                loading={isInvitePending}
                 loadingColor={theme.colors.bg.primary}
             />
         </form>

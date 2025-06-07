@@ -11,6 +11,10 @@ const DashboardContext = createContext<{
     selectedHospital? : string,
     selectedRegion? : string,
     selectedDistrict? : string,
+    claimsActivityStartDate? : string,
+    claimsActivityEndDate? : string,
+    setClaimsActivityStartDate : (startDate : string) => void,
+    setClaimsActivityEndDate : (endDate : string) => void,
     setStartDate : (startDate : string) => void,
     setEndDate : (endDate : string) => void,
     setSelectedHospital : (hospital : string) => void,
@@ -20,11 +24,15 @@ const DashboardContext = createContext<{
 }>({
     dashboardData : null,
     isDashboardDataPending : false,
+    claimsActivityStartDate : undefined,
+    claimsActivityEndDate : undefined,
     startDate : undefined,
     endDate : undefined,
     selectedHospital : undefined,
     selectedRegion : undefined,
     selectedDistrict : undefined,
+    setClaimsActivityStartDate : () => {},
+    setClaimsActivityEndDate : () => {},
     setStartDate : () => {},
     setEndDate : () => {},
     setSelectedHospital : () => {},
@@ -34,6 +42,8 @@ const DashboardContext = createContext<{
 });
 
 export const DashboardContextProvider = ({ children }: { children: ReactNode }) => {
+    const [claimsActivityStartDate, setClaimsActivityStartDate] = useState<string>()
+    const [claimsActivityEndDate, setClaimsActivityEndDate] = useState<string>()
     const {dashboardData, isDashboardDataPending, startDate, endDate, selectedHospital, selectedRegion, selectedDistrict, setStartDate, setEndDate, setSelectedHospital, setSelectedRegion, setSelectedDistrict, setDashboardData} = useDashboard()
 
     return (
@@ -51,7 +61,11 @@ export const DashboardContextProvider = ({ children }: { children: ReactNode }) 
                 setSelectedHospital,
                 setSelectedRegion,
                 setSelectedDistrict,
-                setDashboardData
+                setDashboardData,
+                claimsActivityStartDate,
+                claimsActivityEndDate,
+                setClaimsActivityStartDate,
+                setClaimsActivityEndDate
              }}
         >
             {children}

@@ -13,7 +13,7 @@ import Copychip from "@components/chip/copyChip"
 
 const QRCode = () => {
     const getQRCode = async () => {
-        const response = await protectedApi.POST("/mfa/totp/setup")
+        const response = await protectedApi.POST("/mfa/admin/totp/setup")
         return response
     }
 

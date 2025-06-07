@@ -30,10 +30,6 @@ const WebSocketComponent = () => {
 	}
 
 	useEffect(() => {
-		console.log({ numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined })
-	}, [numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined])
-
-	useEffect(() => {
 		// Create WebSocket connection
 		const socket = new WebSocket(process.env.NEXT_PUBLIC_STATUS_SOCKET_URL || "")
 		socketRef.current = socket

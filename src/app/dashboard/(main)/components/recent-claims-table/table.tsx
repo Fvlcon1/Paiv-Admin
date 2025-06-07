@@ -5,7 +5,7 @@ import theme from "@styles/theme"
 import SlideIn from "@styles/components/slidein"
 import ClickableTab from "@components/clickable/clickabletab"
 import { useState } from "react"
-import RecentClaimsTableSkeleton from "./table-skeleton"
+import RecentClaimsTableSkeleton from "../../../../../components/loaders/table-skeleton"
 import useRecentClaims from "./hooks/useClaims"
 import getDate, { getRelativeTime } from "@/utils/getDate"
 import ReasonForDeclining from '@/app/dashboard/components/reason/reason';

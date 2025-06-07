@@ -5,12 +5,12 @@ const validationSchema = Yup.object({
     .string()
     .email("Invalid email address.")
     .required("Email is required."),
-  location: Yup
+  firstname: Yup
     .string()
-    .required("Location is required."),
-  hospitalName: Yup
+    .required("First name is required."),
+  lastname: Yup
     .string()
-    .required("Hospital name is required."),
+    .required("Last name is required."),
   password: Yup
     .string()
     .required("Password is required."),

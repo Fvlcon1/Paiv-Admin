@@ -4,9 +4,9 @@ import Text from "@styles/components/text"
 import theme from "@styles/theme"
 import SlideIn from "@styles/components/slidein"
 
-const RecentClaimsTableSkeleton = () => {
+const TableSkeleton = () => {
     const tableHeads = ["Hospital Name", "Date", "Patient Name", "Diagnosis", "Drugs", "Status", "Expected Payout", "Actual Payout"]
-    const skeletonRows = 5; // Number of skeleton rows to display
+    const skeletonRows = 10; // Number of skeleton rows to display
     
     return (
         <SlideIn
@@ -22,7 +22,7 @@ const RecentClaimsTableSkeleton = () => {
                 </div>
 
                 {/* Table Skeleton */}
-                <div className="w-full overflow-x-auto">
+                <div className="w-full overflow-x-hidden">
                     <table className="w-full">
                         <thead>
                             <tr>
@@ -70,4 +70,4 @@ const RecentClaimsTableSkeleton = () => {
     )
 }
 
-export default RecentClaimsTableSkeleton
+export default TableSkeleton

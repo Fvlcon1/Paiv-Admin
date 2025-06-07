@@ -33,16 +33,6 @@ const useUAMColumns = () => {
         //     }
         // },
         {
-            accessorKey : 'profileImage',
-            header : 'Profile Image',
-            enableSorting : true,
-            cell : ({getValue} : {getValue : any}) => {
-                return (
-                    getValue()
-                )
-            }
-        },
-        {
             accessorKey : 'fullname',
             header : 'Fullname',
             enableSorting : true,

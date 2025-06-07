@@ -42,7 +42,7 @@ const InviteModal = ({
                             </div>
 
                             <div className="px-4 py-4">
-                                <Form />
+                                <Form close={close}/>
                             </div>                            
                         </div>
                     </Container>

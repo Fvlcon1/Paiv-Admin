@@ -1,4 +1,5 @@
 import { JSX } from "react"
+import { IEncounterDetails } from "../approved/utils/types"
 
 export interface IClaimsTableType {
     hospitalName : string
@@ -42,6 +43,7 @@ export interface IClaimsDetailType {
     location : string
     pharmacy : string
     status : string
+    encounterDetails : IEncounterDetails
 }
 
 export interface IDrugsType {

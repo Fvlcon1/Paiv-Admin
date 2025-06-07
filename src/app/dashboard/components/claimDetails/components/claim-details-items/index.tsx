@@ -7,6 +7,7 @@ import { IClaimsDetailType } from "@/app/dashboard/utils/types";
 import theme from "@styles/theme";
 import LabTests from "./components/labTests";
 import MedicalProcedures from "./components/medicalProcedures";
+import EncounterDetails from "./components/encounter-details/encounter-details";
 
 const ClaimDetailsItems = ({
     maxHeight,
@@ -22,6 +23,9 @@ const ClaimDetailsItems = ({
                 maxHeight: maxHeight ? `${maxHeight}px` : "800px",
             }}
         >
+            <EncounterDetails
+                encounterDetails={claimDetails.encounterDetails}
+            />
             {
                 claimDetails.reasons ?
                 <Reason reasons={claimDetails.reasons}/> : <></>

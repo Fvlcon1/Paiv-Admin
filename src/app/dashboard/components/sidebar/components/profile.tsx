@@ -9,9 +9,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useClickAway } from "react-use"
 import Input from "@components/input/input"
 import { FaMagnifyingGlass } from "react-icons/fa6"
+import { useAuth } from "@/app/context/authContext"
 
 const Profile = () => {
     const [isProfileVisible, setIsProfileVisible] = useState(false)
+    const {userDetails} = useAuth()
     const [searchValue, setSearchValue] = useState("")
     const containerRef = useRef<HTMLDivElement>(null); 
 
@@ -31,12 +33,16 @@ const Profile = () => {
                     }}
                 >
                     <div className="w-[25px] h-[25px] rounded-full bg-main-primary flex justify-center items-center">
-                        <Text bold={TypographyBold.md} textColor={theme.colors.bg.primary}>
-                            PN
+                        <Text 
+                            bold={TypographyBold.md} 
+                            textColor={theme.colors.bg.primary}
+                            size={theme.typography.size.xs2}
+                        >
+                            {`${userDetails?.name?.split(" ")[0].slice(0, 1).toUpperCase()}${userDetails?.name?.split(" ")[1].slice(0, 1).toUpperCase()}`}
                         </Text>
                     </div>
                     <Text textColor={theme.colors.text.primary}>
-                        Prince Nedjoh
+                        {userDetails?.name}
                     </Text>
                     <FaAngleDown color={theme.colors.text.secondary} size={13}/>
                 </div>

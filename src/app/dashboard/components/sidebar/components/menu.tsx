@@ -13,10 +13,12 @@ import { MdOutlinePendingActions, MdSpaceDashboard } from "react-icons/md"
 import { useAppContext } from "@/app/context/context"
 import { useEffect } from "react"
 import { Tooltip } from "antd"
+import { useAuth } from "@/app/context/authContext"
 
 const Menu = () => {
     const pathname = usePathname()
     const { numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined } = useAppContext()
+    const {userDetails} = useAuth()
 
     const claimsMenuItems = [
         {
@@ -61,10 +63,6 @@ const Menu = () => {
             className: `flex gap-2 items-center ${pathname === path ? "bg-[#6969ce23]" : "hover:bg-bg-tetiary"} justify-between duration-200 px-4 py-2 cursor-pointer`
         }
     }
-
-    useEffect(() => {
-        console.log({ numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined })
-    }, [numberOfPending, numberOfApproved, numberOfFlagged, numberOfDeclined])
 
     return (
         <div className="flex gap-1 flex-col pt-1">
@@ -156,30 +154,37 @@ const Menu = () => {
 
             <Divider />
 
-            <Tooltip
-                title="Users and Access Management"
-                placement="right"
-            >
-                <Link
-                    className={getLinkClassName("/dashboard/uam").className}
-                    href={"/dashboard/uam"}
-                >
-                    <div className="flex items-center gap-2">
-                        <FaUserLock
-                            color={getMenuTextStyle("/dashboard/uam").textColor}
-                            size={"15px"}
-                        />
-                        <Text
-                            textColor={getMenuTextStyle("/dashboard/uam").textColor}
-                            bold={getMenuTextStyle("/dashboard/uam").bold}
+            {
+                userDetails?.role === "superadmin" ? (
+                    <>
+                        <Tooltip
+                            title="Users and Access Management"
+                            placement="right"
                         >
-                            {"UAM"}
-                        </Text>
-                    </div>
-                </Link>
-            </Tooltip>
-
-            <Divider />
+                            <Link
+                                className={getLinkClassName("/dashboard/uam").className}
+                                href={"/dashboard/uam"}
+                            >
+                                <div className="flex items-center gap-2">
+                                    <FaUserLock
+                                        color={getMenuTextStyle("/dashboard/uam").textColor}
+                                        size={"15px"}
+                                    />
+                                    <Text
+                                        textColor={getMenuTextStyle("/dashboard/uam").textColor}
+                                        bold={getMenuTextStyle("/dashboard/uam").bold}
+                                    >
+                                        {"UAM"}
+                                    </Text>
+                                </div>
+                            </Link>
+                        </Tooltip>
+                        <Divider />
+                    </>
+                ) : (
+                    <></>
+                )
+            }
 
         </div>
     )
