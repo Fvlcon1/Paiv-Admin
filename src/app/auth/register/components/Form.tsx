@@ -3,30 +3,17 @@
 import Button from "@components/button/button"
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
-import { MdEmail, MdMyLocation } from "react-icons/md"
+import { useState } from "react"
+import { MdEmail } from "react-icons/md"
 import FormInput from "../../form input/formInput"
 import PrivacyText from "./privacyText"
 import { RiLockPasswordFill } from "react-icons/ri"
-import { GiHospitalCross } from "react-icons/gi"
-import { IoLocation, IoMap } from "react-icons/io5"
-import Pressable from "@components/button/pressable"
-import { DropdownItem } from "@/utils/@types"
-import { FaEye, FaEyeSlash, FaPowerOff, FaUser } from "react-icons/fa"
-import { IoMdSettings } from "react-icons/io"
-import Dropdown from "@components/dropdown/dropdown"
-import Coordinates from "./coordinates"
-import { useMutation } from "@tanstack/react-query"
-import axios from "axios"
+import { FaEye, FaEyeSlash, FaUser } from "react-icons/fa"
+import useRegister from "../hooks/useRegister"
 
-const Form = ({
-    loading,
-    formik,
-}: {
-    formik: any,
-    loading: boolean
-}) => {
+const Form = () => {
     const [showPassword, setShowPassword] = useState(false)
+    const {formik, isPending} = useRegister()
 
     return (
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-3">
@@ -34,7 +21,7 @@ const Form = ({
                 <FormInput
                     value={formik.values.email}
                     handleChange={formik.handleChange}
-                    handleBlur={formik.handleBlur}
+                    handleBlur={formik.handleBlur as any}
                     touched={formik.touched.email}
                     error={formik.errors.email}
                     PreIcon={<MdEmail color={theme.colors.text.tetiary} />}
@@ -47,7 +34,7 @@ const Form = ({
                 <FormInput
                     value={formik.values.firstname}
                     handleChange={formik.handleChange}
-                    handleBlur={formik.handleBlur}
+                    handleBlur={formik.handleBlur as any}
                     touched={formik.touched.firstname}
                     error={formik.errors.firstname}
                     autofocus
@@ -61,7 +48,7 @@ const Form = ({
                 <FormInput
                     value={formik.values.lastname}
                     handleChange={formik.handleChange}
-                    handleBlur={formik.handleBlur}
+                    handleBlur={formik.handleBlur as any}
                     touched={formik.touched.lastname}
                     error={formik.errors.lastname}
                     PreIcon={<FaUser color={theme.colors.text.tetiary} />}
@@ -74,7 +61,7 @@ const Form = ({
                 <FormInput
                     value={formik.values.password}
                     handleChange={formik.handleChange}
-                    handleBlur={formik.handleBlur}
+                    handleBlur={formik.handleBlur as any}
                     touched={formik.touched.password}
                     error={formik.errors.password}
                     PreIcon={<RiLockPasswordFill color={theme.colors.text.tetiary} />}
@@ -100,7 +87,7 @@ const Form = ({
                 <Button
                     text="Register"
                     className="!w-full !h-[45px] !rounded-xl !bg-main-primary"
-                    loading={loading}
+                    loading={isPending}
                 />
                 <PrivacyText />
             </div>
