@@ -30,14 +30,6 @@ const getTableData = (encounterDetails : IEncounterDetails) => {
 					&nbsp;{`${encounterDetails?.firstname}${encounterDetails?.othernames ? ` ${encounterDetails?.othernames}` : ''} ${encounterDetails?.lastname}`}
 				</Text>
 			</div>,
-			// <div className="flex">
-			// 	<Text textColor={theme.colors.text.tetiary}>
-			// 		Insurance Type:
-			// 	</Text>
-			// 	<Text>
-			// 		&nbsp;{insuranceType}
-			// 	</Text>
-			// </div>
 		],
 		[
 			<div className="flex">

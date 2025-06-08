@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation"
 
 const Home = () => {
-  redirect("/dashboard")
-    return (
-        <div>
+	redirect("/dashboard")
+	return (
+		<div>
 
-        </div>
-    )
+		</div>
+	)
 }
 export default Home

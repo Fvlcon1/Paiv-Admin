@@ -8,6 +8,9 @@ import theme from "@styles/theme";
 import LabTests from "./components/labTests";
 import MedicalProcedures from "./components/medicalProcedures";
 import EncounterDetails from "./components/encounter-details/encounter-details";
+import getOtherDetails from "./components/other-details/utils/get-other-details";
+import DualTable from "./components/encounter-details/components/dual-table";
+import OtherDetails from "./components/other-details/other-details";
 
 const ClaimDetailsItems = ({
     maxHeight,
@@ -16,6 +19,7 @@ const ClaimDetailsItems = ({
     maxHeight: number | null
     claimDetails: IClaimsDetailType
 }) => {
+    const { data } = getOtherDetails(claimDetails)
     return (
         <div 
             className="flex flex-col gap-3 pb-4 px-4 overflow-y-auto pt-4"
@@ -30,27 +34,6 @@ const ClaimDetailsItems = ({
                 claimDetails.reasons ?
                 <Reason reasons={claimDetails.reasons}/> : <></>
             }
-            
-            <SummaryItem 
-                label="Service Outcome" 
-                value={claimDetails.serviceOutcome} 
-            />
-            <SummaryItem 
-                label="Service Type 1" 
-                value={claimDetails.serviceType1} 
-            />
-            <SummaryItem 
-                label="Service Type 2" 
-                value={claimDetails.serviceType2} 
-            />
-            <SummaryItem 
-                label="Type of Attendance" 
-                value={claimDetails.typeofAttendance} 
-            />
-            <SummaryList 
-                label="Specialties" 
-                items={claimDetails.specialties} 
-            />
             <WithTotal total={claimDetails.diagnosisTotal ?? 0}>
                 <Diagnosis diagnosis={claimDetails.diagnosis} />
             </WithTotal>
@@ -63,6 +46,9 @@ const ClaimDetailsItems = ({
             <WithTotal total={claimDetails.labTestsTotal}>
                 <LabTests tests={claimDetails.labTests} />
             </WithTotal>
+            <OtherDetails
+                claimDetails={claimDetails}
+            />
         </div>
     )
 }

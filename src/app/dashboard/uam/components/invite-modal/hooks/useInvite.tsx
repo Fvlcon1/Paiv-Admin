@@ -5,6 +5,7 @@ import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import * as Yup from "yup"
+import { useUAMContext } from "../../../context/context"
 
 const useInvite = ({
     close
@@ -15,6 +16,7 @@ const useInvite = ({
     const [regionDropdown, setRegionDropdown] = useState<DropdownItem[]>([])
     const [searchDistrict, setSearchDistrict] = useState("")
     const [districtDropdown, setDistrictDropdown] = useState<DropdownItem[]>([])
+    const { refetchAccounts, refetchMetrics } = useUAMContext()
 
     const sendInvite = async () => {
         const response = await protectedApi.POST("superadmin/invite-admin", {
@@ -30,6 +32,8 @@ const useInvite = ({
         mutationFn: sendInvite,
         onSuccess: () => {
             toast.success("Invite sent successfully")
+            refetchAccounts()
+            refetchMetrics()
             close()
         },
         onError: (error: any) => {

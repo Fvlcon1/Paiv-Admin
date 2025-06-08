@@ -20,11 +20,11 @@ const Form = ({
 }) => {
     const { formik, isInvitePending, regionDropdown, searchRegion, setSearchRegion, districtDropdown, searchDistrict, setSearchDistrict } = useInvite({ close })
     const dropdownItems: DropdownItem[] = [
-        { key: "1", label: "Admin", onClick: () => { formik.setFieldValue("role", "admin") } },
+        { key: "1", label: "Superadmin", onClick: () => { formik.setFieldValue("role", "superadmin") } },
         { type: "divider", key: "divider-1" },
-        { key: "2", label: "User", onClick: () => { formik.setFieldValue("role", "user") } },
-        { type: "divider", key: "divider-2" },
-        { key: "3", label: "Reviewer", onClick: () => { formik.setFieldValue("role", "reviewer") } },
+        { key: "2", label: "Admin", onClick: () => { formik.setFieldValue("role", "admin") } },
+        // { type: "divider", key: "divider-2" },
+        // { key: "3", label: "Reviewer", onClick: () => { formik.setFieldValue("role", "reviewer") } },
     ]
 
     return (

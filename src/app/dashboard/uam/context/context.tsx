@@ -11,17 +11,25 @@ const UAMContext = createContext<{
     metricsData: any
     metricsLoading: boolean
     metricsError: any
+    refetchMetrics: () => void
+    refetchAccounts: () => void
+    metricsIsFetching: boolean
+    accountsIsFetching: boolean
 }>({
     accountsData: null,
     accountsLoading: false,
     accountsError: null,
     metricsData: null,
     metricsLoading: false,
-    metricsError: null
+    metricsError: null,
+    refetchMetrics: () => {},
+    refetchAccounts: () => {},
+    metricsIsFetching: false,
+    accountsIsFetching: false
 })
 
 export const UAMContextProvider = ({ children }: { children: ReactNode }) => {
-    const {accountsData, accountsLoading, accountsError, metricsData, metricsLoading, metricsError} = useUAM()
+    const {accountsData, accountsLoading, accountsError, metricsData, metricsLoading, metricsError, refetchMetrics, refetchAccounts, metricsIsFetching, accountsIsFetching} = useUAM()
 
     return (
         <UAMContext.Provider
@@ -31,7 +39,11 @@ export const UAMContextProvider = ({ children }: { children: ReactNode }) => {
                 accountsError,
                 metricsData,
                 metricsLoading,
-                metricsError
+                metricsError,
+                refetchMetrics,
+                refetchAccounts,
+                metricsIsFetching,
+                accountsIsFetching
             }}
         >
             {children}

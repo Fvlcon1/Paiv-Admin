@@ -35,7 +35,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         const profile = localStorage.getItem("profile");
-        getProfileMutation()
         if (profile) {
             setUserDetails(JSON.parse(profile));
         }

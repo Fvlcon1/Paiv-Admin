@@ -1,9 +1,9 @@
-import { useState } from "react"
 import { protectedApi } from "../utils/apis/api"
 import { useMutation } from "@tanstack/react-query"
+import { useAuth } from "../context/authContext"
 
 const useProfile = () => {
-    const [profile, setProfile] = useState()
+    const {setUserDetails} = useAuth()
 
     const transformProfile = (data : any) => {
         return {
@@ -24,7 +24,7 @@ const useProfile = () => {
     const {mutate : getProfileMutation, isPending : isPendingProfile, isError : isErrorProfile, error : errorProfile} = useMutation({
         mutationFn : getProfile,
         onSuccess : (data)=>{
-            setProfile(data as any)
+            setUserDetails(data as any)
             localStorage.setItem("profile", JSON.stringify(data));
         },
         onError : (error)=>{
@@ -34,7 +34,6 @@ const useProfile = () => {
         
     
     return {
-        profile,
         getProfileMutation,
         isPendingProfile,
         isErrorProfile,

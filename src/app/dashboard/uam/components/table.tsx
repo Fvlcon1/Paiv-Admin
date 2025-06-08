@@ -16,7 +16,7 @@ const Table = () => {
     const [isScrolling, setIsScrolling] = useState(false);
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const [containerHeight, setContainerHeight] = useState(500);
-    const {accountsData, accountsLoading} = useUAMContext()
+    const {accountsData, accountsLoading, accountsIsFetching, metricsIsFetching} = useUAMContext()
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -77,7 +77,7 @@ const Table = () => {
                                     {getRowModel().rows.map((row, index) => (
                                         <tr
                                             key={row.id}
-                                            className="hover:bg-bg-secondary bg-white cursor-pointer duration-200"
+                                            className={`hover:bg-bg-secondary bg-white ${(accountsIsFetching || metricsIsFetching) ? "cursor-wait" : "cursor-pointer"} duration-200 ${row.getVisibleCells().some((cell) => cell.getValue() === "Admin") ? "bg-bg-secondary" : ""}`}
                                         >
                                             {row.getVisibleCells().map((cell, colIndex) => (
                                                 <td

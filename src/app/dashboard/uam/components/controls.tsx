@@ -13,6 +13,7 @@ import { FaListUl } from "react-icons/fa"
 import { TiUserAdd } from "react-icons/ti"
 import { RiUserAddLine } from "react-icons/ri"
 import InviteModal from "./invite-modal/invite-modal"
+import { useUAMContext } from "../context/context"
 
 const Controls = () => {
     const [searchValue, setSearchValue] = useState("")
@@ -20,6 +21,12 @@ const Controls = () => {
     const [pageNumber, setPageNumber] = useState(1)
     const [view, setView] = useState<"list" | "grid">("list")
     const [isInviteModalVisible, setIsInviteModalVisible] = useState(false)
+    const { refetchAccounts, refetchMetrics } = useUAMContext()
+
+    const handleRefresh = () => {
+        refetchAccounts()
+        refetchMetrics()
+    }
 
     return (
         <>
@@ -33,6 +40,7 @@ const Controls = () => {
                     <div className="flex items-center gap-2 flex-1">
                         <Pressable
                             scaleFactor={0.95}
+                            onClick={() => handleRefresh()}
                         >
                             <div className="flex h-[33px] items-center p-1 px-2 border-[1px] border-solid border-border-tetiary rounded-lg gap-[1px] cursor-pointer hover:bg-bg-tetiary">
                                 <IoReload
