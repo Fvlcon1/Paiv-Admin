@@ -18,14 +18,11 @@ import { useRouter } from "next/navigation";
 import Cookies from "universal-cookie";
 import { useAuth } from "@/app/context/authContext";
 import useProfile from "@/app/hooks/useProfile";
+import useMFA from "../hooks/useMFA";
 
 const cookies = new Cookies()
 
-const MFACode = ({
-    email_2fa_enabled
-} : {
-    email_2fa_enabled : boolean
-}) => {
+const MFACode = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
     const [timeLeft, setTimeLeft] = useState(60 * 5);
@@ -34,35 +31,7 @@ const MFACode = ({
     const router = useRouter()
     const {userDetails, setUserDetails} = useAuth()
     const {getProfileMutation} = useProfile()
-
-    const enableEmailOtp = async () => {
-        const response = await protectedApi.POST("mfa/admin/email/enable")
-        return response
-    }
-
-    const sendEmailOtp = async () => {
-        const response = await protectedApi.POST("mfa/admin/send-otp")
-        return response
-    }
-
-    const {mutate : sendEmailOtpMutation, isPending : sendEmailOtpPending} = useMutation({
-        mutationFn : sendEmailOtp
-    })
-
-    const {mutate : enableEmailOtpMutation, isPending : enableEmailOtpPending} = useMutation({
-        mutationFn : enableEmailOtp,
-        onSuccess : ()=>{
-            sendEmailOtpMutation()
-        }
-    })
-
-    useEffect(()=>{
-        if(!email_2fa_enabled){
-            enableEmailOtpMutation()
-        } else {
-            sendEmailOtpMutation()
-        }
-    },[])
+    const {sendEmailOtpMutation, sendEmailOtpPending, enableEmailOtpMutation, enableEmailOtpPending, submitOTPMutation, submitOTPPending} = useMFA()
 
     useEffect(() => {
         if (timeLeft > 0) {
@@ -127,27 +96,6 @@ const MFACode = ({
         }
     };
 
-    const submitOTP = async (otp: string) => {
-        console.log({ otp });
-        const response = await protectedApi.POST("mfa/admin/verify-otp", {
-            otp: otp
-        });
-        return response
-    };
-
-    const {mutate : submitOTPMutation, isPending : submitOTPPending} = useMutation({
-        mutationFn : submitOTP,
-        onSuccess : (data)=>{
-            cookies.set("accessToken", data.access_token, {path : "/"})
-            getProfileMutation()
-            toast.success("Setup completed successfully")
-            router.push("/")
-        },
-        onError : ()=>{
-            toast.error("Error setting up mobile auth")
-        }
-    })
-
     const handleResendCode = () => {
         setTimeLeft(60 * 5);
         setCanResend(false);
@@ -167,18 +115,6 @@ const MFACode = ({
             transition={{ duration: 0.5 }}
         >
             <form className="flex flex-col gap-4 items-center mt-[-50px]">
-                <Pressable 
-                    className="w-full mb-[20px] flex items-center gap-1 hover:opacity-70 cursor-pointer duration-200"
-                    scaleFactor={0.99}
-                    onClick={()=>setViewState(MFAViewStates.MFA_SELECTION)}
-                >
-                    <IoIosArrowBack 
-                        color={theme.colors.text.secondary}
-                    />
-                    <Text>
-                        Back
-                    </Text>
-                </Pressable>
                 <div className="flex flex-col gap-0 items-center">
                     <Text
                         fontfamily="greater-theory"

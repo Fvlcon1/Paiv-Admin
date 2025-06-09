@@ -12,10 +12,14 @@ import { TbShieldLockFilled } from 'react-icons/tb';
 import { MFAViewStates } from '../utils/types';
 import toast from 'react-hot-toast';
 import { useMFAContext } from '../context/mfaContext';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import useMFA from '../hooks/useMFA';
 
 const MFASelection = () => {
     const [selectedMfa, setSelectedMfa] = useState<MFAViewStates>(MFAViewStates.EMAIL)
-    const {setViewState} = useMFAContext()
+    const router = useRouter()
+    const {enableEmailOtpMutation, enableEmailOtpPending, sendEmailOtpPending} = useMFA()
 
     const handleMFASelection = (mfaType : MFAViewStates) => {
         setSelectedMfa(mfaType)
@@ -24,7 +28,10 @@ const MFASelection = () => {
     const handleContinue = () => {
         if(!selectedMfa)
             return toast.error("Please select an authentication method")
-        setViewState(selectedMfa)
+        if(selectedMfa === MFAViewStates.EMAIL)
+            enableEmailOtpMutation()
+        else if(selectedMfa === MFAViewStates.MOBILE_APP)
+            router.push("/auth/mfa/mobile-auth")
     }
 
     return (
@@ -111,7 +118,16 @@ const MFASelection = () => {
                     text='Continue'
                     className='!w-full !bg-main-primary !h-[45px]'
                     onClick={handleContinue}
+                    loading={enableEmailOtpPending || sendEmailOtpPending}
                 />
+                <Link href="/">
+                    <Text
+                        textColor={theme.colors.main.primary}
+                        className='hover:opacity-70 duration-200'
+                    >
+                        Continue without MFA ››
+                    </Text>
+                </Link>
             </div>
         </motion.div>
     )

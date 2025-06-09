@@ -1,4 +1,3 @@
-import { IDiagonosisType } from "@/app/dashboard/utils/types"
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
 import { useEffect, useState } from "react"
@@ -22,7 +21,7 @@ const Table = ({
 					{tableHeads.map((head, index) => (
 						<th
 							key={index}
-							className={`pl-4 py-[15px] text-left ${tableBody.length > 0 ? "border-b-[1px]" : ""} ${index !== tableHeads.length - 1 ? "border-r-[1px]" : ""} border-solid border-bg-tetiary`}
+							className={`pl-4 py-2 text-left ${tableBody.length > 0 ? "border-b-[1px]" : ""} ${index !== tableHeads.length - 1 ? "border-r-[1px]" : ""} border-solid border-bg-tetiary`}
 						>
 							<Text textColor={theme.colors.text.tetiary}>{head}</Text>
 						</th>
@@ -36,7 +35,7 @@ const Table = ({
 							body.map((item, index) => (
 								<td
 									key={index}
-									className={`pl-4 ${bodyIndex !== tableBody.length - 1 ? "border-b-[1px]" : ""} py-[15px] text-left ${index !== body.length - 1 ? "border-r-[1px]" : ""} border-solid border-bg-tetiary`}
+									className={`pl-4 ${bodyIndex !== tableBody.length - 1 ? "border-b-[1px]" : ""} py-2 text-left ${index !== body.length - 1 ? "border-r-[1px]" : ""} border-solid border-bg-tetiary`}
 								>
 									<Text>{item}</Text>
 								</td>

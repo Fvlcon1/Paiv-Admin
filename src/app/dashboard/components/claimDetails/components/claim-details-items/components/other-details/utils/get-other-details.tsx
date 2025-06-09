@@ -62,7 +62,7 @@ const getOtherDetails = (claimDetails: IClaimsDetailType) => {
 							<div className="flex flex-wrap gap-2">
 								{specialties.map((item, index) => (
 									<div 
-										className="flex gap-1 px-2 py-1 bg-bg-secondary border border-border-primary rounded-full"
+										className="flex gap-1 px-2 py-[2px] bg-bg-secondary border border-border-primary rounded-full"
 										key={index}
 									>
 										<Text bold={theme.typography.bold.md}>

@@ -36,7 +36,7 @@ const Table = () => {
                 {accountsData?.length > 0 ? (
                     <div
                         ref={tableContainerRef}
-                        className="w-full overflow-x-auto h-[calc(100vh-100px)]"
+                        className="w-full overflow-x-auto"
                         // onScroll={(e) => {
                         //     if (isScrolling) return;
                         //     setIsScrolling(true);
@@ -77,7 +77,7 @@ const Table = () => {
                                     {getRowModel().rows.map((row, index) => (
                                         <tr
                                             key={row.id}
-                                            className={`hover:bg-bg-secondary bg-white ${(accountsIsFetching || metricsIsFetching) ? "cursor-wait" : "cursor-pointer"} duration-200 ${row.getVisibleCells().some((cell) => cell.getValue() === "Admin") ? "bg-bg-secondary" : ""}`}
+                                            className={`hover:bg-bg-secondary bg-white ${(accountsIsFetching || metricsIsFetching) ? "cursor-wait opacity-50" : "cursor-pointer"} duration-200 ${row.getVisibleCells().some((cell) => cell.getValue() === "Admin") ? "bg-bg-secondary" : ""}`}
                                         >
                                             {row.getVisibleCells().map((cell, colIndex) => (
                                                 <td

@@ -17,10 +17,11 @@ const EncounterDetails = ({
             <Images
                 encounterDetails={encounterDetails}
             />
-            <div className="w-full border-solid border-[1px] border-bg-tetiary rounded-xl flex flex-col">
-                <div className="flex w-full border-solid border-b-[1px] border-border-secondary bg-bg-secondary min-h-[45px] items-center pl-4 rounded-t-xl">
+            <div className="w-full rounded-xl flex flex-col">
+                <div className="flex w-full min-h-[45px] items-center pl-4 rounded-t-xl bg-main-primary">
                     <Text
                         bold={theme.typography.bold.md}
+                        textColor={theme.colors.bg.primary}
                     >
                         Patient Details
                     </Text>

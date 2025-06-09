@@ -72,7 +72,7 @@ const Button = ({
 		<div
 			className={`normal-loader !w-[20px]`}
 			style={{
-				backgroundColor: loadingColor ?? theme.colors.main.primary
+				backgroundColor: loadingColor ?? theme.colors.bg.primary
 			}}
 		/>
 	)

@@ -97,14 +97,14 @@ const ChartCarousel = () => {
                         {/* Navigation Arrows */}
                         <button
                             onClick={() => navigate(-1)}
-                            className="absolute left-0 h-full w-[100px] rounded-l-2xl flex items-center justify-center top-1/2 cursor-pointer -translate-y-1/2 p-2 opacity-0 hover:opacity-100 bg-[#4f4f4f23] duration-300 "
+                            className="absolute left-0 h-full w-[100px] rounded-l-xl flex items-center justify-center top-1/2 cursor-pointer -translate-y-1/2 p-2 opacity-0 hover:opacity-100 bg-[#4f4f4f23] duration-300 "
                             aria-label="Previous chart"
                         >
                             <FiChevronLeft className="text-gray-700 text-xl" />
                         </button>
                         <button
                             onClick={() => navigate(1)}
-                            className="absolute right-0 h-full w-[100px] rounded-r-2xl flex items-center justify-center top-1/2 cursor-pointer -translate-y-1/2 p-2 opacity-0 hover:opacity-100 bg-[#4f4f4f23] duration-300"
+                            className="absolute right-0 h-full w-[100px] rounded-r-xl flex items-center justify-center top-1/2 cursor-pointer -translate-y-1/2 p-2 opacity-0 hover:opacity-100 bg-[#4f4f4f23] duration-300"
                             aria-label="Next chart"
                         >
                             <FiChevronRight className="text-gray-700 text-xl" />

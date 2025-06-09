@@ -20,6 +20,7 @@ export interface INhisDetails {
 }
 
 export interface IEncounterDetails extends INhisDetails {
+    encounterId : string
     checkinTime? : Date,
     checkoutTime? : Date,
     disposition? : string

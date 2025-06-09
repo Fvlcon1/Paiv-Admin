@@ -132,7 +132,7 @@ const useApprovedClaims = () => {
             labTestsTotal: item.lab_tests_total,
             drugsTotal: item.drugs_total,
             claimSubmissionDate: getDate(new Date(item.created_at)),
-            claimProcessingDate: item.updated_at ? getDate(new Date(item.updated_at)) : "-",
+            claimProcessingDate: item.processed_at ? getDate(new Date(item.processed_at)) : "-",
             claimStatus: item.status,
             actualPayout: item.total_payout ? "GHS " + item.total_payout : "-",
             details: convertToClaimsDetails(item)

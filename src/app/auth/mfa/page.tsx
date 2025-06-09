@@ -1,11 +1,9 @@
 'use client'
 
 import { AnimatePresence } from "framer-motion"
-import MFACode from "./components/MFACode"
-import MFASelection from "./components/MFASelection"
 import { useMFAContext } from "./context/mfaContext"
 import { MFAViewStates } from "./utils/types"
-import MobileAuthenticator from "./components/mobile auth/MobileAuthenticator"
+import MobileAuthenticator from "./mobile-auth/page"
 import { protectedApi } from "@/app/utils/apis/api"
 import { useMutation } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
@@ -40,7 +38,7 @@ const MFA = () => {
 
     return (
         <>
-            <AnimatePresence>
+            {/* <AnimatePresence>
                 {
                     isPending ?
                     <div key={1} className="w-full h-screen flex justify-center items-center"><div className="normal-loader"></div></div>
@@ -55,7 +53,7 @@ const MFA = () => {
                 <div key={5} className="w-full relative flex justify-center items-center">
                     <Copyright />
                 </div>
-            </AnimatePresence>
+            </AnimatePresence> */}
         </>
     )
 }

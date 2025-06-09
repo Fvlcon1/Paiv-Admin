@@ -3,10 +3,10 @@
 import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 import { useSearchParams } from "next/navigation"
-import { toast } from "react-toastify"
 import { useFormik } from "formik"
 import validationSchema from "../utils/validationSchema"
 import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
 
 interface SignupType {
     firstname : string,
@@ -38,8 +38,8 @@ const useRegister = () => {
             toast.success("registration successful")
             router.push('/auth/login')
         },
-        onError: (error) => {
-            toast.error(error.message)
+        onError: (error : any) => {
+            toast.error(error.response.data.detail || "Failed to register")
             console.error({error});
         }
     })

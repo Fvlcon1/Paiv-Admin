@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Input from "@components/input/input";
 import Text from "@styles/components/text";
 import { TypographyBold } from "@styles/style.types";
-import { useMFAContext } from "../../context/mfaContext";
+import { useMFAContext } from "../context/mfaContext";
 import { protectedApi } from "@/app/utils/apis/api";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";

@@ -6,6 +6,7 @@ import { RiVerifiedBadgeFill } from "react-icons/ri"
 import { ReactNode } from "react"
 import { IEncounterDetails } from "@/app/dashboard/approved/utils/types"
 import { FaUser } from "react-icons/fa6"
+import Text from "@styles/components/text"
 
 const OutterContainer = ({
     children
@@ -13,7 +14,7 @@ const OutterContainer = ({
     children?: ReactNode
 }) => {
     return (
-        <div className="flex items-center border-border-primary border-[1px] justify-center duration-500 p-1 w-[100px] h-[100px] bg-bg-primary-light rounded-lg">
+        <div className="flex flex-col justify-center items-center border-border-primary border-[1px] duration-500 p-1 w-[100px] h-[100px] bg-bg-primary-light rounded-lg">
             {children}
         </div>
     )
@@ -29,58 +30,79 @@ const Images = ({
         <div className="relative gap-2 flex">
 
             {/* Profile Image */}
-            <OutterContainer>
-                {
-                    encounterDetails?.imageUrl ?
-                        <div className="relative overflow-hidden rounded-md w-full h-full">
-                            <Image
-                                src={encounterDetails.imageUrl}
-                                alt="profile"
-                                fill
-                                className="object-cover"
-                                sizes="100px"
-                            />
-                        </div>
-                        :
-                        <FaUser color={theme.colors.text.tetiary} size={60} />
-                }
-            </OutterContainer>
+            <div className="flex flex-col gap-2 items-center">
+                <OutterContainer>
+                    {
+                        encounterDetails?.imageUrl ?
+                            <div className="relative overflow-hidden rounded-md w-full h-full">
+                                <Image
+                                    src={encounterDetails.imageUrl}
+                                    alt="profile"
+                                    fill
+                                    className="object-cover"
+                                    sizes="100px"
+                                />
+                            </div>
+                            :
+                            <FaUser color={theme.colors.text.tetiary} size={60} />
+                    }
+                </OutterContainer>
+                <div className="px-3 py-[2px] w-fit flex items-center rounded-full bg-bg-tetiary border-[1px] border-border-secondary">
+                    <Text>
+                        Profile
+                    </Text>
+                </div>
+            </div>
 
             {/* Checkin Image */}
-            <OutterContainer>
-                {
-                    encounterDetails?.checkinImageUrl ?
-                        <div className="relative overflow-hidden rounded-md w-full h-full">
-                            <Image
-                                src={encounterDetails.checkinImageUrl}
-                                alt="profile"
-                                fill
-                                className="object-cover"
-                                sizes="100px"
-                            />
-                        </div>
-                        :
-                        <FaUser color={theme.colors.text.tetiary} size={60} />
-                }
-            </OutterContainer>
+            <div className="flex flex-col gap-2 items-center">
+                <OutterContainer>
+                    {
+                        encounterDetails?.checkinImageUrl ?
+                            <div className="relative overflow-hidden rounded-md w-full h-full">
+                                <Image
+                                    src={encounterDetails.checkinImageUrl}
+                                    alt="profile"
+                                    fill
+                                    className="object-cover"
+                                    sizes="100px"
+                                />
+                            </div>
+                            :
+                            <FaUser color={theme.colors.text.tetiary} size={60} />
+                    }
+                </OutterContainer>
+                <div className="px-3 py-[2px] w-fit flex items-center rounded-full bg-bg-tetiary border-[1px] border-border-secondary">
+                    <Text>
+                        Checkin
+                    </Text>
+                </div>
+            </div>
 
             {/* Checkout Image */}
-            <OutterContainer>
-                {
-                    encounterDetails?.checkoutImageUrl ?
-                        <div className="relative overflow-hidden rounded-md w-full h-full">
-                            <Image
-                                src={encounterDetails.checkoutImageUrl}
-                                alt="profile"
-                                fill
-                                className="object-cover"
-                                sizes="100px"
-                            />
-                        </div>
-                        :
-                        <FaUser color={theme.colors.text.tetiary} size={60} />
-                }
-            </OutterContainer>
+            <div className="flex flex-col gap-2 items-center"> 
+                <OutterContainer>
+                    {
+                        encounterDetails?.checkoutImageUrl ?
+                            <div className="relative overflow-hidden rounded-md w-full h-full">
+                                <Image
+                                    src={encounterDetails.checkoutImageUrl}
+                                    alt="profile"
+                                    fill
+                                    className="object-cover"
+                                    sizes="100px"
+                                />
+                            </div>
+                            :
+                            <FaUser color={theme.colors.text.tetiary} size={60} />
+                    }
+                </OutterContainer>
+                <div className="px-3 py-[2px] w-fit flex items-center rounded-full bg-bg-tetiary border-[1px] border-border-secondary">
+                    <Text>
+                        Checkout
+                    </Text>
+                </div>
+            </div>
 
             {/* Status */}
             <div className="h-full flex justify-center items-center">

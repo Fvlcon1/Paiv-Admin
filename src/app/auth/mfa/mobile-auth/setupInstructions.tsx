@@ -4,8 +4,8 @@ import { TypographyBold, TypographySize } from "@styles/style.types"
 import theme from "@styles/theme"
 import { IoIosArrowBack } from "react-icons/io"
 import { PiDotDuotone } from "react-icons/pi"
-import { useMFAContext } from "../../context/mfaContext"
-import { MFAViewStates } from "../../utils/types"
+import { useMFAContext } from "../context/mfaContext"
+import { MFAViewStates } from "../utils/types"
 
 const SetupInstructions = () => {
     const {setViewState} = useMFAContext()

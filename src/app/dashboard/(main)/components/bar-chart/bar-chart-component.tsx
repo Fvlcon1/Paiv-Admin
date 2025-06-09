@@ -10,6 +10,21 @@ const Chart = dynamic(() => import('react-apexcharts'), {
     loading: () => <BarChartSkeleton />
 });
 
+const barColors = [
+    '#34C759', // Green
+    '#F8E231', // Yellow
+    '#FF8C00', // Orange
+    '#FF69B4', // Pink
+    '#8B9467', // Brown
+    '#45B3FA', // Sky Blue
+    '#9B59B6', // Purple
+    '#2ECC40', // Light Green
+    '#E74C3C', // Red
+    '#1ABC9C', // Teal
+    '#2980B9', // Dark Blue
+    '#F1C40F', // Golden
+];
+
 const BarChartComponent = () => {
     const { isDashboardDataPending } = useDashboardContext();
 
@@ -30,7 +45,7 @@ const BarChartComponent = () => {
             toolbar: { show: false },
             foreColor: '#9CA3AF'
         },
-        colors: [getShade(10), getShade(20), getShade(30), getShade(40), getShade(50), getShade(60), getShade(70), getShade(80), getShade(90), getShade(100)],
+        colors: barColors,
         plotOptions: {
             bar: {
                 horizontal: false,

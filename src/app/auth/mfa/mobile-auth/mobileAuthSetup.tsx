@@ -5,8 +5,8 @@ import Text from "@styles/components/text"
 import theme from "@styles/theme";
 import { motion } from 'framer-motion';
 import { IoIosArrowBack } from "react-icons/io";
-import { MFAViewStates } from "../../utils/types";
-import { useMFAContext } from "../../context/mfaContext";
+import { MFAViewStates } from "../utils/types";
+import { useMFAContext } from "../context/mfaContext";
 import { TypographyBold, TypographySize } from "@styles/style.types";
 import { PiDotDuotone } from "react-icons/pi";
 import SetupInstructions from "./setupInstructions";

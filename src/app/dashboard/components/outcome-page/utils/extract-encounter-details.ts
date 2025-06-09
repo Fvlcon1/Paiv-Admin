@@ -1,4 +1,4 @@
-import { getDateTime } from "@/utils/getDate";
+import getDate, { getDateTime } from "@/utils/getDate";
 import { IEncounterDetails } from "../../../approved/utils/types";
 
 const extractEncounterDetails = (data : any) => {
@@ -27,7 +27,8 @@ const extractEncounterDetails = (data : any) => {
         final_time,
         disposition_name,
         verification_status,
-        final_verification_status
+        final_verification_status,
+        encounter_id
     } = data.encounter_details
 
     const encounterDetails: IEncounterDetails = {
@@ -57,6 +58,7 @@ const extractEncounterDetails = (data : any) => {
         disposition : disposition_name,
         checkinStatus : verification_status,
         checkoutStatus : final_verification_status,
+        encounterId : encounter_id,
         // claimSubmissionAt :  claim_submission_time && new Date(claim_submission_time),
     };
     return encounterDetails

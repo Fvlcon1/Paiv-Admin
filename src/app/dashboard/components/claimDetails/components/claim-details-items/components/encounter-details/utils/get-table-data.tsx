@@ -5,7 +5,7 @@ import { getDateTime } from "@/utils/getDate"
 import { getLengthOfStay } from "./getLengthOfStay"
 import { IEncounterDetails } from "@/app/dashboard/approved/utils/types"
 
-const getTableData = (encounterDetails : IEncounterDetails) => {
+const getTableData = (encounterDetails: IEncounterDetails) => {
 	const {
 		gender,
 		dob,
@@ -14,7 +14,7 @@ const getTableData = (encounterDetails : IEncounterDetails) => {
 		residentialAddress,
 		ghanaCardNumber,
 		nhisId,
-		claimSubmissionAt,
+		createdAt,
 		checkinTime,
 		checkoutTime,
 		disposition
@@ -28,6 +28,14 @@ const getTableData = (encounterDetails : IEncounterDetails) => {
 				</Text>
 				<Text>
 					&nbsp;{`${encounterDetails?.firstname}${encounterDetails?.othernames ? ` ${encounterDetails?.othernames}` : ''} ${encounterDetails?.lastname}`}
+				</Text>
+			</div>,
+			<div className="flex">
+				<Text textColor={theme.colors.text.tetiary}>
+					Encounter ID:
+				</Text>
+				<Text>
+					&nbsp;{encounterDetails?.encounterId}
 				</Text>
 			</div>,
 		],
@@ -81,7 +89,7 @@ const getTableData = (encounterDetails : IEncounterDetails) => {
 					Claim submitted on:
 				</Text>
 				<Text>
-					&nbsp;{claimSubmissionAt ? getDateTime(claimSubmissionAt) : "-"}
+					&nbsp;{createdAt ? getDateTime(createdAt) : "-"}
 				</Text>
 			</div>
 		],

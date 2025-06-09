@@ -15,14 +15,13 @@ import OtherDetails from "./components/other-details/other-details";
 const ClaimDetailsItems = ({
     maxHeight,
     claimDetails
-} : {
+}: {
     maxHeight: number | null
     claimDetails: IClaimsDetailType
 }) => {
-    const { data } = getOtherDetails(claimDetails)
     return (
-        <div 
-            className="flex flex-col gap-3 pb-4 px-4 overflow-y-auto pt-4"
+        <div
+            className="flex flex-col gap-5 pb-4 px-4 overflow-y-auto pt-4"
             style={{
                 maxHeight: maxHeight ? `${maxHeight}px` : "800px",
             }}
@@ -30,10 +29,6 @@ const ClaimDetailsItems = ({
             <EncounterDetails
                 encounterDetails={claimDetails.encounterDetails}
             />
-            {
-                claimDetails.reasons ?
-                <Reason reasons={claimDetails.reasons}/> : <></>
-            }
             <WithTotal total={claimDetails.diagnosisTotal ?? 0}>
                 <Diagnosis diagnosis={claimDetails.diagnosis} />
             </WithTotal>
@@ -49,6 +44,10 @@ const ClaimDetailsItems = ({
             <OtherDetails
                 claimDetails={claimDetails}
             />
+            {
+                claimDetails.reasons ?
+                    <Reason reasons={claimDetails.reasons} /> : <></>
+            }
         </div>
     )
 }
@@ -57,15 +56,15 @@ export default ClaimDetailsItems
 const WithTotal = ({
     total,
     children
-} : {
-    total : number
-    children : React.ReactNode
+}: {
+    total: number
+    children: React.ReactNode
 }) => (
     <div className="w-full flex flex-col gap-2">
         {children}
         <div className="wfull flex justify-end">
             <Text>
-                Total: 
+                Total:
                 <Text bold={TypographyBold.md2}>
                     &nbsp;GHS {total}
                 </Text>
@@ -93,7 +92,7 @@ const SummaryList = ({ label, items }: { label: string; items: string[] }) => (
         {items?.length > 0 ? (
             <div className="flex flex-wrap gap-2">
                 {items.map((item, index) => (
-                    <div 
+                    <div
                         className="flex gap-1 px-2 py-1 bg-bg-quantinary border border-border-primary rounded-full"
                         key={`${label}-${index}`}
                     >

@@ -2,7 +2,6 @@ import SlideIn from "@styles/components/slidein"
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
 import ChartComponent from "./chart-component"
-import ChartSkeleton from "./chart-skeleton"
 import { DatePicker } from "antd"
 import { useState } from "react"
 import dayjs from "dayjs"
@@ -10,17 +9,14 @@ import useLineChart from "./hooks/useLineChart"
 import { useDashboardContext } from "../../context/context"
 
 const Chart = () => {
-    const [quickMonths, setQuickMonths] = useState<string[]>(["This Month", "April", "March"])
-    const [selectedMonth, setSelectedMonth] = useState<string | undefined>(quickMonths[0])
     const [selectedDate, setSelectedDate] = useState<string>("")
     const { lineChartSeries, isLineChartDataPending } = useLineChart()
     const {setClaimsActivityStartDate, setClaimsActivityEndDate, claimsActivityStartDate, claimsActivityEndDate} = useDashboardContext()
 
     const handleMonthChange = (value: string) => {
-        setSelectedMonth(undefined)
         setSelectedDate(value)
-        setClaimsActivityStartDate(dayjs(value).startOf("month").format("YYYY-MM-DD"))
-        setClaimsActivityEndDate(dayjs(value).endOf("month").format("YYYY-MM-DD"))
+        setClaimsActivityStartDate(dayjs(value).startOf("year").format("YYYY-MM-DD"))
+        setClaimsActivityEndDate(dayjs(value).endOf("year").format("YYYY-MM-DD"))
     }
 
     return (
@@ -42,7 +38,8 @@ const Chart = () => {
                     </div>
 
                     <DatePicker
-                        placeholder="Select Month"
+                        placeholder="Select Year"
+                        className="z-10"
                         format="YYYY-MM-DD"
                         style={{
                             outline: "none",
@@ -51,7 +48,7 @@ const Chart = () => {
                             fontSize: "14px",
                             height: "30px"
                         }}
-                        picker="month"
+                        picker="year"
                         value={selectedDate ? dayjs(selectedDate) : claimsActivityStartDate ? dayjs(claimsActivityStartDate) : undefined}
                         onChange={(value) => handleMonthChange(value?.format("YYYY-MM-DD") || "")}
                     />

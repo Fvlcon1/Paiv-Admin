@@ -11,7 +11,7 @@ import Copyright from "../components/copyright"
 
 const Login = () => {
     const [stayLoggedIn, setStayLoggedIn] = useState(true)
-    const {formik, isPendingLogin : isPending, isErrorLogin : isError, errorLogin : error} = useLogin()
+    const {formik, isPendingLogin : isPending, isErrorLogin : isError, errorLogin : error, sendEmailOtpPending} = useLogin()
 
     return (
         <div className="w-full h-screen flex justify-center items-center mt-[-50px]">
@@ -35,7 +35,7 @@ const Login = () => {
                 {/* Form */}
                 <Form
                     formik={formik}
-                    loading={isPending}
+                    loading={isPending || sendEmailOtpPending}
                     stayLoggedIn={stayLoggedIn}
                     setStayLoggedIn={setStayLoggedIn}
                 />

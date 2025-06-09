@@ -2,7 +2,7 @@ import Input from "@components/input/input"
 import Text from "@styles/components/text"
 import { TypographyBold } from "@styles/style.types"
 import theme from "@styles/theme"
-import { ChangeEvent, DetailedHTMLProps, HTMLInputAutoCompleteAttribute, InputHTMLAttributes, ReactNode } from "react"
+import { ChangeEvent, DetailedHTMLProps, FocusEventHandler, HTMLInputAutoCompleteAttribute, InputHTMLAttributes, ReactNode } from "react"
 
 const FormInput = ({
     value,
@@ -22,7 +22,7 @@ const FormInput = ({
 } : {
     value : string,
     handleChange : (e?:ChangeEvent<HTMLInputElement>)=>void
-    handleBlur : ()=>void
+    handleBlur? : FocusEventHandler<HTMLInputElement>
     error? : string
     touched? : boolean
     autofocus? : boolean

@@ -37,7 +37,7 @@ const useInvite = ({
             close()
         },
         onError: (error: any) => {
-            toast.error(error?.response?.data?.message || "Failed to send invite")
+            toast.error(error?.response?.data?.detail || "Failed to send invite")
         }
     })
 
@@ -134,6 +134,11 @@ const useInvite = ({
 
         setDistrictDropdown(dropdown)
     }
+
+    useEffect(()=>{
+        if(regionsLoading)
+            setRegionDropdown([{key : "1", label : <div className="normal-loader" />, disabled : true}])
+    },[regionsLoading])
 
     useEffect(() => {
         getRegionsDropdown()

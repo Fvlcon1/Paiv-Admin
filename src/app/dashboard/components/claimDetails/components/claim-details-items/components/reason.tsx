@@ -8,16 +8,17 @@ const Reason = ({
     reasons : string[]
 }) => {
     return (
-        <div className="w-full border-solid border-[1px] border-bg-tetiary rounded-xl flex flex-col gap-2">
-            <div className="flex w-full border-solid border-b-[1px] border-border-secondary bg-bg-secondary min-h-[45px] items-center pl-4 rounded-t-xl">
+        <div className="w-full rounded-xl flex flex-col">
+            <div className="flex w-full border-solid border-b-[1px] border-border-secondary bg-main-primary min-h-[45px] items-center pl-4 rounded-t-xl">
                 <Text
                     bold={TypographyBold.md}
+                    textColor={theme.colors.bg.primary}
                 >
                     Comments
                 </Text>
             </div>
 
-            <div className="flex w-full flex-col gap-4 px-2 pb-4 pt-2">
+            <div className="flex w-full flex-col gap-4 px-2 pb-4 pt-2 border-[1px] border-bg-quantinary border-t-[0] rounded-b-xl">
                 {
                     Array.isArray((reasons)) ?
                     reasons.length ?

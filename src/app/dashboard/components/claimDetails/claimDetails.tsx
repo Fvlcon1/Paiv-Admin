@@ -9,6 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import { IClaimsDetailType } from "@/app/dashboard/utils/types";
 import ClaimDetailsItems from "./components/claim-details-items";
 import Bottom from "./components/bottom";
+import theme from "@styles/theme";
 
 const ClaimDetails = ({
     claimDetails,
@@ -25,7 +26,7 @@ const ClaimDetails = ({
 
     useEffect(() => {
         const updateHeight = () => {
-            setMaxHeight(window.innerHeight - 300);
+            setMaxHeight(window.innerHeight - 200);
         };
 
         updateHeight(); // Set initial height
@@ -51,7 +52,7 @@ const ClaimDetails = ({
                         <div
                             className="md:w-[800px] w-full flex flex-col"
                         >
-                            <div className="bg-bg-secondary border-solid border-b-[1px] border-bg-tetiary rounded-t-[20px] h-[55px] flex items-center pl-6">
+                            <div className="bg-bg-tetiary border-solid border-b-[1px] border-bg-tetiary rounded-t-[20px] h-[55px] flex items-center pl-6">
                                 <Text bold={TypographyBold.md}>
                                     Claim Details
                                 </Text>
