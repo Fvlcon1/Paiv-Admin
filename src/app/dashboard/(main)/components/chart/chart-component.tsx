@@ -30,7 +30,7 @@ const ClaimsTimelineChart = ({
             toolbar: { show: false },
             foreColor: '#9CA3AF'
         },
-        colors: ['#6366F1', '#10B981', '#EF4444', '#FF9500'],
+        colors: ['#6366F1', '#10B981', '#FF9500', '#EF4444'],
         dataLabels: { enabled: false },
         stroke: { curve: 'smooth', width: 2 },
         fill: {

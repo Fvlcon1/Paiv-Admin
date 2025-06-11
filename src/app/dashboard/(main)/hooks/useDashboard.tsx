@@ -1,6 +1,6 @@
 import { protectedApi } from "@/app/utils/apis/api"
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const useDashboard = () => {
     const [startDate, setStartDate] = useState<string>()
@@ -24,11 +24,16 @@ const useDashboard = () => {
         return response
     }
 
-    const {isPending : isDashboardDataPending} = useQuery({
+    const {isPending : isDashboardDataPending, data} = useQuery({
         queryFn : getDashboardData,
         queryKey : ["dashboard-data", startDate, endDate, selectedHospital, selectedRegion, selectedDistrict],
         refetchOnMount: true,
     })
+
+    useEffect(() => {
+        if(data)
+            setDashboardData(data)
+    }, [data])
 
     return {
         dashboardData,

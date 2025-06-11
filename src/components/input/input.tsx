@@ -22,6 +22,7 @@ type InputProps = {
     autoSelect?: boolean;
     autoComplete?: HTMLInputAutoCompleteAttribute;
     inputProps?: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+    disabled?: boolean;
 } & (
     | { value: string; setValue?: Dispatch<SetStateAction<string>> }
     | { value: number; setValue?: Dispatch<SetStateAction<number>> }
@@ -46,7 +47,8 @@ const Input = ({
     borderColor,
     ref,
     autoSelect,
-    autoComplete
+    autoComplete,
+    disabled
 }: InputProps) => {
     const [inputFocus, setInputFocus] = useState<boolean>(autofocus ?? false);
     const [hover, setHover] = useState<boolean>(false);
@@ -63,10 +65,13 @@ const Input = ({
 
     return (
         <div
-            className={`flex w-full h-fit gap-2 px-[15px] py-[10px] items-center rounded-lg bg-bg-primary border-border-primary border-[1px] border-solid duration-200 ${className}`}
+            className={`
+                flex w-full h-fit gap-2 px-[15px] py-[10px] items-center rounded-lg bg-bg-primary border-border-primary border-[1px] border-solid duration-200 ${className}
+                ${disabled ? "opacity-50 cursor-not-allowed" : ""}
+            `}
             onClick={onClick}
             style={{
-                borderColor: (inputFocus || hover) ? theme.colors.main.primary : borderColor || theme.colors.border.primary
+                borderColor: ((inputFocus || hover) && !disabled) ? theme.colors.main.primary : borderColor || theme.colors.border.primary
             }}
         >
             {PreIcon && PreIcon}
@@ -102,6 +107,7 @@ const Input = ({
                     inputProps?.onChange?.(e);
                 }}
                 autoComplete={autoComplete ?? inputProps?.autoComplete}
+                disabled={disabled}
             />
             {PostIcon && PostIcon}
         </div>

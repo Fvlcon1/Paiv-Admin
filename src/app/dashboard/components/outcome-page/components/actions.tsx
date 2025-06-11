@@ -13,7 +13,7 @@ const DeclineAction = ({
     return (
         <Button
             text="Decline"
-            className="!bg-[#fef6f6] !border-none"
+            className="!bg-[#d65151] !border-none"
             color={theme.colors.bg.primary}
             onClick={onClick}
             loadingColor={theme.colors.text.primary}

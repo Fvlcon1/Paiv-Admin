@@ -8,73 +8,79 @@ import Text from "@styles/components/text"
 import { DropdownItem } from "@/utils/@types"
 import theme from "@styles/theme"
 import { MdDelete } from "react-icons/md"
-import { FaEdit } from "react-icons/fa"
+import { FaEdit, FaUserAltSlash } from "react-icons/fa"
+import ConfirmationModal from "../components/confirmation-modal/confirmation-modal"
+import { useState } from "react"
+import { IUserInfo } from "../components/edit-modal/hooks/useEditUser"
+import EditModal from "../components/edit-modal/edit-modal"
+import DeactivateConfirmationModal from "../components/deactivate-confirmation-modal copy/confirmation-modal"
+import { Tooltip } from "antd"
 
-const useUAM = () => {
-    const getStatusClass = (status: string) => {
-        switch (status) {
-            case "pending":
-                return `bg-[#FF950033]`
-            case "active":
-                return `bg-[#00C85133]`
-            case "inactive":
-                return `bg-[#FF000033]`
-        }
+const getStatusClass = (status: string) => {
+    switch (status) {
+        case "pending":
+            return `bg-[#FF950033]`
+        case "active":
+            return `bg-[#00C85133]`
+        case "inactive":
+            return `bg-[#FF000033]`
     }
+}
 
-    const getStatusTextColor = (status: string) => {
-        switch (status) {
-            case "pending":
-                return "#FF9500"
-            case "active":
-                return "#058e3c"
-            case "inactive":
-                return "#FF0000"
-        }
+const getStatusTextColor = (status: string) => {
+    switch (status) {
+        case "pending":
+            return "#FF9500"
+        case "active":
+            return "#058e3c"
+        case "inactive":
+            return "#FF0000"
     }
+}
 
-    const getRoleColor = (role: string) => {
-        switch (role) {
-            case "Admin":
-                return "bg-[#3498db33]"
-            case "User":
-                return "bg-[#7a00e633]"
-        }
+const getRoleColor = (role: string) => {
+    switch (role) {
+        case "Admin":
+            return "bg-[#3498db33]"
+        case "User":
+            return "bg-[#7a00e633]"
     }
+}
 
-    const getRoleTextColor = (role: string) => {
-        switch (role) {
-            case "superadmin":
-                return "red"
-            case "admin":
-                return "#3498db"
-        }
+const getRoleTextColor = (role: string) => {
+    switch (role) {
+        case "superadmin":
+            return "red"
+        case "admin":
+            return "#3498db"
     }
+}
 
-    const StatusChip = ({ status }: { status: string }) => {
-        return (
-            <div className={`flex px-4 py-1 rounded-full w-fit ${getStatusClass(status)}`}>
-                <Text
-                    whiteSpace="nowrap"
-                    textColor={getStatusTextColor(status)}
-                >
-                    {status.charAt(0).toUpperCase() + status.slice(1)}
-                </Text>
-            </div>
-        )
-    }
-
-    const RoleChip = ({ role }: { role: string }) => {
-        return (
+const StatusChip = ({ status }: { status: string }) => {
+    return (
+        <div className={`flex px-4 py-1 rounded-full w-fit ${getStatusClass(status)}`}>
             <Text
                 whiteSpace="nowrap"
-                textColor={getRoleTextColor(role)}
+                textColor={getStatusTextColor(status)}
             >
-                {role.charAt(0).toUpperCase() + role.slice(1)}
+                {status.charAt(0).toUpperCase() + status.slice(1)}
             </Text>
-        )
-    }
+        </div>
+    )
+}
 
+export const RoleChip = ({ role }: { role: string }) => {
+    return (
+        <Text
+            whiteSpace="nowrap"
+            textColor={getRoleTextColor(role)}
+        >
+            {role.charAt(0).toUpperCase() + role.slice(1)}
+        </Text>
+    )
+}
+
+const useUAM = () => {
     const LastActiveChip = ({ lastActive }: { lastActive: string }) => {
         return (
             <div className="flex px-4 py-1 rounded-full w-fit bg-bg-secondary">
@@ -87,20 +93,67 @@ const useUAM = () => {
         )
     }
 
-    const Actions = () => {
+    const Actions = ({
+        user
+    }: {
+        user: IUserInfo
+    }) => {
+        const [isVisible, setIsVisible] = useState(false);
+        const [isEditVisible, setIsEditVisible] = useState(false);
+        const [isDeactivateVisible, setIsDeactivateVisible] = useState(false);
+
         const dropdownItems: DropdownItem[] = [
-            { key : "1", label: "Deactivate", onClick: () => { } },
-            { key : "2", label: "Delete User", onClick: () => { } },
+            { key: "1", label: "Deactivate", onClick: () => { } },
+            { key: "2", label: "Delete User", onClick: () => { } },
         ]
         return (
-            <div className="flex items-center gap-2">
-                <div className="p-2 rounded-md bg-bg-secondary hover:bg-bg-tetiary">
-                    <MdDelete color={"#eb4646"} />
+            <>
+                <ConfirmationModal isVisible={isVisible} close={() => setIsVisible(false)} user={user} />
+                <EditModal isVisible={isEditVisible} close={() => setIsEditVisible(false)} user={user} />
+                <DeactivateConfirmationModal isVisible={isDeactivateVisible} close={() => setIsDeactivateVisible(false)} user={user} />
+
+                <div className="flex items-center gap-2">
+                    <Tooltip
+                        title="Edit user"
+                    >
+                        <div
+                            className="p-2 rounded-md bg-bg-tetiary hover:bg-bg-quantinary"
+                            onClick={() => setIsEditVisible(true)}
+                        >
+                            <FaEdit color={theme.colors.text.tetiary} />
+                        </div>
+                    </Tooltip>
+
+                    {
+                        user.status !== "pending" && (
+                            <>
+                                <Tooltip
+                                    title="Deactivate user"
+                                >
+                                    <div
+                                        className="p-2 rounded-md bg-bg-tetiary hover:bg-bg-quantinary"
+                                        onClick={() => setIsDeactivateVisible(true)}
+                                    >
+                                        <FaUserAltSlash color={"orange"} />
+                                    </div>
+                                </Tooltip>
+                                <Tooltip
+                                    title="Delete user"
+                                >
+                                    <div
+                                        className="p-2 rounded-md bg-bg-tetiary hover:bg-bg-quantinary"
+                                        onClick={() => setIsVisible(true)}
+                                    >
+                                        <MdDelete
+                                            color={"#eb4646"}
+                                        />
+                                    </div>
+                                </Tooltip>
+                            </>
+                        )
+                    }
                 </div>
-                <div className="p-2 rounded-md bg-bg-secondary hover:bg-bg-tetiary">
-                    <FaEdit color={theme.colors.text.secondary} />
-                </div>
-            </div>
+            </>
         )
     }
 
@@ -116,12 +169,20 @@ const useUAM = () => {
 
     const { data: metricsData, isLoading: metricsLoading, error: metricsError, refetch: refetchMetrics, isFetching: metricsIsFetching } = useQuery({
         queryKey: ["uam-metrics"],
-        queryFn: getMetrics
+        queryFn: getMetrics,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchInterval: false,
+        staleTime: 60 * 60 * 1000
     })
 
     const { data: accountsData, isLoading: accountsLoading, error: accountsError, refetch: refetchAccounts, isFetching: accountsIsFetching } = useQuery({
         queryKey: ["uam-accounts"],
-        queryFn: getAccounts
+        queryFn: getAccounts,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchInterval: false,
+        staleTime: 60 * 60 * 1000
     })
 
     const transformMetricsData = (data: any) => {
@@ -171,7 +232,7 @@ const useUAM = () => {
                 <LastActiveChip lastActive={account.last_active} />
             ),
             actions: (
-                <Actions />
+                <Actions user={account} />
             )
         }))
         return accounts

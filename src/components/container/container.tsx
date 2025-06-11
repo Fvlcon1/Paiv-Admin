@@ -29,7 +29,7 @@ const Container = ({
     return (
         isVisible && (
             <div
-                className={`min-w-[300px] flex flex-col items-center relative rounded-[20px] border-[1px] border-solid border-border-tetiary bg-bg-primary ${className}`}
+                className={`min-w-[300px] flex flex-col items-center relative rounded-[20px] overflow-hidden border-[1px] border-border-tetiary bg-bg-primary ${className}`}
                 {...divProps}
             >
                 {closable && (

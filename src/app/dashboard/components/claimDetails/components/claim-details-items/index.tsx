@@ -14,13 +14,16 @@ import OtherDetails from "./components/other-details/other-details";
 
 const ClaimDetailsItems = ({
     maxHeight,
-    claimDetails
+    claimDetails,
+    ref
 }: {
     maxHeight: number | null
     claimDetails: IClaimsDetailType
+    ref: React.RefObject<HTMLDivElement | null>
 }) => {
     return (
         <div
+            ref={ref}
             className="flex flex-col gap-5 pb-4 px-4 overflow-y-auto pt-4"
             style={{
                 maxHeight: maxHeight ? `${maxHeight}px` : "800px",

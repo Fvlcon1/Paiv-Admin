@@ -18,7 +18,8 @@ const FormInput = ({
     placeholder,
     label,
     autoComplete,
-    inputProps
+    inputProps,
+    disabled
 } : {
     value : string,
     handleChange : (e?:ChangeEvent<HTMLInputElement>)=>void
@@ -34,6 +35,7 @@ const FormInput = ({
     label : string
     autoComplete? : HTMLInputAutoCompleteAttribute
     inputProps? : DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+    disabled? : boolean
 }) => {
     return (
         <div className="flex flex-col gap-[6px] w-full h-fit">
@@ -59,6 +61,7 @@ const FormInput = ({
                 inputClassName="!h-[20px]"
                 autoComplete={autoComplete}
                 inputProps={inputProps}
+                disabled={disabled}
             />
             {
                 error && touched && (
