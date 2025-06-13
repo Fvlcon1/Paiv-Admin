@@ -4,6 +4,7 @@ import { useDashboardContext } from '../../context/context';
 import BarChartSkeleton from './chart-skeleton';
 import dynamic from 'next/dynamic';
 import useDiagnosisData from './hooks/useDiagnosisData';
+import { ApexOptions } from 'apexcharts';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
     ssr: false,
@@ -27,7 +28,7 @@ const barColors = [
 
 const DiagnosisBarChartComponent = () => {
     const { isDashboardDataPending } = useDashboardContext();
-    const { series: dataseries, categories } = useDiagnosisData();
+    const { series: dataseries, categories, diagnosisCodes } = useDiagnosisData();
 
     const series = [
         {
@@ -36,7 +37,7 @@ const DiagnosisBarChartComponent = () => {
         },
     ];
 
-    const options = {
+    const options : ApexOptions = {
         chart: {
             type: 'bar',
             height: 350,
@@ -49,7 +50,6 @@ const DiagnosisBarChartComponent = () => {
             bar: {
                 horizontal: false,
                 columnWidth: '55%',
-                endingShape: 'rounded',
                 borderRadius: 4,
                 distributed: true,
             },
@@ -63,7 +63,7 @@ const DiagnosisBarChartComponent = () => {
             colors: ['transparent']
         },
         xaxis: {
-            categories: categories,
+            categories: diagnosisCodes,
             axisBorder: { show: false },
             axisTicks: { show: false },
             labels: {
@@ -89,7 +89,7 @@ const DiagnosisBarChartComponent = () => {
             fontSize: '12px',
             fontWeight: 500,
             fontFamily: 'Montserrat',
-            markers: { radius: 0 }
+            customLegendItems: categories
         },
         grid: {
             borderColor: theme.colors.border.primary,
@@ -98,18 +98,13 @@ const DiagnosisBarChartComponent = () => {
         },
         tooltip: {
             theme: 'light',
-            y: {
-                formatter: function (val: number) {
-                    return val.toString();
-                }
-            }
         },
         fill: {
             opacity: 1
         }
     };
 
-    return <Chart options={options as any} series={series} type="bar" height={450} />;
+    return <Chart options={options} series={series} type="bar" height={450} />;
 };
 
 export default DiagnosisBarChartComponent;

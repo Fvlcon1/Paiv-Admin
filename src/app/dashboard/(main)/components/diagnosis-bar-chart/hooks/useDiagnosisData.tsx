@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 const useDiagnosisData = () => {
     const [categories, setCategories] = useState<string[]>([])
     const [series, setSeries] = useState<number[]>([])
+    const [diagnosisCodes, setDiagnosisCodes] = useState<string[]>([])
 
     const getDiagnosisData = async () => {
         const response = await protectedApi.GET("/analytics/top-diagnoses")
@@ -16,15 +17,18 @@ const useDiagnosisData = () => {
         const sortedData = [...data].sort((a, b) => a.count - b.count); // ascending sort by count
     
         const categories: string[] = [];
+        const diagnosisCodes: string[] = [];
         const series: number[] = [];
     
         sortedData.forEach(item => {
-            categories.push(item.diagnosis_code);
+            categories.push(item.diagnosis_name);
+            diagnosisCodes.push(item.diagnosis_code);
             series.push(item.count);
         });
     
         setCategories(categories);
         setSeries(series);
+        setDiagnosisCodes(diagnosisCodes);
     }
     
     useEffect(()=>{
@@ -41,6 +45,7 @@ const useDiagnosisData = () => {
         diagnosisData,
         categories,
         series,
+        diagnosisCodes,
         isDiagnosisDataPending
     }
 }
