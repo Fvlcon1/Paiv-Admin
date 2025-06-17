@@ -32,7 +32,7 @@ const Declined = () => {
                 <Table />
             </div> */}
             <OutcomePageLayout
-                endpoint="/claims/declined"
+                endpoint="/claims/rejected"
                 actionsTypes={["approve"]}
             />
         </>
