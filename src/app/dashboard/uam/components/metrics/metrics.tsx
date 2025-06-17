@@ -14,7 +14,6 @@ export interface IMetricCard {
 
 const Metrics = () => {
     const {metricsData, metricsLoading} = useUAMContext()
-    console.log({metricsData})
 
     if(metricsLoading) {
         return <MetricCardSkeleton />

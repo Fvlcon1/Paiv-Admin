@@ -83,7 +83,7 @@ const Table = () => {
                                                 <td
                                                     key={cell.id}
                                                     className={`border-b-[1px] border-r-[1px] border-solid border-border-primary py-[10px] px-[30px] duration-1000
-                                                        ${colIndex === 0 ? 'sticky left-0 z-10' : ''}
+                                                        ${colIndex === 0 ? 'sticky left-0' : ''}
                                                         ${colIndex === 0 && isScrolling ? 'after:content-[""] after:absolute after:top-0 after:right-[-8px] duration-1000 after:h-full after:w-2 after:bg-gradient-to-r after:from-black/15 after:to-transparent' : ''}
                                                     `}
                                                 >

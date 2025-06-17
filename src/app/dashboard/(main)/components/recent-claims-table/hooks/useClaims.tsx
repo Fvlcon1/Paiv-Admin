@@ -12,14 +12,12 @@ const useRecentClaims = () => {
     const {startDate, endDate, selectedHospital, selectedRegion, selectedDistrict} = useDashboardContext()
 
     const getClaims = async () => {
-        const response = await protectedApi.GET("/claims", {
-            params : {
-                from_date : startDate,
-                to_date : endDate,
-                hospital : selectedHospital,
-                region : selectedRegion,
-                district : selectedDistrict
-            }
+        const response = await protectedApi.GET("/claims/", {
+            from_date : startDate,
+            to_date : endDate,
+            hospital_name : selectedHospital,
+            region : selectedRegion,
+            district : selectedDistrict
         })
         convertToRecentTableData(response.reverse())
         return response.reverse()
@@ -54,7 +52,7 @@ const useRecentClaims = () => {
 
     const { data: claims, isPending: isClaimsPending } = useQuery({
         queryFn: getClaims,
-        queryKey: ["claims"],
+        queryKey: ["claims", startDate, endDate, selectedHospital, selectedRegion, selectedDistrict],
         refetchOnMount: true,
     })
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import Controls from "./components/controls"
+import Controls from "./components/controls/controls"
 import Table from "./components/table"
 import { useApprovedContext } from "./context/context"
 import { IActionsType } from "./utils/types"
@@ -18,16 +18,16 @@ const OutcomePage = ({
     const [pageSize, setPageSize] = useState(15)
     const [pageNumber, setPageNumber] = useState(1)
     const [view, setView] = useState<"list" | "grid">("list")
-    const { getApprovedClaimsMutation, sorting, selectedSpecialties } = useApprovedContext()
+    const { getApprovedClaimsMutation, sorting, selectedSpecialties, selectedHospital, selectedRegion, selectedDistrict } = useApprovedContext()
 
     useEffect(() => {
         getApprovedClaimsMutation(endpoint)
-    }, [sorting, selectedSpecialties])
+    }, [sorting, selectedSpecialties, selectedHospital, selectedRegion, selectedDistrict])
 
     return (
         <>
             <div className="w-full flex flex-col">
-                <div className="w-full px-3 h-[60px] flex items-center border-b-[1px] border-solid border-b-border-primary">
+                <div className="w-full flex items-center border-b-[1px] border-solid border-b-border-primary">
                     <Controls
                         pageSize={pageSize}
                         setPageSize={setPageSize}

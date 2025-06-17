@@ -10,7 +10,17 @@ export const tableData = [
         "actualPayout": "-"
     },
     {
-        "hospitalName": "Accra General Hospital",
+        "hospitalName": "Accra general hospital",
+        "date": "5th May 2025",
+        "patientName": "Ama Kusi",
+        "diagnosis": "B20.0 - HIV disease",
+        "drugs": "AZT - (12 hourly for 30 day(s))",
+        "status": "Flagged",
+        "expectedPayout": "GHS 500",
+        "actualPayout": "-"
+    },
+    {
+        "hospitalName": "Tema General Hospital",
         "date": "5th May 2025",
         "patientName": "Ama Kusi",
         "diagnosis": "B20.0 - HIV disease",

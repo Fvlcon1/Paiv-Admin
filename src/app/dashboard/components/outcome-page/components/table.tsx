@@ -110,7 +110,7 @@ const Table = ({
                 <div className="relative w-full overflow-hidden">
                     <div
                         ref={tableContainerRef}
-                        className="w-full overflow-x-auto h-[calc(100vh-100px)]"
+                        className="w-full overflow-x-auto"
                         onScroll={(e) => {
                             if (isScrolling) return;
                             setIsScrolling(true);

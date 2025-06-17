@@ -20,6 +20,12 @@ const approvedContext = createContext<{
     setSorting: Dispatch<SetStateAction<SortingState>>
     handleSelectAllClaims: () => void
     handleUnselectAllClaims: () => void
+    selectedHospital?: string
+    setSelectedHospital: Dispatch<SetStateAction<string | undefined>>
+    selectedRegion?: string
+    setSelectedRegion: Dispatch<SetStateAction<string | undefined>>
+    selectedDistrict?: string
+    setSelectedDistrict: Dispatch<SetStateAction<string | undefined>>
 }>({
     setShowClaimDetail : ()=>{},
     showClaimDetail : false,
@@ -33,12 +39,36 @@ const approvedContext = createContext<{
     sorting : [],
     setSorting : ()=>{},
     handleSelectAllClaims : ()=>{},
-    handleUnselectAllClaims : ()=>{}
+    handleUnselectAllClaims : ()=>{},
+    selectedHospital: "",
+    setSelectedHospital: ()=>{},
+    selectedRegion: "",
+    setSelectedRegion: ()=>{},
+    selectedDistrict: "",
+    setSelectedDistrict: ()=>{}
 });
 
 export const ApprovedContextProvider = ({ children }: { children: ReactNode }) => {
     const [showClaimDetail, setShowClaimDetail] = useState(false)
-    const {getApprovedClaimsMutation, isApprovedClaimsPending, tableData, selectedClaims, selectedSpecialties, setSelectedSpecialties, isAllClaimsSelected, sorting, setSorting, handleSelectAllClaims, handleUnselectAllClaims} = useApprovedClaims()
+    const {
+        getApprovedClaimsMutation, 
+        isApprovedClaimsPending, 
+        tableData, 
+        selectedClaims, 
+        selectedSpecialties, 
+        setSelectedSpecialties, 
+        isAllClaimsSelected, 
+        sorting, 
+        setSorting, 
+        handleSelectAllClaims, 
+        handleUnselectAllClaims,
+        selectedHospital,
+        setSelectedHospital,
+        selectedRegion,
+        setSelectedRegion,
+        selectedDistrict,
+        setSelectedDistrict
+    } = useApprovedClaims()
 
     return (
         <approvedContext.Provider
@@ -55,7 +85,13 @@ export const ApprovedContextProvider = ({ children }: { children: ReactNode }) =
                 sorting,
                 setSorting,
                 handleSelectAllClaims,
-                handleUnselectAllClaims
+                handleUnselectAllClaims,
+                selectedHospital,
+                setSelectedHospital,
+                selectedRegion,
+                setSelectedRegion,
+                selectedDistrict,
+                setSelectedDistrict
             }}
         >
             {children}

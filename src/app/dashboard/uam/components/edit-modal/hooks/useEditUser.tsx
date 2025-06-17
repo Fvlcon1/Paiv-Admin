@@ -15,7 +15,8 @@ export interface IUserInfo {
     region: string,
     district: string,
     last_active: string
-    status: string
+    status: string,
+    invite_id: number
 }
 
 const useEditUser = ({

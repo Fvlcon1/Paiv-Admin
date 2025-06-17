@@ -1,7 +1,7 @@
 import { protectedApi } from "@/app/utils/apis/api"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { IMetricCard } from "../components/metrics/metrics"
-import { FaUser, FaUsers } from "react-icons/fa6"
+import { FaLinkSlash, FaUser, FaUsers } from "react-icons/fa6"
 import { IoCloudOffline } from "react-icons/io5"
 import { AiOutlineUsergroupAdd } from "react-icons/ai"
 import Text from "@styles/components/text"
@@ -9,12 +9,15 @@ import { DropdownItem } from "@/utils/@types"
 import theme from "@styles/theme"
 import { MdDelete } from "react-icons/md"
 import { FaEdit, FaUserAltSlash } from "react-icons/fa"
-import ConfirmationModal from "../components/confirmation-modal/confirmation-modal"
-import { useState } from "react"
+import DeleteConfirmationModal from "../components/confirmation-modal/confirmation-modal"
+import { useEffect, useState } from "react"
 import { IUserInfo } from "../components/edit-modal/hooks/useEditUser"
 import EditModal from "../components/edit-modal/edit-modal"
 import DeactivateConfirmationModal from "../components/deactivate-confirmation-modal copy/confirmation-modal"
 import { Tooltip } from "antd"
+import toast from "react-hot-toast"
+import ConfirmationModal from "@components/confirmation-modal/confirmation-modal"
+import Actions from "../components/actions"
 
 const getStatusClass = (status: string) => {
     switch (status) {
@@ -93,69 +96,6 @@ const useUAM = () => {
         )
     }
 
-    const Actions = ({
-        user
-    }: {
-        user: IUserInfo
-    }) => {
-        const [isVisible, setIsVisible] = useState(false);
-        const [isEditVisible, setIsEditVisible] = useState(false);
-        const [isDeactivateVisible, setIsDeactivateVisible] = useState(false);
-
-        const dropdownItems: DropdownItem[] = [
-            { key: "1", label: "Deactivate", onClick: () => { } },
-            { key: "2", label: "Delete User", onClick: () => { } },
-        ]
-        return (
-            <>
-                <ConfirmationModal isVisible={isVisible} close={() => setIsVisible(false)} user={user} />
-                <EditModal isVisible={isEditVisible} close={() => setIsEditVisible(false)} user={user} />
-                <DeactivateConfirmationModal isVisible={isDeactivateVisible} close={() => setIsDeactivateVisible(false)} user={user} />
-
-                <div className="flex items-center gap-2">
-                    <Tooltip
-                        title="Edit user"
-                    >
-                        <div
-                            className="p-2 rounded-md bg-bg-tetiary hover:bg-bg-quantinary"
-                            onClick={() => setIsEditVisible(true)}
-                        >
-                            <FaEdit color={theme.colors.text.tetiary} />
-                        </div>
-                    </Tooltip>
-
-                    {
-                        user.status !== "pending" && (
-                            <>
-                                <Tooltip
-                                    title="Deactivate user"
-                                >
-                                    <div
-                                        className="p-2 rounded-md bg-bg-tetiary hover:bg-bg-quantinary"
-                                        onClick={() => setIsDeactivateVisible(true)}
-                                    >
-                                        <FaUserAltSlash color={"orange"} />
-                                    </div>
-                                </Tooltip>
-                                <Tooltip
-                                    title="Delete user"
-                                >
-                                    <div
-                                        className="p-2 rounded-md bg-bg-tetiary hover:bg-bg-quantinary"
-                                        onClick={() => setIsVisible(true)}
-                                    >
-                                        <MdDelete
-                                            color={"#eb4646"}
-                                        />
-                                    </div>
-                                </Tooltip>
-                            </>
-                        )
-                    }
-                </div>
-            </>
-        )
-    }
 
     const getMetrics = async () => {
         const response = await protectedApi.GET("superadmin/stats")
@@ -222,6 +162,7 @@ const useUAM = () => {
             email: account.email,
             region: account.region,
             district: account.district,
+            inviteId: account.invite_id,
             status: (
                 <StatusChip status={account.status} />
             ),
@@ -232,13 +173,15 @@ const useUAM = () => {
                 <LastActiveChip lastActive={account.last_active} />
             ),
             actions: (
-                <Actions user={account} />
+                <Actions
+                    user={account}
+                    refetchAccounts={refetchAccounts}
+                    refetchMetrics={refetchMetrics}
+                />
             )
         }))
         return accounts
     }
-
-    console.log({ metricsData, accountsData })
 
     return {
         metricsData,

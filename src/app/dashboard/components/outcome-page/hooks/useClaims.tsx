@@ -18,6 +18,9 @@ const useApprovedClaims = () => {
     const [isAllClaimsSelected, setIsAllClaimsSelected] = useState(false)
     const [tableData, setTableData] = useState<any[]>([])
     const [sorting, setSorting] = useState<SortingState>([]);
+    const [selectedHospital, setSelectedHospital] = useState<string>()
+    const [selectedRegion, setSelectedRegion] = useState<string>()
+    const [selectedDistrict, setSelectedDistrict] = useState<string>()
     
     const getSorting = (id: string) => {
         switch (id) {
@@ -45,7 +48,10 @@ const useApprovedClaims = () => {
     const getApprovedClaims = async (endpoint: string) => {
         setSelectedClaims([])
         const params : any = {
-            specialty_filter : selectedSpecialties[0] === "All" ? "" : selectedSpecialties[0]
+            specialty_filter : selectedSpecialties[0] === "All" ? "" : selectedSpecialties[0],
+            hospital_name : selectedHospital,
+            region : selectedRegion,
+            district : selectedDistrict
         }
 
         if(sorting.length){
@@ -165,7 +171,13 @@ const useApprovedClaims = () => {
         sorting,
         setSorting,
         handleSelectAllClaims,
-        handleUnselectAllClaims
+        handleUnselectAllClaims,
+        selectedHospital,
+        setSelectedHospital,
+        selectedRegion,
+        setSelectedRegion,
+        selectedDistrict,
+        setSelectedDistrict
     }
 }
 export default useApprovedClaims
