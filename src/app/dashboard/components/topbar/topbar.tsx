@@ -1,13 +1,26 @@
 'use client'
 
+import Button from "@components/button/button"
+import OutlineButton from "@components/button/outlineButton"
 import Text from "@styles/components/text"
 import { TypographyBold } from "@styles/style.types"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { FaPowerOff } from "react-icons/fa6"
+import Cookies from "universal-cookie"
+
+const cookies = new Cookies()
 
 const Topbar = () => {
     const [isScrolled, setIsScrolled] = useState(false)
+    const router = useRouter()
+
+    const handleLogout = () => {
+        cookies.remove("access_token")
+        router.push("/auth/login")
+    }
 
     useEffect(() => {
         const handleScroll = () => {
@@ -19,7 +32,7 @@ const Topbar = () => {
     }, [])
 
     return (
-        <div className={`fixed top-0 z-50 h-[60px] px-4 flex items-center ml-[250px] border-b-[1px] border-solid border-b-border-primary w-full ${isScrolled ? "bg-bg-secondary" : "bg-transparent"}`}>
+        <div className={`fixed top-0 z-50 h-[60px] px-4 flex items-center justify-between pl-[266px] border-b-[1px] border-solid border-b-border-primary w-full ${isScrolled ? "bg-bg-secondary" : "bg-transparent"}`}>
             <Link className="flex items-center gap-1" href={'/'}>
                 <Image
                     src={"/assets/prod/logo-main.png"}
@@ -31,6 +44,13 @@ const Topbar = () => {
                     PAIV - Claim Review
                 </Text>
             </Link>
+            <Button 
+                text="Logout"
+                onClick={handleLogout}
+                icon={(
+                    <FaPowerOff size={13} />
+                )}
+            />
         </div>
     )
 }
