@@ -65,7 +65,7 @@ const SlideIn: React.FC<SlideInProps> = ({
 	return (
 		<motion.div
 			initial="hidden"
-			whileInView="visible"
+			animate="visible"
 			viewport={{ once, amount }}
 			variants={variants}
 			className={className}
