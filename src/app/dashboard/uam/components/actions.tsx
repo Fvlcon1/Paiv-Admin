@@ -25,7 +25,6 @@ const Actions = ({
     refetchAccounts: () => void,
     refetchMetrics: () => void
 }) => {
-    console.log({user})
     const [isVisible, setIsVisible] = useState(false);
     const [isEditVisible, setIsEditVisible] = useState(false);
     const [isDeactivateVisible, setIsDeactivateVisible] = useState(false);

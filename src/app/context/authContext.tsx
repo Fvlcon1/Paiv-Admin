@@ -40,56 +40,52 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }, []);
 
-    // 🔹 Logout function (Prevents showing session alert on /auth pages)
     const logout = useCallback((showAlert = true) => {
         setIsAuthenticated(false);
         cookies.remove("accessToken");
 
         if (pathname.startsWith("/auth")) {
-            setShowSessionAlert(false); // Hide session alert immediately
+            setShowSessionAlert(false);
             return;
         }
 
         if (showAlert) {
             setShowSessionAlert(true);
         } else {
-            router.push("/auth/login"); // Redirect if no token
+            router.push("/auth/login");
             setShowSessionAlert(false);
         }
     }, [pathname, router]);
 
-    // 🔹 Reset inactivity timer (Prevents logout on /auth pages)
     const resetTimer = useCallback(() => {
         if (logoutTimer.current) clearTimeout(logoutTimer.current);
         
         logoutTimer.current = window.setTimeout(() => {
-            if (!pathname.startsWith("/auth")) { // Ensure logout only runs if NOT on auth pages
+            if (!pathname.startsWith("/auth")) {
                 logout(true);
             }
         }, 60 * 60 * 1000);
     }, [logout, pathname]);
 
-    // 🔹 Check token on app load
     useEffect(() => {
         const token = cookies.get("accessToken");
 
         if (!token) {
-            logout(false); // No token? Redirect immediately
+            logout(false);
         } else {
             setIsAuthenticated(true);
         }
 
-        setupInterceptors(logout); // ✅ Runs only once
+        setupInterceptors(logout);
     }, [logout]);
 
-    // 🔹 Track user activity & reset inactivity timer
     useEffect(() => {
         if (!isAuthenticated || pathname.startsWith("/auth")) return;
 
         const events = ["mousemove", "keydown", "click"];
         events.forEach(event => window.addEventListener(event, resetTimer));
 
-        resetTimer(); // Start initial timer
+        resetTimer();
 
         return () => {
             events.forEach(event => window.removeEventListener(event, resetTimer));

@@ -28,7 +28,7 @@ const extractEncounterDetails = (data : any) => {
         disposition_name,
         verification_status,
         final_verification_status,
-        encounter_id
+        encounter_id,
     } = data.encounter_details
 
     const encounterDetails: IEncounterDetails = {

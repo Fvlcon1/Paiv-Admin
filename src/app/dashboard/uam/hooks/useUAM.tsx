@@ -1,22 +1,10 @@
 import { protectedApi } from "@/app/utils/apis/api"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import { IMetricCard } from "../components/metrics/metrics"
-import { FaLinkSlash, FaUser, FaUsers } from "react-icons/fa6"
+import { FaUser, FaUsers } from "react-icons/fa6"
 import { IoCloudOffline } from "react-icons/io5"
 import { AiOutlineUsergroupAdd } from "react-icons/ai"
 import Text from "@styles/components/text"
-import { DropdownItem } from "@/utils/@types"
-import theme from "@styles/theme"
-import { MdDelete } from "react-icons/md"
-import { FaEdit, FaUserAltSlash } from "react-icons/fa"
-import DeleteConfirmationModal from "../components/confirmation-modal/confirmation-modal"
-import { useEffect, useState } from "react"
-import { IUserInfo } from "../components/edit-modal/hooks/useEditUser"
-import EditModal from "../components/edit-modal/edit-modal"
-import DeactivateConfirmationModal from "../components/deactivate-confirmation-modal copy/confirmation-modal"
-import { Tooltip } from "antd"
-import toast from "react-hot-toast"
-import ConfirmationModal from "@components/confirmation-modal/confirmation-modal"
 import Actions from "../components/actions"
 
 const getStatusClass = (status: string) => {
@@ -83,20 +71,19 @@ export const RoleChip = ({ role }: { role: string }) => {
     )
 }
 
+const LastActiveChip = ({ lastActive }: { lastActive: string }) => {
+    return (
+        <div className="flex px-4 py-1 rounded-full w-fit bg-bg-secondary">
+            <Text
+                whiteSpace="nowrap"
+            >
+                {lastActive ?? "-"}
+            </Text>
+        </div>
+    )
+}
+
 const useUAM = () => {
-    const LastActiveChip = ({ lastActive }: { lastActive: string }) => {
-        return (
-            <div className="flex px-4 py-1 rounded-full w-fit bg-bg-secondary">
-                <Text
-                    whiteSpace="nowrap"
-                >
-                    {lastActive ?? "-"}
-                </Text>
-            </div>
-        )
-    }
-
-
     const getMetrics = async () => {
         const response = await protectedApi.GET("superadmin/stats")
         return transformMetricsData(response)
