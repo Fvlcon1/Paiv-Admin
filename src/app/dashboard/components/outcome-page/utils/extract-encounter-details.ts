@@ -28,8 +28,9 @@ const extractEncounterDetails = (data : any) => {
         disposition_name,
         verification_status,
         final_verification_status,
-        encounter_id,
     } = data.encounter_details
+
+    const {encounter_token} = data
 
     const encounterDetails: IEncounterDetails = {
         firstname: first_name,
@@ -58,7 +59,7 @@ const extractEncounterDetails = (data : any) => {
         disposition : disposition_name,
         checkinStatus : verification_status,
         checkoutStatus : final_verification_status,
-        encounterId : encounter_id,
+        encounterId : encounter_token,
         // claimSubmissionAt :  claim_submission_time && new Date(claim_submission_time),
     };
     return encounterDetails
