@@ -9,7 +9,7 @@ import RecentClaimsTableSkeleton from "../../../../../components/loaders/table-s
 import useRecentClaims from "./hooks/useClaims"
 import getDate, { getRelativeTime } from "@/utils/getDate"
 import ReasonForDeclining from '@/app/dashboard/components/reason/reason';
-import useReasonForDeclining from "@/app/dashboard/approved/hooks/useReason"
+import useReasonForDeclining from "@/app/approved/hooks/useReason"
 import { IClaimsDetailType } from "@/app/dashboard/utils/types"
 import ClaimDetails from "@/app/dashboard/components/claimDetails/claimDetails"
 import Button from "@components/button/button"

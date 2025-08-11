@@ -3,7 +3,7 @@ import theme from "@styles/theme"
 import { getAgeFromDate } from "./getAgeFromDate"
 import { getDateTime } from "@/utils/getDate"
 import { getLengthOfStay } from "./getLengthOfStay"
-import { IEncounterDetails } from "@/app/dashboard/approved/utils/types"
+import { IEncounterDetails } from "@/app/approved/utils/types"
 
 const getTableData = (encounterDetails: IEncounterDetails) => {
 	const {

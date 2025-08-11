@@ -1,4 +1,4 @@
-import { IEncounterDetails } from "@/app/dashboard/approved/utils/types"
+import { IEncounterDetails } from "@/app/approved/utils/types"
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
 import Images from "./components/images"

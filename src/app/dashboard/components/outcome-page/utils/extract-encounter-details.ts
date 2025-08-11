@@ -1,5 +1,5 @@
 import getDate, { getDateTime } from "@/utils/getDate";
-import { IEncounterDetails } from "../../../approved/utils/types";
+import { IEncounterDetails } from "../../../../approved/utils/types";
 
 const extractEncounterDetails = (data : any) => {
     const {

@@ -2,46 +2,50 @@ import { TypographyBold, TypographySize } from "./style.types"
 
 export const colors = {
 	text: {
-		primary: '#0A2540',
-		secondary: '#425466',
-		tetiary: '#8E98A3',
-	},
-	bg: {
-		primary: '#FFFFFF',
-		primaryLight : "#FBFBFB",
-		secondary: '#F7F7FA',
-		tetiary: '#EDEDF2',
-		quantinary: '#DADAE0',
-	},
-	border: {
-		primary: '#E4E4E4',
-		secondary: '#F2F2F2',
-		tetiary: '#DDDDDD',
-		quantinary: '#C6C6D0',
-	},
-	main: {
-		primary: '#5c5bb8',
-	},
+        primary: '#284452',
+        secondary: '#3F6D84',
+        tetiary: '#95AAB6',
+        danger: '#b93b36',
+        success: '#29a333',
+    },
+    bg: {
+        primary: '#FFFFFF',
+        primaryLighter : '#FBFBFB',
+        secondary: '#F4F4F4',
+        tetiary: '#EBEBEB',
+        quantinary: "#D0D0D0",
+		sidebar : "#364761"
+    },
+    border: {
+        primary: "#E8EDEF",
+        secondary: '#C4D2D9',
+        tetiary: '#DDDDDD',
+        quantinary: '#C6C6D0',
+    },
+    main: {
+        primary: '#3F6D84'
+    }
 };
 
 export const theme = {
 	colors,
 	typography: {
 		size: {
-			body: TypographySize.body,
-			HL: TypographySize.HL,
-			HM: TypographySize.HM,
-			body2 : TypographySize.body2,
-			xs2 : TypographySize.xs2,
-			xs : TypographySize.xs,
-		},
-		bold: {
-			md : TypographyBold.md,
-			md2 : TypographyBold.md2,
-			sm : TypographyBold.sm,
-			sm2 : TypographyBold.sm2,
-			lg : TypographyBold.lg,
-		},
+            xs: TypographySize.xs,
+            xs2: TypographySize.xs2,
+            body: TypographySize.body,
+            body2: TypographySize.body2,
+            HL: TypographySize.HL,
+            HM: TypographySize.HM,
+            HM2: TypographySize.HM2,
+        },
+        bold: {
+            sm: TypographyBold.sm,
+            sm2: TypographyBold.sm2,
+            md: TypographyBold.md,
+            lg: TypographyBold.lg,
+            md2: TypographyBold.md2,
+        },
 	},
 }
 

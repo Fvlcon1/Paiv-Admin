@@ -6,6 +6,8 @@ import { Toaster } from "react-hot-toast";
 import QueryProvider from "./QueryProvider";
 import { AppContextProvider } from "./context/context";
 import { AuthProvider } from "./context/authContext";
+import Siderbar from "./components/sidebar/sidebar";
+import Topbar from "./components/topbar/topbar";
 
 const montserrat = Montserrat({
 	variable: "--font-montserrat",
@@ -29,7 +31,11 @@ export default function RootLayout({
 					<AuthProvider>
 						<AppContextProvider>
 							<Toaster />
-							{children}
+							<Siderbar />
+							<Topbar />
+							<div className="ml-[250px] mt-[60px]">
+								{children}
+							</div>
 						</AppContextProvider>
 					</AuthProvider>
 				</QueryProvider>
