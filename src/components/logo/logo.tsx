@@ -3,7 +3,7 @@ import Image from "next/image"
 export type ILogoColors = "light" | "dark" | "main"
 
 const Logo = ({
-    size = 25,
+    size = 30,
     color = "main"
 } : {
     size? : number,
@@ -12,10 +12,10 @@ const Logo = ({
 
     const getLogoFromColor = () : string => {
         return color === "main"
-                ? "/assets/prod/logo-main.png"
+                ? "/assets/prod/logo-v1.png"
                 : color === "dark"
-                ? "/assets/prod/logo-dark.png"
-                : "/assets/prod/logo-light.png"
+                ? "/assets/prod/logo-v1.png"
+                : "/assets/prod/logo-v1.png"
     }
 
     return (

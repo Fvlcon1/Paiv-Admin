@@ -8,14 +8,17 @@ const Status = ({status} : {status : string}) => {
     const color = {
         "pending" : "#f59e0b",
         "approved" : theme.colors.text.success,
-        "rejected" : theme.colors.text.danger    
+        "rejected" : theme.colors.text.danger,
+        "flagged" : theme.colors.text.danger    
     }
 
     const bgColor = {
         "pending" : "bg-orange-100",
         "approved" : "bg-green-100",
-        "rejected" : "bg-red-100"    
+        "rejected" : "bg-red-100",
+        "flagged" : "bg-red-100"    
     }
+
     return (
         <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${bgColor[status as keyof typeof bgColor]}`}>
             <Text

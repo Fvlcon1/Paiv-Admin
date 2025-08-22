@@ -1,0 +1,160 @@
+export const data = [
+    {
+        batchId: "JUL2025",
+        providerName: "Komfo Anokye Teaching Hospital",
+        batchProgress: "28",
+        totalClaims: "234",
+        processedClaims: "65",
+        flaggedClaims: "4",
+        rejectedClaims: "2",
+        expectedPayout: "GHS 12,234",
+        anomaly: "2",
+        status: "processing"
+    },
+    {
+        batchId: "JUN2025",
+        providerName: "Korle-Bu Teaching Hospital",
+        batchProgress: "100",
+        totalClaims: "156",
+        processedClaims: "156",
+        flaggedClaims: "3",
+        rejectedClaims: "1",
+        expectedPayout: "GHS 8,112",
+        status: "completed"
+    },
+    {
+        batchId: "MAY2025",
+        providerName: "St. Dominic Catholic Hospital",
+        batchProgress: "100",
+        totalClaims: "104",
+        processedClaims: "104",
+        flaggedClaims: "7",
+        rejectedClaims: "3",
+        expectedPayout: "GHS 5,280",
+        status: "under review"
+    },
+    {
+        batchId: "APR2025",
+        providerName: "Ashanti Goldfields Company Hospital",
+        batchProgress: "100",
+        totalClaims: "52",
+        processedClaims: "0",
+        flaggedClaims: "0",
+        rejectedClaims: "0",
+        expectedPayout: "GHS 2,608",
+        anomaly: "2",
+        status: "submitted"
+    },
+    {
+        batchId: "MAR2025",
+        providerName: "Akormaa Memorial SDA Hospital",
+        batchProgress: "100",
+        totalClaims: "12",
+        processedClaims: "12",
+        flaggedClaims: "1",
+        rejectedClaims: "0",
+        expectedPayout: "GHS 2,600",
+        anomaly: "2",
+        status: "completed"
+    },
+    {
+        batchId: "FEB2025",
+        providerName: "Asafo‑Agyei Hospital",
+        batchProgress: "100",
+        totalClaims: "83",
+        processedClaims: "42",
+        flaggedClaims: "2",
+        rejectedClaims: "1",
+        expectedPayout: "GHS 4,126",
+        status: "processing"
+    },
+    {
+        batchId: "JAN2025",
+        providerName: "Adidome Hospital",
+        batchProgress: "100",
+        totalClaims: "42",
+        processedClaims: "42",
+        flaggedClaims: "0",
+        rejectedClaims: "0",
+        expectedPayout: "GHS 2,100",
+        status: "completed"
+    },
+    {
+        batchId: "DEC2024",
+        providerName: "Abokobi District Hospital",
+        batchProgress: "100",
+        totalClaims: "22",
+        processedClaims: "22",
+        flaggedClaims: "5",
+        rejectedClaims: "2",
+        expectedPayout: "GHS 1,100",
+        status: "under review"
+    },
+    {
+        batchId: "NOV2024",
+        providerName: "Achimota Hospital",
+        batchProgress: "100",
+        totalClaims: "111",
+        processedClaims: "0",
+        flaggedClaims: "0",
+        rejectedClaims: "0",
+        expectedPayout: "GHS 555",
+        anomaly: "2",
+        status: "submitted"
+    },
+    {
+        batchId: "OCT2024",
+        providerName: "Bawjiase Polyclinic",
+        batchProgress: "100",
+        totalClaims: "289",
+        processedClaims: "289",
+        flaggedClaims: "12",
+        rejectedClaims: "5",
+        expectedPayout: "GHS 1,445",
+        status: "completed"
+    },
+    {
+        batchId: "SEP2024",
+        providerName: "Ussher Polyclinic",
+        batchProgress: "100",
+        totalClaims: "289",
+        processedClaims: "156",
+        flaggedClaims: "8",
+        rejectedClaims: "3",
+        expectedPayout: "GHS 1,445",
+        status: "processing"
+    },
+    {
+        batchId: "AUG2024",
+        providerName: "Living Waters Specialist Hospital",
+        batchProgress: "100",
+        totalClaims: "289",
+        processedClaims: "289",
+        flaggedClaims: "22",
+        rejectedClaims: "15",
+        expectedPayout: "GHS 1,445",
+        status: "under review"
+    },
+    {
+        batchId: "JUL2024",
+        providerName: "Bryant Mission Hospital",
+        batchProgress: "100",
+        totalClaims: "289",
+        processedClaims: "289",
+        flaggedClaims: "0",
+        rejectedClaims: "0",
+        expectedPayout: "GHS 1,445",
+        status: "completed"
+    },
+    {
+        batchId: "JUN2024",
+        providerName: "City Hospital",
+        batchProgress: "100",
+        totalClaims: "289",
+        processedClaims: "0",
+        flaggedClaims: "0",
+        rejectedClaims: "0",
+        expectedPayout: "GHS 1,445",
+        status: "submitted"
+    }
+]

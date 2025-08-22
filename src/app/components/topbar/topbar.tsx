@@ -2,6 +2,7 @@
 
 import Button from "@components/button/button"
 import OutlineButton from "@components/button/outlineButton"
+import Logo from "@components/logo/logo"
 import Text from "@styles/components/text"
 import { TypographyBold } from "@styles/style.types"
 import Image from "next/image"
@@ -33,16 +34,8 @@ const Topbar = () => {
 
     return (
         <div className={`fixed top-0 z-50 h-[60px] px-4 flex items-center justify-between pl-[266px] border-b-[1px] border-solid border-b-border-primary w-full ${isScrolled ? "bg-bg-secondary" : "bg-transparent"}`}>
-            <Link className="flex items-center gap-1" href={'/'}>
-                <Image
-                    src={"/assets/prod/logo-main.png"}
-                    alt="logo"
-                    width={25}
-                    height={25}
-                />
-                <Text bold={TypographyBold.md}>
-                    PAIV - Claim Review
-                </Text>
+            <Link className="flex items-center gap-2" href={'/'}>
+                <Logo size={40} color="dark" />
             </Link>
             <Button 
                 text="Logout"

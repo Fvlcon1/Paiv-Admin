@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 
 const Home = () => {
-	redirect("/dashboard")
+	redirect("/claim-explorer")
 	return (
 		<div>
 

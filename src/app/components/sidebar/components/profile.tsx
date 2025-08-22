@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import Text from "@styles/components/text"
 import { TypographyBold, TypographySize } from "@styles/style.types"
 import theme from "@styles/theme"
@@ -11,16 +11,27 @@ import Input from "@components/input/input"
 import { FaMagnifyingGlass } from "react-icons/fa6"
 import { useAuth } from "@/app/context/authContext"
 import { hexOpacity } from "@/utils/hexOpacity";
+import useProfile from "@/app/hooks/useProfile";
 
 const Profile = () => {
     const [isProfileVisible, setIsProfileVisible] = useState(false)
     const { userDetails } = useAuth()
     const [searchValue, setSearchValue] = useState("")
     const containerRef = useRef<HTMLDivElement>(null);
+    const {getProfileMutation} = useProfile()
 
     useClickAway(containerRef, () => {
         setIsProfileVisible(false);
     });
+
+    useEffect(() => {
+        console.log({userDetails})
+        console.log({userLocal : localStorage.getItem("profile")})
+    }, [userDetails])
+
+    useEffect(() => {
+        getProfileMutation()
+    }, [])
 
     return (
         userDetails ? (

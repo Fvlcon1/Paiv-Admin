@@ -15,12 +15,13 @@ import { HiMiniMagnifyingGlass } from "react-icons/hi2"
 import theme from "@styles/theme"
 import { gradientClass } from "@/utils/constants"
 import SlideIn from "@styles/components/slidein"
-import Table from "./table-body"
+import Table from "./components/table-body"
 import { IoMdArrowRoundBack } from "react-icons/io"
 import { useRouter } from "next/navigation"
-import TableHead from "./table-head"
-import TableBody from "./table-body"
-import TableBodySorted from "./table-body-sorted"
+import TableHead from "./components/table-head"
+import TableBody from "./components/table-body"
+import TableBodySorted from "./components/table-body-sorted"
+import BatchDetailsSlider from "./components/batch-details-slider"
 
 interface ICrumbs {
     icon?: IconType
@@ -198,14 +199,17 @@ const Top = () => {
 
 const HospitalPage = () => {
     return (
-        <SlideIn
-            direction="right"
-            className="w-full flex flex-col gap-2 py-4"
-        >
-            <Top />
-            <TableHead />
-            <TableBodySorted />
-        </SlideIn>
+        <>
+            <BatchDetailsSlider />
+            <SlideIn
+                direction="right"
+                className="w-full flex flex-col gap-2 py-4"
+            >
+                <Top />
+                <TableHead />
+                <TableBodySorted />
+            </SlideIn>
+        </>
     )
 }
 export default HospitalPage

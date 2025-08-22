@@ -6,7 +6,7 @@ import { TypographyBold, TypographySize } from "@styles/style.types"
 import theme from "@styles/theme"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { FaThList, FaUserLock } from "react-icons/fa"
+import { FaThList, FaUserLock, FaCogs } from "react-icons/fa"
 import { FaCediSign, FaCircleCheck, FaFileLines, FaFlag } from "react-icons/fa6"
 import { GiCancel } from "react-icons/gi"
 import { MdOutlinePendingActions, MdSpaceDashboard } from "react-icons/md"
@@ -33,54 +33,31 @@ const Menu = () => {
 
     const claimsMenuItems: IMenuItem[] = [
         {
-            title: "Dashboard",
+            title: "Claims Analytics",
             icon: FaThList,
-            path: "/dashboard",
-        },
-        // {
-        //     title: "Pending",
-        //     icon: MdOutlinePendingActions,
-        //     path: "/pending",
-        //     notifications: numberOfPending,
-        //     badgeColor: "bg-[green]"
-        // },
-        // {
-        //     title: "Approved",
-        //     icon: FaCircleCheck,
-        //     path: "/approved",
-        //     notifications: numberOfApproved,
-        //     badgeColor: "bg-[green]"
-        // },
-        {
-            title: "Flagged",
-            icon: FaFlag,
-            path: '/flagged',
-            notifications: numberOfFlagged,
-            badgeColor: "bg-[#d19017]"
-        },
-        // {
-        //     title: "Declined",
-        //     icon: GiCancel,
-        //     path: '/declined',
-        //     notifications: numberOfDeclined,
-        //     badgeColor: "bg-[#c94c30]"
-        // },
-        // {
-        //     title: "Paid",
-        //     icon: MdOutlinePendingActions,
-        //     path: "/paid",
-        //     notifications: 0,
-        //     badgeColor: "bg-[green]"
-        // },
-        {
-            title: "Annoucement",
-            icon: BsFillMegaphoneFill,
-            path: "/annoucement",
+            path: "/claims-analytics",
         },
         {
             title: "Claim Explorer",
             icon: FaFileLines,
             path: "/claim-explorer",
+        },
+        {
+            title: "Batch Processing Monitor",
+            icon: FaCogs,
+            path: "/batch-processing",
+        },
+        {
+            title: "Flagged Claims",
+            icon: FaFlag,
+            path: '/flagged',
+            notifications: numberOfFlagged,
+            badgeColor: "bg-[#d19017]"
+        },
+        {
+            title: "Annoucement",
+            icon: BsFillMegaphoneFill,
+            path: "/annoucement",
         },
         {
             title: "UAM",
@@ -92,7 +69,7 @@ const Menu = () => {
     const getMenuTextStyle = (path: string) => {
         const isActive = pathname === path || (pathname.startsWith(path));
         return {
-            textColor: isActive ? theme.colors.bg.primary : theme.colors.bg.primary + hexOpacity(80),
+            textColor: isActive ? theme.colors.bg.primary : theme.colors.bg.primary + hexOpacity(100),
             bold: isActive ? TypographyBold.md : TypographyBold.sm2
         }
     }

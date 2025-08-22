@@ -1,5 +1,5 @@
 import Text from "@styles/components/text"
-import { FaFolder } from "react-icons/fa6"
+import { FaFolder, FaSquarePhone } from "react-icons/fa6"
 import theme from "@styles/theme"
 import PLevelIcon from "../components/p-level-icon"
 
@@ -15,7 +15,21 @@ const statusTextColor = {
     "pending review" : "#f59e0b",
 }
 
+import { FaEye, FaUserTie } from "react-icons/fa"
+import Button from "@/components/button/button"
+import { PiHospitalFill } from "react-icons/pi"
+import { useExplorerContext } from "../context/explorer-context"
+import { HiMenuAlt3 } from "react-icons/hi"
+import ClickableTab from "@components/clickable/clickabletab"
+
 const useColumns = () => {
+    const { setIsFacilityProfileVisible } = useExplorerContext()
+
+    const handleContactAuthorizedIndividual = (facilityId: string) => {
+        // TODO: Implement contact authorized individual logic
+        console.log('Contact authorized individual for facility:', facilityId)
+    }
+
     const columns = [
         {
             accessorKey : 'providerName',
@@ -43,6 +57,26 @@ const useColumns = () => {
                     </div>
                 )
             }
+        },
+        // {
+        //     accessorKey : 'facilityId',
+        //     header : 'Facility ID',
+        //     enableSorting : true,
+        //     cell : ({getValue} : {getValue : () => string}) => (
+        //         <Text ellipsis lineHeight={1}>
+        //             {getValue()}
+        //         </Text>
+        //     )
+        // },
+        {
+            accessorKey : 'district',
+            header : 'District',
+            enableSorting : true,
+            cell : ({getValue} : {getValue : () => string}) => (
+                <Text ellipsis lineHeight={1}>
+                    {getValue()}
+                </Text>
+            )
         },
         {
             accessorKey : 'prescribingLevel',
@@ -86,29 +120,51 @@ const useColumns = () => {
             }
         },
         {
-            accessorKey : 'email',
-            header : 'Email',
+            accessorKey : 'lastUpdated',
+            header : 'Last Updated',
             enableSorting : true,
-            cell : ({getValue} : {getValue : any}) => {
-                return (
-                    <Text ellipsis lineHeight={1}>
-                        {getValue()}
-                    </Text>
-                )
-            }
+            cell : ({getValue} : {getValue : () => string}) => (
+                <Text ellipsis lineHeight={1}>
+                    {getValue() || 'N/A'}
+                </Text>
+            )
         },
-        // {
-        //     accessorKey : 'district',
-        //     header : 'District',
-        //     enableSorting : true,
-        //     cell : ({getValue} : {getValue : any}) => {
-        //         return (
-        //             <Text ellipsis lineHeight={1}>
-        //                 {getValue()}
-        //             </Text>
-        //         )
-        //     }
-        // }
+        {
+            accessorKey : 'totalClaimsSubmitted',
+            header : 'Total Claims Submitted',
+            enableSorting : true,
+            cell : ({getValue} : {getValue : () => number}) => (
+                <Text ellipsis lineHeight={1}>
+                    {getValue() || 0}
+                </Text>
+            )
+        },
+        {
+            accessorKey : 'totalApprovedAmount',
+            header : 'Total Approved Amount',
+            enableSorting : true,
+            cell : ({getValue} : {getValue : () => number}) => (
+                <Text ellipsis lineHeight={1}>
+                    ${getValue()?.toLocaleString() || '0'}
+                </Text>
+            )
+        },
+        {
+            id: 'actions',
+            header: 'Actions',
+            cell: ({row} : {row: any}) => (
+                <ClickableTab className="flex gap-2 cursor-pointer">
+                    <HiMenuAlt3
+                        color={theme.colors.text.tetiary}
+                        size={20}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            setIsFacilityProfileVisible(true)
+                        }}
+                    />
+                </ClickableTab>
+            )
+        }
     ]
     return {columns}
 }
