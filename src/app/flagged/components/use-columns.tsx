@@ -98,16 +98,6 @@ const useColumns = () => {
             }
         },
         {
-            accessorKey : 'status',
-            header : 'Decision Status',
-            enableSorting : true,
-            cell : ({getValue} : {getValue : any}) => {
-                return (
-                    <Status status={getValue()} />
-                )
-            }
-        },
-        {
             accessorKey : 'reviewedBy',
             header : 'Reviewed By',
             enableSorting : true,

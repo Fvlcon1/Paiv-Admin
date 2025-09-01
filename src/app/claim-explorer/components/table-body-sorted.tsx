@@ -1,8 +1,9 @@
 import { gradientClass } from "@/utils/constants";
-import { data } from "./data"
 import TableBody from "./table-body";
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
+import { useExplorerContext } from "../context/explorer-context"
+import { data } from "./data";
 
 interface ProviderData {
     providerName: string;
@@ -13,21 +14,22 @@ interface ProviderData {
     district: string;
 }
 
-const groupDataByProviderName = (): ProviderData[][] => {
-    const groupedData: ProviderData[][] = Array.from({ length: 26 }, () => []);
-
-    data.forEach((item: ProviderData) => {
-        const firstLetter = item.providerName.charAt(0).toUpperCase();
-        const index = firstLetter.charCodeAt(0) - 'A'.charCodeAt(0);
-        if (index >= 0 && index < 26) {
-            groupedData[index].push(item);
-        }
-    });
-
-    return groupedData;
-};
 
 const TableBodySorted = ({ }) => {
+    const { providers } = useExplorerContext()
+    const groupDataByProviderName = (): ProviderData[][] => {
+        const groupedData: ProviderData[][] = Array.from({ length: 26 }, () => []);
+    
+        data?.forEach((item: ProviderData) => {
+            const firstLetter = item.providerName.charAt(0).toUpperCase();
+            const index = firstLetter.charCodeAt(0) - 'A'.charCodeAt(0);
+            if (index >= 0 && index < 26) {
+                groupedData[index].push(item);
+            }
+        });
+    
+        return groupedData;
+    };
     const groupedData = groupDataByProviderName();
 
     return (

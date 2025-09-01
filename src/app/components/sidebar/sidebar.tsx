@@ -8,7 +8,7 @@ const Sidebar = () => {
         <div 
             className="w-[250px] h-full z-[51] bg-bg-sidebar fixed left-0 top-0 border-r border-border-primary"
             style={{
-                backgroundImage: "url('/assets/prod/sidebar-bg.jpeg')",
+                backgroundImage: "url('/assets/prod/sidebar-bg-3.jpg')",
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',

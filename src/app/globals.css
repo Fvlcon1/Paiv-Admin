@@ -19,7 +19,7 @@
   --color-bg-secondary: #F4F4F4;
   --color-bg-tetiary: #EBEBEB;
   --color-bg-quantinary: #D0D0D0;
-  --color-bg-sidebar: #03A6AF;
+  --color-bg-sidebar: #226161;
   
   /* Border colors */
   --color-border-primary: #E8EDEF;
@@ -27,7 +27,7 @@
   --color-border-tetiary: #DDDDDD;
   --color-border-quantinary: #C6C6D0;
   
-  --color-main-primary: #3F6D84;
+  --color-main-primary: #226161;
   --color-main-primary-gradient: #77ABCB;
 }
 
@@ -49,7 +49,7 @@
 	--color-border-primary: #4D4D4D;
 	--color-border-quantinary: #909090;
 
-	--color-main-primary: #3F6D84;
+	--color-main-primary: #226161;
   --color-main-primary-gradient: #77ABCB;
 }
 

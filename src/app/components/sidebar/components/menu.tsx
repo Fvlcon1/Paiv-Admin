@@ -6,7 +6,7 @@ import { TypographyBold, TypographySize } from "@styles/style.types"
 import theme from "@styles/theme"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { FaThList, FaUserLock, FaCogs } from "react-icons/fa"
+import { FaThList, FaUserLock, FaCogs, FaExclamationTriangle } from "react-icons/fa"
 import { FaCediSign, FaCircleCheck, FaFileLines, FaFlag } from "react-icons/fa6"
 import { GiCancel } from "react-icons/gi"
 import { MdOutlinePendingActions, MdSpaceDashboard } from "react-icons/md"
@@ -17,6 +17,7 @@ import { useAuth } from "@/app/context/authContext"
 import { IconType } from "react-icons"
 import { BsFillMegaphoneFill } from "react-icons/bs"
 import { hexOpacity } from "@/utils/hexOpacity"
+import { TiWarning } from "react-icons/ti"
 
 interface IMenuItem {
     title: string
@@ -55,6 +56,13 @@ const Menu = () => {
             badgeColor: "bg-[#d19017]"
         },
         {
+            title: "Claim Anomalies",
+            icon: FaExclamationTriangle,
+            path: '/claim-anomalies',
+            notifications: 5,
+            badgeColor: "bg-text-danger"
+        },
+        {
             title: "Annoucement",
             icon: BsFillMegaphoneFill,
             path: "/annoucement",
@@ -69,7 +77,7 @@ const Menu = () => {
     const getMenuTextStyle = (path: string) => {
         const isActive = pathname === path || (pathname.startsWith(path));
         return {
-            textColor: isActive ? theme.colors.bg.primary : theme.colors.bg.primary + hexOpacity(100),
+            textColor: isActive ? theme.colors.bg.primary : theme.colors.bg.primary + hexOpacity(80),
             bold: isActive ? TypographyBold.md : TypographyBold.sm2
         }
     }

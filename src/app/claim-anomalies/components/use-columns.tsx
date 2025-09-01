@@ -6,9 +6,6 @@ import { FaFolder } from "react-icons/fa"
 import { PiWarningFill } from "react-icons/pi"
 import { ProgressProps } from "antd"
 import { getRelativeTime } from "@/utils/getDate"
-import ClickableTab from "@components/clickable/clickabletab"
-import { HiMenuAlt3 } from "react-icons/hi"
-import { useExplorerContext } from "../../context/explorer-context"
 
 const ProgressCircle = ({ percent }: { percent: number }) => {
     const strokeColor: ProgressProps['strokeColor'] = {
@@ -52,7 +49,6 @@ const Status = ({ status }: { status: string }) => {
 }
 
 const useColumns = () => {
-    const { setIsBatchDetailsVisible } = useExplorerContext()
     const columns = [
         {
             accessorKey: 'batchId',
@@ -61,28 +57,18 @@ const useColumns = () => {
             cell: ({ getValue, row }: { getValue: any, row: any }) => {
                 const anomaly = row.original.anomaly
                 return (
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 py-2">
                         <Text bold={theme.typography.bold.md} ellipsis lineHeight={1}>
                             {getValue()}
                         </Text>
-                        {anomaly > 0 && (
+                        {/* {anomaly > 0 && (
                             <Tooltip
                                 title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
                             >
                                 <PiWarningFill color={theme.colors.text.danger} />
                             </Tooltip>
-                        )}
+                        )} */}
                     </div>
-                )
-            }
-        },
-        {
-            accessorKey: 'status',
-            header: 'Processing Status',
-            enableSorting: true,
-            cell: ({ getValue }: { getValue: any }) => {
-                return (
-                    <Status status={getValue() ? getValue() : "not submitted"} />
                 )
             }
         },
@@ -111,18 +97,6 @@ const useColumns = () => {
             }
         },
         {
-            accessorKey: 'lastUpdated',
-            header: 'Last Updated',
-            enableSorting: true,
-            cell: ({ getValue }: { getValue: any }) => {
-                return (
-                    <Text ellipsis lineHeight={1}>
-                        {getRelativeTime(getValue())}
-                    </Text>
-                )
-            }
-        },
-        {
             accessorKey: 'totalClaims',
             header: 'Total Claims',
             enableSorting: true,
@@ -140,28 +114,21 @@ const useColumns = () => {
             enableSorting: true,
             cell: ({ getValue }: { getValue: any }) => {
                 return (
-                    <Text ellipsis lineHeight={1}>
+                    <Text ellipsis lineHeight={1} bold={theme.typography.bold.md}>
                         {getValue()}
                     </Text>
                 )
             }
         },
         {
-            accessorKey: 'actions',
-            header: 'Actions',
+            accessorKey: 'reason',
+            header: 'Reason',
             enableSorting: true,
             cell: ({ getValue }: { getValue: any }) => {
                 return (
-                    <ClickableTab className="flex gap-2 cursor-pointer">
-                        <HiMenuAlt3
-                            color={theme.colors.text.tetiary}
-                            size={20}
-                            onClick={(e) => {
-                                e.stopPropagation()
-                                setIsBatchDetailsVisible(true)
-                            }}
-                        />
-                    </ClickableTab>
+                    <Text ellipsis lineHeight={1}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce maximus varius libero, non scelerisque turpis efficitur in. Nam tristique sem a risus placerat, vel vehicula elit facilisis.
+                    </Text>
                 )
             }
         },

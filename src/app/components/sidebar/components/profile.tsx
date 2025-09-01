@@ -81,11 +81,12 @@ const Profile = () => {
                         value={searchValue}
                         setValue={setSearchValue}
                         className="!py-[5px] !bg-[#ffffff0c] pl-[10px] pr-1 !h-[33px]"
+                        inputClassName="placeholder:!text-bg-primary/50 !text-bg-primary"
                         placeholder="Search anything..."
                         borderColor={theme.colors.border.primary + hexOpacity(10)}
                         PreIcon={
                             <FaMagnifyingGlass
-                                color={theme.colors.text.tetiary}
+                                color={theme.colors.bg.primary + hexOpacity(50)}
                                 size={13}
                             />
                         }

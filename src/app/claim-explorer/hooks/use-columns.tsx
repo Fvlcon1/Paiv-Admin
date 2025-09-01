@@ -25,9 +25,9 @@ import ClickableTab from "@components/clickable/clickabletab"
 const useColumns = () => {
     const { setIsFacilityProfileVisible } = useExplorerContext()
 
-    const handleContactAuthorizedIndividual = (facilityId: string) => {
+    const handleContactAuthorizedIndividual = (providerId: string) => {
         // TODO: Implement contact authorized individual logic
-        console.log('Contact authorized individual for facility:', facilityId)
+        console.log('Contact authorized individual for facility:', providerId)
     }
 
     const columns = [
@@ -59,7 +59,7 @@ const useColumns = () => {
             }
         },
         // {
-        //     accessorKey : 'facilityId',
+        //     accessorKey : 'providerId',
         //     header : 'Facility ID',
         //     enableSorting : true,
         //     cell : ({getValue} : {getValue : () => string}) => (

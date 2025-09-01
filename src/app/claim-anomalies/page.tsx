@@ -19,6 +19,7 @@ import { IoMdArrowRoundBack } from "react-icons/io"
 import { useRouter } from "next/navigation"
 import Table from "./components/table"
 import Filter from "./components/filter"
+import { FaExclamationTriangle } from "react-icons/fa"
 
 interface ICrumbs {
     icon?: IconType
@@ -34,32 +35,17 @@ const Top = () => {
     const formattedHospitalName = hospital ? decodeURIComponent(hospital).replace(/%20/g, ' ') : ''
     const router = useRouter()
 
-    const crumbs: ICrumbs[] = [
-        {
-            icon: RiHome6Fill,
-            path: "/dashboard",
-        },
-        {
-            title: "Claim Explorer",
-            path: "/dashboard/claim-explorer",
-        },
-        {
-            title: formattedHospitalName,
-            path: `/dashboard/claim-explorer/${hospital}`,
-            active: true
-        },
-    ]
-
     const Header = () => {
         return (
             <div className="flex items-center gap-2">
+                <FaExclamationTriangle size={20} color={theme.colors.text.primary} />
                 <Text
                     size={theme.typography.size.HM2}
                     textColor={theme.colors.text.secondary}
                     bold={theme.typography.bold.md2}
                     className={`!pl-[2px] ${gradientClass}`}
                 >
-                    Batch Processing
+                    Claim Anomalies
                 </Text>
             </div>
         )
@@ -73,7 +59,7 @@ const Top = () => {
     )
 }
 
-const BatchProcessing = () => {
+const ClaimAnomalies = () => {
     return (
         <SlideIn
             direction="right"
@@ -84,4 +70,4 @@ const BatchProcessing = () => {
         </SlideIn>
     )
 }
-export default BatchProcessing
+export default ClaimAnomalies

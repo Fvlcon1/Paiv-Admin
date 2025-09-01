@@ -1,0 +1,7 @@
+.ant-picker .ant-picker-input > input {
+    font-size: 12px;
+}
+
+.ant-picker .ant-picker-input > input::placeholder {
+    color: var(--color-text-tetiary);
+}

@@ -1,6 +1,6 @@
 export const data = [
 	{
-		"facilityId": "KATH001",
+		"providerId": "KATH001",
 		"providerName": "Komfo Anokye Teaching Hospital",
 		"prescribingLevel": "D",
 		"providerCategory": "Teaching Hospital",
@@ -9,7 +9,7 @@ export const data = [
 		"district": "Kumasi Metropolitan"
 	},
 	{
-		"facilityId": "KBTH002",
+		"providerId": "KBTH002",
 		"providerName": "Korle-Bu Teaching Hospital",
 		"prescribingLevel": "D",
 		"providerCategory": "Teaching Hospital",
@@ -18,7 +18,7 @@ export const data = [
 		"district": "Ablekuma South"
 	},
 	{
-		"facilityId": "SDCH003",
+		"providerId": "SDCH003",
 		"providerName": "St. Dominic Catholic Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Regional Hospital",
@@ -27,7 +27,7 @@ export const data = [
 		"district": "Denkyembour"
 	},
 	{
-		"facilityId": "AGCH004",
+		"providerId": "AGCH004",
 		"providerName": "Ashanti Goldfields Company Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -36,7 +36,7 @@ export const data = [
 		"district": "Obuasi Municipal"
 	},
 	{
-		"facilityId": "AMSH005",
+		"providerId": "AMSH005",
 		"providerName": "Akormaa Memorial SDA Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -45,7 +45,7 @@ export const data = [
 		"district": "Amansie West"
 	},
 	{
-		"facilityId": "AAH006",
+		"providerId": "AAH006",
 		"providerName": "Asafo‑Agyei Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -54,7 +54,7 @@ export const data = [
 		"district": "Kumasi Metropolitan"
 	},
 	{
-		"facilityId": "ADH007",
+		"providerId": "ADH007",
 		"providerName": "Adidome Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -63,7 +63,7 @@ export const data = [
 		"district": "Central Tongu"
 	},
 	{
-		"facilityId": "ABH008",
+		"providerId": "ABH008",
 		"providerName": "Abokobi District Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "District Hospital",
@@ -72,7 +72,7 @@ export const data = [
 		"district": "Ga East Municipal"
 	},
 	{
-		"facilityId": "ACH009",
+		"providerId": "ACH009",
 		"providerName": "Achimota Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "District Hospital",
@@ -81,7 +81,7 @@ export const data = [
 		"district": "Accra Metropolitan"
 	},
 	{
-		"facilityId": "BWP010",
+		"providerId": "BWP010",
 		"providerName": "Bawjiase Polyclinic",
 		"prescribingLevel": "B1",
 		"providerCategory": "Polyclinic",
@@ -90,7 +90,7 @@ export const data = [
 		"district": "Awutu Senya"
 	},
 	{
-		"facilityId": "USP011",
+		"providerId": "USP011",
 		"providerName": "Ussher Polyclinic",
 		"prescribingLevel": "B1",
 		"providerCategory": "Polyclinic",
@@ -99,7 +99,7 @@ export const data = [
 		"district": "Ashiedu Keteke"
 	},
 	{
-		"facilityId": "LWSH012",
+		"providerId": "LWSH012",
 		"providerName": "Living Waters Specialist Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Specialist Hospital",
@@ -108,7 +108,7 @@ export const data = [
 		"district": "Ejisu‑Juaben"
 	},
 	{
-		"facilityId": "BMH013",
+		"providerId": "BMH013",
 		"providerName": "Bryant Mission Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -117,7 +117,7 @@ export const data = [
 		"district": "Obuasi Municipal"
 	},
 	{
-		"facilityId": "CTY014",
+		"providerId": "CTY014",
 		"providerName": "City Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -126,7 +126,7 @@ export const data = [
 		"district": "Kumasi Metropolitan"
 	},
 	{
-		"facilityId": "CNY015",
+		"providerId": "CNY015",
 		"providerName": "County Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -135,7 +135,7 @@ export const data = [
 		"district": "Kumasi Metropolitan"
 	},
 	{
-		"facilityId": "DHB016",
+		"providerId": "DHB016",
 		"providerName": "District Hospital (Bekwai)",
 		"prescribingLevel": "C",
 		"providerCategory": "District Hospital",
@@ -144,7 +144,7 @@ export const data = [
 		"district": "Bekwai Municipal"
 	},
 	{
-		"facilityId": "EJH017",
+		"providerId": "EJH017",
 		"providerName": "Ejura Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -153,7 +153,7 @@ export const data = [
 		"district": "Ejura/Sekyedumase"
 	},
 	{
-		"facilityId": "EFH018",
+		"providerId": "EFH018",
 		"providerName": "Effiduase Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -162,7 +162,7 @@ export const data = [
 		"district": "Sekyere East"
 	},
 	{
-		"facilityId": "JDH019",
+		"providerId": "JDH019",
 		"providerName": "Juaso District Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "District Hospital",
@@ -171,7 +171,7 @@ export const data = [
 		"district": "Asante Akim South"
 	},
 	{
-		"facilityId": "JBH020",
+		"providerId": "JBH020",
 		"providerName": "Juaben Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -180,7 +180,7 @@ export const data = [
 		"district": "Ejisu‑Juaben"
 	},
 	{
-		"facilityId": "KSH021",
+		"providerId": "KSH021",
 		"providerName": "Kumasi South Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -189,7 +189,7 @@ export const data = [
 		"district": "Kumasi Metropolitan"
 	},
 	{
-		"facilityId": "NKH022",
+		"providerId": "NKH022",
 		"providerName": "Nkawie Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -198,7 +198,7 @@ export const data = [
 		"district": "Atwima Nwabiagya"
 	},
 	{
-		"facilityId": "OBH023",
+		"providerId": "OBH023",
 		"providerName": "Obuasi Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -207,7 +207,7 @@ export const data = [
 		"district": "Obuasi Municipal"
 	},
 	{
-		"facilityId": "TFH024",
+		"providerId": "TFH024",
 		"providerName": "Tafo Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -216,7 +216,7 @@ export const data = [
 		"district": "Kumasi Metropolitan"
 	},
 	{
-		"facilityId": "TPH025",
+		"providerId": "TPH025",
 		"providerName": "Tepa Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -225,7 +225,7 @@ export const data = [
 		"district": "Ahafo Ano North"
 	},
 	{
-		"facilityId": "TSH026",
+		"providerId": "TSH026",
 		"providerName": "TrustCare Specialist Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Specialist Hospital",
@@ -234,7 +234,7 @@ export const data = [
 		"district": "Kumasi Metropolitan"
 	},
 	{
-		"facilityId": "SDA027",
+		"providerId": "SDA027",
 		"providerName": "SDA Hospital (Wiamoase)",
 		"prescribingLevel": "C",
 		"providerCategory": "Mission Hospital",
@@ -243,7 +243,7 @@ export const data = [
 		"district": "Sekyere South"
 	},
 	{
-		"facilityId": "PLH028",
+		"providerId": "PLH028",
 		"providerName": "Peace & Love Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",
@@ -252,7 +252,7 @@ export const data = [
 		"district": "Kumasi Metropolitan"
 	},
 	{
-		"facilityId": "WEH029",
+		"providerId": "WEH029",
 		"providerName": "West End Hospital",
 		"prescribingLevel": "C",
 		"providerCategory": "Primary Care Hospital",

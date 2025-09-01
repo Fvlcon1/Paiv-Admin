@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState } from "react"
+import useExplorer from "../hooks/use-explorer"
 
 const ExplorerContext = createContext<{
     isFilterVisible : boolean
@@ -11,6 +12,9 @@ const ExplorerContext = createContext<{
     setIsBatchDetailsVisible : React.Dispatch<React.SetStateAction<boolean>>
     selectedBatch : any
     setSelectedBatch : React.Dispatch<React.SetStateAction<any>>
+    providers : any
+    providersLoading : boolean
+    providersError : any
 }>({
     isFilterVisible : false,
     setIsFilterVisible : () => {},
@@ -19,7 +23,10 @@ const ExplorerContext = createContext<{
     isBatchDetailsVisible : false,
     setIsBatchDetailsVisible : () => {},
     selectedBatch : null,
-    setSelectedBatch : () => {}
+    setSelectedBatch : () => {},
+    providers : null,
+    providersLoading : false,
+    providersError : null
 })
 
 const ExplorerProvider = ({children} : {children : React.ReactNode}) => {
@@ -27,6 +34,7 @@ const ExplorerProvider = ({children} : {children : React.ReactNode}) => {
     const [isFacilityProfileVisible, setIsFacilityProfileVisible] = useState<boolean>(false)
     const [isBatchDetailsVisible, setIsBatchDetailsVisible] = useState<boolean>(false)
     const [selectedBatch, setSelectedBatch] = useState<any>(null)
+    const { providers, providersLoading, providersError } = useExplorer()
     return (
         <ExplorerContext.Provider 
             value={{
@@ -37,7 +45,10 @@ const ExplorerProvider = ({children} : {children : React.ReactNode}) => {
                 isBatchDetailsVisible,
                 setIsBatchDetailsVisible,
                 selectedBatch,
-                setSelectedBatch
+                setSelectedBatch,
+                providers,
+                providersLoading,
+                providersError
             }}
         >
             {children}

@@ -1,7 +1,5 @@
 import { ReactNode } from "react"
-import WebSocketComponent from "./components/web-socket"
-import Siderbar from "../components/sidebar/sidebar"
-import Topbar from "../components/topbar/topbar"
+import { AnalyticsContextProvider } from "./context/context"
 
 const Layout = ({
     children
@@ -10,10 +8,12 @@ const Layout = ({
 }) => {
     return (
         <>
-            <WebSocketComponent />
-            <div className="ml-[250px] mt-[60px]">
-                {children}
-            </div>
+            {/* <Topbar /> */}
+            <AnalyticsContextProvider>
+                <div className="mt-[60px] bg-[#F2F2F2]">
+                    {children}
+                </div>
+            </AnalyticsContextProvider>
         </>
     )
 }

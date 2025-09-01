@@ -14,7 +14,7 @@ export const colors = {
         secondary: '#F4F4F4',
         tetiary: '#EBEBEB',
         quantinary: "#D0D0D0",
-		sidebar : "#022C56"
+		sidebar : "#226161"
     },
     border: {
         primary: "#E8EDEF",
@@ -23,7 +23,7 @@ export const colors = {
         quantinary: '#C6C6D0',
     },
     main: {
-        primary: '#3F6D84'
+        primary: '#226161'
     }
 };
 
