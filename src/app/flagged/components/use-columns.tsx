@@ -32,7 +32,7 @@ const Status = ({status} : {status : string}) => {
 
 const ReviewedBy = ({reviewedBy} : {reviewedBy : string}) => {
     return (
-        reviewedBy === "ai" ? (
+        reviewedBy === "NHIS_Expert_System" ? (
             <div className="flex items-center gap-1 rounded-md px-2 py-1 bg-bg-quantinary/70">
                 <FaMicrochip size={15} color={theme.colors.text.secondary} />
                 <Text ellipsis lineHeight={1}>
@@ -49,21 +49,33 @@ const ReviewedBy = ({reviewedBy} : {reviewedBy : string}) => {
 
 const useColumns = () => {
     const columns = [
+        // {
+        //     accessorKey : 'encounterToken',
+        //     header : 'Encounter Token',
+        //     enableSorting : true,
+        //     cell : ({getValue} : {getValue : any}) => {
+        //         return (
+        //             <Text bold={theme.typography.bold.md} ellipsis lineHeight={1}>
+        //                 {getValue()}
+        //             </Text>
+        //         )
+        //     }
+        // },
         {
-            accessorKey : 'id',
-            header : 'Encounter Token',
+            accessorKey : 'claimId',
+            header : 'Claim ID',
             enableSorting : true,
             cell : ({getValue} : {getValue : any}) => {
                 return (
-                    <Text bold={theme.typography.bold.md} ellipsis lineHeight={1}>
+                    <Text ellipsis lineHeight={1} className="py-2">
                         {getValue()}
                     </Text>
                 )
             }
         },
         {
-            accessorKey : 'claimId',
-            header : 'Claim ID',
+            accessorKey : 'providerName',
+            header : 'Provider Name',
             enableSorting : true,
             cell : ({getValue} : {getValue : any}) => {
                 return (
@@ -74,7 +86,7 @@ const useColumns = () => {
             }
         },
         {
-            accessorKey : 'patientName',
+            accessorKey : 'fullName',
             header : 'Patient Name',
             enableSorting : true,
             cell : ({getValue} : {getValue : any}) => {

@@ -6,7 +6,7 @@ const useDiagnosisData = () => {
     const [categories, setCategories] = useState<string[]>([])
     const [series, setSeries] = useState<number[]>([])
     const [diagnosisCodes, setDiagnosisCodes] = useState<string[]>([])
-    const {totalApprovedAmount} = useAnalyticsContext()
+    const {totalApprovedAmount, isTotalApprovedAmountPending} = useAnalyticsContext()
 
     const transformToApprovedAmount = (data: any[]) => {
         const sortedData = [...data].sort((a, b) => a.count - b.count); // ascending sort by count
@@ -34,7 +34,8 @@ const useDiagnosisData = () => {
     return {
         categories,
         series,
-        diagnosisCodes
+        diagnosisCodes,
+        isTotalApprovedAmountPending
     }
 }
 export default useDiagnosisData

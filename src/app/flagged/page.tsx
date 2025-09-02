@@ -18,6 +18,10 @@ import SlideIn from "@styles/components/slidein"
 import { IoMdArrowRoundBack } from "react-icons/io"
 import { useRouter } from "next/navigation"
 import Table from "./components/table"
+import Filter from "./components/filter"
+import FilterSlider from "./components/filter-slider"
+import TableSkeleton from "@components/loaders/table-skeleton-v2"
+import useFlagged from "./hooks/use-flagged"
 
 interface ICrumbs {
     icon?: IconType
@@ -65,95 +69,6 @@ const Top = () => {
         { key: "Inactive", label: "Inactive", value: "Inactive", isSelected: status === "Inactive" }
     ]
 
-    const Crumbs = () => {
-        return (
-            <div className="flex items-center gap-2">
-                <div
-                    className="flex gap-1 px-3 py-1 rounded-lg bg-bg-secondary items-center w-fit cursor-pointer hover:bg-bg-tetiary duration-200"
-                    onClick={() => router.back()}
-                >
-                    <IoMdArrowRoundBack size={15} color={theme.colors.text.tetiary} />
-                    <Text
-                        bold={theme.typography.bold.sm2}
-                    >
-                        Back
-                    </Text>
-                </div>
-                <div className="flex px-3 py-1 rounded-lg bg-bg-secondary items-center w-fit">
-                    <div className="flex items-center gap-1">
-                        {
-                            crumbs.map((crumb, index) => (
-                                <Fragment key={index}>
-                                    <Link
-                                        href={crumb.path}
-                                    >
-                                        <div className="flex items-center">
-                                            {
-                                                crumb.icon &&
-                                                <crumb.icon size={15} color={theme.colors.text.tetiary} />
-                                            }
-                                            <Text
-                                                textColor={crumb.active ? theme.colors.text.secondary : theme.colors.text.tetiary}
-                                                bold={crumb.active ? theme.typography.bold.md : theme.typography.bold.sm2}
-                                            >
-                                                &nbsp;{crumb.title}
-                                            </Text>
-                                        </div>
-                                    </Link>
-                                    {index < crumbs.length - 1 && <Text textColor={theme.colors.text.tetiary}>/</Text>}
-                                </Fragment>
-                            ))
-                        }
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    const Filter = () => {
-        return (
-            <div className="flex items-center gap-8">
-                <div className="flex items-center gap-2">
-                    <div className="flex p-2 rounded-lg bg-bg-secondary items-center">
-                        <IoFilter size={17} color={theme.colors.text.secondary} />
-                    </div>
-                    <Dropdown
-                        menuItems={prescribingLevels}
-                        onChange={(value) => setPrescribingLevel(value)}
-                    >
-                        <Input
-                            placeholder="Search"
-                            value={prescribingLevel}
-                            onChange={(e) => { }}
-                            className="!h-[35px] !shadow-xs !w-[120px]"
-                            PostIcon={<FaChevronDown size={11} color={theme.colors.text.tetiary} />}
-                        />
-                    </Dropdown>
-                    <Dropdown
-                        menuItems={statusOptions}
-                        onChange={(value) => setStatus(value)}
-                    >
-                        <Input
-                            placeholder="Search"
-                            value={status}
-                            onChange={(e) => { }}
-                            className="!h-[35px] !shadow-xs !w-[120px]"
-                            PostIcon={<FaChevronDown size={11} color={theme.colors.text.tetiary} />}
-                        />
-                    </Dropdown>
-                </div>
-
-                <Input
-                    placeholder="Search facility name"
-                    value={""}
-                    onChange={(e) => { }}
-                    PreIcon={<HiMiniMagnifyingGlass size={15} color={theme.colors.text.tetiary} />}
-                    className="!h-[35px] !shadow-xs !w-[400px] !px-3"
-                />
-            </div>
-        )
-    }
-
     const Header = () => {
         return (
             <div className="flex items-center gap-2">
@@ -174,14 +89,29 @@ const Top = () => {
     }
 
     return (
-        <div className="w-full flex flex-col gap-2 px-4">
-            <Header />
-            <Filter />
-        </div>
+        <>
+            <FilterSlider />
+            <div className="w-full flex flex-col gap-2 px-4">
+                <Header />
+                <Filter />
+            </div>
+        </>
     )
 }
 
 const Flagged = () => {
+    const { isFlaggedClaimsLoading, isFlaggedClaimsRefetching } = useFlagged()
+
+    if (isFlaggedClaimsLoading || isFlaggedClaimsRefetching) {
+        return (
+            <TableSkeleton
+                columns={7}
+                rows={20}
+                showHeader
+            />
+        )
+    }
+
     return (
         <SlideIn
             direction="right"

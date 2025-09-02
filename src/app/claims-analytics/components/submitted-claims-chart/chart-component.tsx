@@ -2,13 +2,13 @@
 
 import React from 'react';
 import theme from '@styles/theme';
-import ChartSkeleton from './chart-skeleton';
 import dynamic from 'next/dynamic';
 import { ApexOptions } from 'apexcharts';
+import LineChartSkeleton from '../skeletons/line-chart-skeleton';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
     ssr: false,
-    loading: () => <ChartSkeleton />
+    loading: () => <LineChartSkeleton />
 });
 
 const ChartComponent = ({
@@ -18,9 +18,9 @@ const ChartComponent = ({
     isLineChartDataPending: boolean
     lineChartSeries: any
 }) => {
-    // if (isLineChartDataPending) {
-    //     return <ChartSkeleton />
-    // }
+    if (isLineChartDataPending) {
+        return <LineChartSkeleton />
+    }
 
     const series = lineChartSeries
 

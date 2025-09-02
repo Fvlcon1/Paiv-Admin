@@ -7,7 +7,7 @@ import ChartComponent from "./chart-component"
 import useLineChart from "./hooks/useLineChart"
 
 const SubmittedClaimsLineChart = () => {
-    const { lineChartSeries } = useLineChart()
+    const { lineChartSeries, isLineChartPending } = useLineChart()
 
     return (
         <SlideIn delay={0.3} className="flex flex-1 h-full">
@@ -24,9 +24,9 @@ const SubmittedClaimsLineChart = () => {
                 </div>
 
                 {/** Chart */}
-                <div className="ml-[-10px] mt-[-10px]">
+                <div className="ml-[-10px] mt-[-10px] h-full">
                     <ChartComponent
-                        isLineChartDataPending={false}
+                        isLineChartDataPending={isLineChartPending}
                         lineChartSeries={lineChartSeries}
                     />
                 </div>

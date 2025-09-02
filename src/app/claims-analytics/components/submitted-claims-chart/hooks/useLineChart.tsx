@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
 
 const useLineChart = () => {
-    const { claimsSubmittedOvertime } = useAnalyticsContext()
+    const { claimsSubmittedOvertime, isClaimsSubmittedOvertimePending } = useAnalyticsContext()
     const [series, setSeries] = useState<any[]>([])
 
     const transformToApprovedAmount = (data: any[]) => {
@@ -37,6 +37,7 @@ const useLineChart = () => {
 
     return {
         lineChartSeries: series,
+        isLineChartPending: isClaimsSubmittedOvertimePending
     }
 }
 export default useLineChart

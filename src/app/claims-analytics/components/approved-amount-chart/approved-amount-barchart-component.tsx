@@ -1,5 +1,5 @@
 import React from 'react';
-import BarChartSkeleton from './chart-skeleton';
+import BarChartSkeleton from '../skeletons/barchart-skeleton';
 import dynamic from 'next/dynamic';
 import useApprovedAmountData from './hooks/use-approved-amount';
 import { ApexOptions } from 'apexcharts';

@@ -3,6 +3,8 @@ import theme from "@styles/theme"
 import { FaInfoCircle } from "react-icons/fa"
 import { FaChartSimple } from "react-icons/fa6"
 import useSummary from "./hooks/use-summary"
+import { SummaryCardsSkeleton } from "../skeletons/summary-card-skeleton"
+import SlideIn from "@styles/components/slidein"
 
 const Card = ({title, value, change}: any) => {
     return (
@@ -47,11 +49,15 @@ const Card = ({title, value, change}: any) => {
 const SummaryCards = () => {
     const {summary, isKpiSummaryPending} = useSummary()
 
+    if(isKpiSummaryPending) return <SummaryCardsSkeleton />
+
     return (
         <div className="flex items-center gap-4">
             {
                 summary.map((item: any, index: number) => (
-                    <Card key={index} title={item.title} value={item.value} change={item.change} />
+                    <SlideIn key={index} delay={index * 0.1}>
+                        <Card title={item.title} value={item.value} change={item.change} />
+                    </SlideIn>
                 ))
             }
         </div>

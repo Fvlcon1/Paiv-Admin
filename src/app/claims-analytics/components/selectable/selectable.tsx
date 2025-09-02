@@ -52,7 +52,7 @@ const Selectable = ({
     }, [externalSelectedItems]);
 
     const filteredItems = items.filter((item) =>
-        item.label.toLowerCase().includes(searchTerm.toLowerCase())
+        item.label?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const handleItemToggle = (value: string, checked: boolean) => {

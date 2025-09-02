@@ -8,18 +8,38 @@ import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import { gradientClass } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 import { data } from "./data";
+import { useFlaggedContext } from "../context/flagged-context";
+import NoData from "@components/NoData/noData";
 
 const Table = () => {
     const { columns } = useColumns()
     const [isScrolling, setIsScrolling] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter()
+    const { flaggedClaims, isFlaggedClaimsLoading, flaggedClaimsError } = useFlaggedContext()
+
     const { getHeaderGroups, getRowModel } = useReactTable({
-        data: data,
+        data: flaggedClaims || [],
         columns: columns,
         getCoreRowModel: getCoreRowModel(),
         manualSorting: true,
     });
+
+    const NoDataLocal = () => (
+        <tbody>
+            <tr>
+                <td
+                    colSpan={columns.length}
+                    className="h-[400px] w-full" // Adjust height as needed
+                >
+                    <div className="w-full h-full flex justify-center items-center">
+                        <NoData />
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    )
+
     return (
         <div className="px-4">
             <table className="w-full min-w-[800px] border-separate border-spacing-0">
@@ -69,34 +89,40 @@ const Table = () => {
                     ))}
                 </thead>
 
-                <tbody className={`${isLoading ? "opacity-50" : ""}`}>
-                    {getRowModel().rows.map((row, index) => (
-                        <tr
-                            key={row.id}
-                            className={`${isLoading ? "cursor-wait" : "cursor-pointer"} ${index % 2 === 0 ? "bg-bg-primary-lighter" : ""} group hover:bg-bg-secondary duration-500`}
-                        // onClick={() => router.push(`/claim-explorer/${formattedHospitalName}/${row.original.batchId}`)}
-                        >
-                            {row.getVisibleCells().map((cell, colIndex) => (
-                                <td
-                                    key={cell.id}
-                                    className={`border-b-[1px] border-solid border-border-primary py-4 duration-500 group-hover:bg-bg-secondary
-                                                        ${index % 2 === 0 ? "bg-bg-primary-lighter" : ""}
-                
-                                                        ${colIndex === 0 && isScrolling ? 'after:content-[""] after:absolute after:top-0 after:right-[-8px] duration-1000 after:h-full after:w-2 after:bg-gradient-to-r after:from-black/15 after:to-transparent' : ''}
-                                                    `}
-                                    style={{
-                                        minWidth: colIndex === 0 ? '150px' : '150px',
-                                        maxWidth: colIndex === 0 ? '150px' : '150px',
-                                    }}
+                {
+                    flaggedClaims?.length === 0 ? (
+                        <NoDataLocal />
+                    ) : (
+                        <tbody className={`${isLoading ? "opacity-50" : ""}`}>
+                            {getRowModel().rows.map((row, index) => (
+                                <tr
+                                    key={row.id}
+                                    className={`${isLoading ? "cursor-wait" : "cursor-pointer"} ${index % 2 === 0 ? "bg-bg-primary-lighter" : ""} group hover:bg-bg-secondary duration-500`}
+                                // onClick={() => router.push(`/claim-explorer/${formattedHospitalName}/${row.original.batchId}`)}
                                 >
-                                    <div className={`${colIndex === 0 ? 'px-[10px]' : 'px-[30px]'} w-full flex h-full items-center gap-1`}>
-                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                    </div>
-                                </td>
+                                    {row.getVisibleCells().map((cell, colIndex) => (
+                                        <td
+                                            key={cell.id}
+                                            className={`border-b-[1px] border-solid border-border-primary py-4 duration-500 group-hover:bg-bg-secondary
+                                                            ${index % 2 === 0 ? "bg-bg-primary-lighter" : ""}
+                    
+                                                            ${colIndex === 0 && isScrolling ? 'after:content-[""] after:absolute after:top-0 after:right-[-8px] duration-1000 after:h-full after:w-2 after:bg-gradient-to-r after:from-black/15 after:to-transparent' : ''}
+                                                        `}
+                                            style={{
+                                                minWidth: colIndex === 0 ? '150px' : '150px',
+                                                maxWidth: colIndex === 0 ? '150px' : '150px',
+                                            }}
+                                        >
+                                            <div className={`${colIndex === 0 ? 'px-[10px]' : 'px-[30px]'} w-full flex h-full items-center gap-1`}>
+                                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                            </div>
+                                        </td>
+                                    ))}
+                                </tr>
                             ))}
-                        </tr>
-                    ))}
-                </tbody>
+                        </tbody>
+                    )
+                }
             </table>
         </div>
     )

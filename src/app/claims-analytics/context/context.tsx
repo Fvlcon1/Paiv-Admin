@@ -18,6 +18,12 @@ const AnalyticsContext = createContext<{
     setSelectedRegions: (regions: string[]) => void,
     setSelectedDistricts: (districts: string[]) => void,
     setSelectedFacilities: (facilities: string[]) => void,
+    startDate: string,
+    endDate: string,
+    setStartDate: (startDate: string) => void,
+    setEndDate: (endDate: string) => void,
+    providers: any,
+    isProvidersPending: boolean,
 }>({
     claimsSubmittedOvertime: null,
     isClaimsSubmittedOvertimePending: false,
@@ -33,13 +39,23 @@ const AnalyticsContext = createContext<{
     setSelectedRegions: () => {},
     setSelectedDistricts: () => {},
     setSelectedFacilities: () => {},
+    startDate: "",
+    endDate: "",
+    setStartDate: () => {},
+    setEndDate: () => {},
+    providers: null,
+    isProvidersPending: false,
 });
 
 export const AnalyticsContextProvider = ({ children }: { children: ReactNode }) => {
     const {
         claimsSubmittedOvertime, isClaimsSubmittedOvertimePending, totalApprovedAmount, isTotalApprovedAmountPending, topDiagnosis, isTopDiagnosisPending, kpiSummary, isKpiSummaryPending,
         selectedRegions, selectedDistricts, selectedFacilities,
-        setSelectedRegions, setSelectedDistricts, setSelectedFacilities
+        setSelectedRegions, setSelectedDistricts, setSelectedFacilities,
+        startDate, endDate,
+        setStartDate, setEndDate,
+        providers,
+        isProvidersPending,
     } = useAnalytics()
     
     return (
@@ -58,7 +74,13 @@ export const AnalyticsContextProvider = ({ children }: { children: ReactNode }) 
                 selectedFacilities,
                 setSelectedRegions,
                 setSelectedDistricts,
-                setSelectedFacilities
+                setSelectedFacilities,
+                startDate,
+                endDate,
+                setStartDate,
+                setEndDate,
+                providers,
+                isProvidersPending,
              }}
         >
             {children}

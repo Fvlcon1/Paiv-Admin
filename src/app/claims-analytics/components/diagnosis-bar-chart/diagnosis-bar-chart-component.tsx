@@ -1,9 +1,9 @@
 import React from 'react';
 import theme from '@styles/theme';
-import BarChartSkeleton from './chart-skeleton';
 import dynamic from 'next/dynamic';
 import useDiagnosisData from './hooks/useDiagnosisData';
 import { ApexOptions } from 'apexcharts';
+import BarChartSkeleton from '../skeletons/barchart-skeleton';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
     ssr: false,

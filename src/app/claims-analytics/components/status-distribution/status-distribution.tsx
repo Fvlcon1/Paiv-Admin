@@ -3,9 +3,10 @@
 import SlideIn from '@styles/components/slidein';
 import Text from '@styles/components/text';
 import theme from '@styles/theme';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import StatusDistributionSkeleton from './status-distribution-skeleton';
 import dynamic from 'next/dynamic';
+import { useAnalyticsContext } from '../../context/context';
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), {
     ssr: false,
@@ -14,12 +15,14 @@ const ReactApexChart = dynamic(() => import('react-apexcharts'), {
 
 const StatusDistributionChart = () => {
     const [chartOptions, setChartOptions] = useState<any>()
+    const {isKpiSummaryPending, kpiSummary} = useAnalyticsContext()
+    const {approved, partially_approved : partiallyApproved, flagged, rejected : declined} = kpiSummary?.status_breakdown || {}
 
-    const inititializeChartOptions = () => {
+    const inititializeChartOptions = useCallback(() => {
         setChartOptions({
-            series: [20, 20, 20],
-            labels: ['Approved', 'Flagged', 'Declined'],
-            colors: ['#10B981', '#F59E0B', '#EF4444'],
+            series: [approved || 0, partiallyApproved || 0, flagged || 0, declined || 0],
+            labels: ['Approved', 'Partially Approved', 'Flagged', 'Declined',],
+            colors: ['#10B981', '#3B82F6', '#F59E0B', '#EF4444',],
             chart: {
                 type: 'donut',
                 width: 800,
@@ -76,34 +79,44 @@ const StatusDistributionChart = () => {
                 color: theme.colors.text.tetiary,
             },
         })
-    }
+    }, [approved, partiallyApproved, flagged, declined])
 
     useEffect(() => {
         console.log({ chartOptions })
     }, [chartOptions])
 
+    useEffect(() => {
+        inititializeChartOptions()
+    }, [approved, partiallyApproved, flagged, declined])
+
     const legends = [
         {
             name: 'Approved',
             color: '#10B981',
+            value: approved || 0
         },
         {
             name : "Partially Approved",
             color: '#3B82F6',
+            value: partiallyApproved || 0
         },
         {
             name: 'Flagged',
             color: '#F59E0B',
+            value: flagged || 0
         },
         {
             name: 'Declined',
             color: '#EF4444',
+            value: declined || 0
         },
     ]
 
-    useEffect(() => {
-        inititializeChartOptions()
-    }, [])
+    if(isKpiSummaryPending) {
+        return (
+            <StatusDistributionSkeleton />
+        )
+    }
 
     return (
         <SlideIn
@@ -143,7 +156,7 @@ const StatusDistributionChart = () => {
                                     size='30px'
                                     lineHeight={1}
                                 >
-                                    {200}
+                                    {(approved || 0) + (partiallyApproved || 0) + (flagged || 0) + (declined || 0)}
                                 </Text>
                             </div>
                         </div>
@@ -159,12 +172,12 @@ const StatusDistributionChart = () => {
                                                 className="rounded-md py-1 px-2 flex"
                                                 style={{ backgroundColor: legend.color }}
                                             >
-                                                <Text
+                                                {/* <Text
                                                     textColor={theme.colors.bg.primary}
                                                     bold={theme.typography.bold.md}
                                                 >
                                                     ↗ +3.2%
-                                                </Text>
+                                                </Text> */}
                                             </div>
                                             <Text
                                                 textColor={legend.color}
@@ -177,7 +190,7 @@ const StatusDistributionChart = () => {
                                             textColor={legend.color}
                                             bold={theme.typography.bold.md}
                                         >
-                                            {20}
+                                            {legend.value}
                                         </Text>
                                     </div>
                                 ))

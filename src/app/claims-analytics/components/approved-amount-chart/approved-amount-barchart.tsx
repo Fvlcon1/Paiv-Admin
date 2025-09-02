@@ -4,15 +4,16 @@ import SlideIn from "@styles/components/slidein"
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
 import ApprovedAmountBarChartComponent from "./approved-amount-barchart-component"
+import { useAnalyticsContext } from "../../context/context"
+import { BarChartSkeleton } from "../skeletons/barchart-skeleton"
 
 const ApprovedAmountBarChart = () => {
-
-
-    // if(isDashboardDataPending) {
-    //     return (
-    //         <ChartSkeleton />
-    //     )
-    // }
+    const {isTotalApprovedAmountPending} = useAnalyticsContext()
+    if(isTotalApprovedAmountPending) {
+        return (
+            <BarChartSkeleton />
+        )
+    }
 
     return (
         <SlideIn delay={0.6} className="flex flex-1">

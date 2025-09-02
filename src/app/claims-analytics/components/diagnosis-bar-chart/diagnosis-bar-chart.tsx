@@ -4,16 +4,16 @@ import SlideIn from "@styles/components/slidein"
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
 import DiagnosisBarChartComponent from "./diagnosis-bar-chart-component"
-import ChartSkeleton from "./chart-skeleton"
+import { useAnalyticsContext } from "../../context/context"
+import BarChartSkeleton from "../skeletons/barchart-skeleton"
 
 const DiagnosisBarChart = () => {
-
-
-    // if(isDashboardDataPending) {
-    //     return (
-    //         <ChartSkeleton />
-    //     )
-    // }
+    const {isTopDiagnosisPending} = useAnalyticsContext()
+    if(isTopDiagnosisPending) {
+        return (
+            <BarChartSkeleton />
+        )
+    }
 
     return (
         <SlideIn delay={0.6} className="flex flex-1">
