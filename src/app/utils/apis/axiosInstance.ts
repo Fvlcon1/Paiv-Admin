@@ -16,7 +16,7 @@ export const setupInterceptors = (logout: () => void) => {
             if (error.response?.status === 401) {
                 console.log("instance")
                 toast.error("Please login to continue")
-                logout();
+                // logout();
                 return null
             }
             

@@ -22,6 +22,10 @@ import TableHead from "./components/table-head"
 import TableBody from "./components/table-body"
 import TableBodySorted from "./components/table-body-sorted"
 import BatchDetailsSlider from "./components/batch-details-slider"
+import TableSkeleton from "@components/loaders/table-skeleton-v2"
+import { useHospitalContext } from "./context/hospital-context"
+import Filter from "./components/filter"
+import FilterSlider from "./components/filter-slider"
 
 interface ICrumbs {
     icon?: IconType
@@ -114,50 +118,6 @@ const Top = () => {
         )
     }
 
-    const Filter = () => {
-        return (
-            <div className="flex items-center gap-8">
-                <div className="flex items-center gap-2">
-                    <div className="flex p-2 rounded-lg bg-bg-secondary items-center">
-                        <IoFilter size={17} color={theme.colors.text.secondary} />
-                    </div>
-                    <Dropdown
-                        menuItems={prescribingLevels}
-                        onChange={(value) => setPrescribingLevel(value)}
-                    >
-                        <Input
-                            placeholder="Search"
-                            value={prescribingLevel}
-                            onChange={(e) => { }}
-                            className="!h-[35px] !shadow-xs !w-[120px]"
-                            PostIcon={<FaChevronDown size={11} color={theme.colors.text.tetiary} />}
-                        />
-                    </Dropdown>
-                    <Dropdown
-                        menuItems={statusOptions}
-                        onChange={(value) => setStatus(value)}
-                    >
-                        <Input
-                            placeholder="Search"
-                            value={status}
-                            onChange={(e) => { }}
-                            className="!h-[35px] !shadow-xs !w-[120px]"
-                            PostIcon={<FaChevronDown size={11} color={theme.colors.text.tetiary} />}
-                        />
-                    </Dropdown>
-                </div>
-
-                <Input
-                    placeholder="Search facility name"
-                    value={""}
-                    onChange={(e) => { }}
-                    PreIcon={<HiMiniMagnifyingGlass size={15} color={theme.colors.text.tetiary} />}
-                    className="!h-[35px] !shadow-xs !w-[400px] !px-3"
-                />
-            </div>
-        )
-    }
-
     const Header = () => {
         return (
             <div className="flex items-center gap-2">
@@ -198,8 +158,10 @@ const Top = () => {
 }
 
 const HospitalPage = () => {
+    const { batchesLoading } = useHospitalContext()
     return (
         <>
+            <FilterSlider />
             <BatchDetailsSlider />
             <SlideIn
                 direction="right"
@@ -207,7 +169,16 @@ const HospitalPage = () => {
             >
                 <Top />
                 <TableHead />
-                <TableBodySorted />
+                {
+                    batchesLoading ? (
+                        <TableSkeleton
+                            rows={20}
+                            showHeader
+                        />
+                    ) : (
+                        <TableBodySorted />
+                    )
+                }
             </SlideIn>
         </>
     )

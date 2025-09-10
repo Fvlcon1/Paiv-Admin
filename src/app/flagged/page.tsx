@@ -22,6 +22,7 @@ import Filter from "./components/filter"
 import FilterSlider from "./components/filter-slider"
 import TableSkeleton from "@components/loaders/table-skeleton-v2"
 import useFlagged from "./hooks/use-flagged"
+import { useFlaggedContext } from "./context/flagged-context"
 
 interface ICrumbs {
     icon?: IconType
@@ -100,17 +101,7 @@ const Top = () => {
 }
 
 const Flagged = () => {
-    const { isFlaggedClaimsLoading, isFlaggedClaimsRefetching } = useFlagged()
-
-    if (isFlaggedClaimsLoading || isFlaggedClaimsRefetching) {
-        return (
-            <TableSkeleton
-                columns={7}
-                rows={20}
-                showHeader
-            />
-        )
-    }
+    const { isFlaggedClaimsLoading, isFlaggedClaimsRefetching } = useFlaggedContext()
 
     return (
         <SlideIn
@@ -118,7 +109,16 @@ const Flagged = () => {
             className="w-full flex flex-col gap-2 py-4"
         >
             <Top />
-            <Table />
+            {
+                (isFlaggedClaimsLoading || isFlaggedClaimsRefetching) ? (
+                    <TableSkeleton
+                        rows={20}
+                        showHeader
+                    />
+                ) : (
+                    <Table />
+                )
+            }
         </SlideIn>
     )
 }

@@ -71,12 +71,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const token = cookies.get("accessToken");
 
         if (!token) {
-            logout(false);
+            // logout(false);
         } else {
             setIsAuthenticated(true);
         }
 
-        setupInterceptors(logout);
+        // setupInterceptors(logout);
     }, [logout]);
 
     useEffect(() => {

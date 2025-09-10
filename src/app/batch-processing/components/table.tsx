@@ -8,18 +8,22 @@ import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import { gradientClass } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 import { data } from "./data";
+import { useBatchProcessingContext } from "../context/btach-processing-context";
 
 const Table = () => {
     const { columns } = useColumns()
     const [isScrolling, setIsScrolling] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter()
+    const { tableData } = useBatchProcessingContext()
+
     const { getHeaderGroups, getRowModel } = useReactTable({
-        data: data,
+        data: tableData,
         columns: columns,
         getCoreRowModel: getCoreRowModel(),
         manualSorting: true,
     });
+    
     return (
         <div className="px-4">
             <table className="w-full min-w-[800px] border-separate border-spacing-0">

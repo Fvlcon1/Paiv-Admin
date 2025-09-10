@@ -13,47 +13,45 @@ import Button from "@components/button/button"
 import Separator from "@components/divider/divider"
 import Text from "@styles/components/text"
 import { useExplorerContext } from "../context/explorer-context"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import theme from "@styles/theme"
 import Overlay from "@components/overlay/overlay"
 import { gradientClass } from "@/utils/constants"
-
-interface FacilityData {
-    facilityId: string
-    providerName: string
-    prescribingLevel: string
-    providerCategory: string
-    email: string
-    credentialStatus: string
-    district: string
-    phone: string
-    address: string
-    region: string
-    establishedDate?: string
-    staffCount?: number
-    specialties?: string[]
-}
+import { ProviderProfile, Provider } from "../utils/types"
+import { extractProviderProfile } from "../utils/transform-providers"
+import getDate from "@/utils/getDate"
 
 const FacilityProfileSlider = () => {
     const [isLoading, setIsLoading] = useState(false)
-    const { isFacilityProfileVisible, setIsFacilityProfileVisible } = useExplorerContext()
+    const { isFacilityProfileVisible, setIsFacilityProfileVisible, providers, expandedProviderId } = useExplorerContext()
+    const [provider, setProvider] = useState<ProviderProfile | null>(null)
+
+    useEffect(() => {
+        if (expandedProviderId) {
+            const provider = providers?.find((provider: Provider) =>
+                provider.providerId.toString() === expandedProviderId
+            )
+            console.log({ expandedProviderId, providers, provider })
+            if (provider) setProvider(extractProviderProfile(provider))
+        }
+    }, [expandedProviderId])
 
     // Sample data if no facility provided
-    const facilityData: FacilityData = {
-        facilityId: "KATH001",
-        providerName: "Komfo Anokye Teaching Hospital",
-        prescribingLevel: "D",
-        providerCategory: "Teaching Hospital",
-        email: "info@kathhsp.org",
-        credentialStatus: "Active",
-        district: "Kumasi Metropolitan",
-        phone: "+233 32 202 1234",
-        address: "P.O. Box 1934, Kumasi, Ghana",
-        region: "Ashanti Region",
-        establishedDate: "1954",
-        staffCount: 2850,
-        specialties: ["Emergency Medicine", "Cardiology", "Oncology", "Pediatrics", "Surgery"]
-    }
+    // const provider: ProviderProfile = {
+    //     facilityId: "KATH001",
+    //     providerName: "Komfo Anokye Teaching Hospital",
+    //     prescribingLevel: "D",
+    //     providerCategory: "Teaching Hospital",
+    //     email: "info@kathhsp.org",
+    //     credentialStatus: "Active",
+    //     district: "Kumasi Metropolitan",
+    //     phone: "+233 32 202 1234",
+    //     address: "P.O. Box 1934, Kumasi, Ghana",
+    //     region: "Ashanti Region",
+    //     establishedDate: "1954",
+    //     staffCount: 2850,
+    //     specialties: ["Emergency Medicine", "Cardiology", "Oncology", "Pediatrics", "Surgery"]
+    // }
 
     const getStatusBadgeVariant = (status: string) => {
         switch (status.toLowerCase()) {
@@ -86,7 +84,7 @@ const FacilityProfileSlider = () => {
     return (
         <AnimatePresence>
             {
-                isFacilityProfileVisible && (
+                isFacilityProfileVisible && provider && (
                     <Overlay
                         onClick={() => setIsFacilityProfileVisible(false)}
                     >
@@ -148,7 +146,7 @@ const FacilityProfileSlider = () => {
                                                 transition={{ delay: 0.2 }}
                                             >
                                                 <div className="bg-gradient-card border-0 shadow-card">
-                                                    <div className="p-4">
+                                                    <div className="p-4 pb-0">
                                                         <div className="flex flex-col gap-1 mb-3">
                                                             <div className="flex-1 min-w-0">
                                                                 <Text
@@ -156,27 +154,34 @@ const FacilityProfileSlider = () => {
                                                                     bold={theme.typography.bold.md2}
                                                                     className={gradientClass}
                                                                 >
-                                                                    {facilityData.providerName}
+                                                                    {provider.providerName}
                                                                 </Text>
                                                                 <div className="flex items-center gap-1">
                                                                     {/* <HiOutlineLocationMarker className="text-text-tetiary flex-shrink-0" size={14} /> */}
-                                                                    <Text textColor={theme.colors.text.tetiary}>{facilityData.district}, {facilityData.region}</Text>
+                                                                    <Text textColor={theme.colors.text.tetiary}>{provider.district}, {provider.region}</Text>
                                                                 </div>
                                                             </div>
                                                             <div className="flex w-fit items-center gap-1 rounded-full px-2 py-0.5 bg-green-500/20">
                                                                 <HiOutlineShieldCheck color={theme.colors.text.success} className="" size={13} />
-                                                                <Text textColor={theme.colors.text.success}>{facilityData.credentialStatus}</Text>
+                                                                <Text textColor={theme.colors.text.success}>{provider.credentialStatus}</Text>
                                                             </div>
                                                         </div>
 
-                                                        <div className="grid grid-cols-2 gap-3 text-xs">
-                                                            <div className="flex flex-col gap-1">
-                                                                <Text textColor={theme.colors.text.tetiary}>Category</Text>
-                                                                <Text>{facilityData.providerCategory}</Text>
+                                                        <div className="flex flex-col gap-2">
+                                                            <div className="flex items-center justify-between">
+                                                                <Text className="text-xs">Category</Text>
+                                                                <div className="flex px-3 py-1 rounded-md bg-bg-tetiary">
+                                                                    <Text>{provider.providerCategory || 'N/A'}</Text>
+                                                                </div>
                                                             </div>
-                                                            <div className="flex flex-col gap-1">
-                                                                <Text textColor={theme.colors.text.tetiary}>Established</Text>
-                                                                <Text>{facilityData.establishedDate || 'N/A'}</Text>
+
+                                                            <Separator />
+
+                                                            <div className="flex items-center justify-between">
+                                                                <Text className="text-xs">Established</Text>
+                                                                <div className="flex px-3 py-1 rounded-md bg-bg-tetiary">
+                                                                    <Text>{getDate(new Date(provider.establishedDate || '')) || 'N/A'}</Text>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -184,39 +189,41 @@ const FacilityProfileSlider = () => {
                                             </motion.div>
 
                                             {/* Quick Stats */}
-                                            {facilityData.staffCount && (
-                                                <motion.div
-                                                    initial={{ y: 20, opacity: 0 }}
-                                                    animate={{ y: 0, opacity: 1 }}
-                                                    transition={{ delay: 0.3 }}
-                                                    className="grid grid-cols-2 gap-3 px-4"
-                                                >
-                                                    <div className="bg-bg-secondary rounded-lg">
-                                                        <div className="p-3 text-center flex flex-col items-center gap-0.5">
-                                                            <Text
-                                                                size={theme.typography.size.body2}
-                                                                bold={theme.typography.bold.md}
-                                                                className={gradientClass}
-                                                            >
-                                                                {facilityData.staffCount.toLocaleString()}
-                                                            </Text>
-                                                            <Text>Staff Members</Text>
+                                            {
+                                                (
+                                                    <motion.div
+                                                        initial={{ y: 20, opacity: 0 }}
+                                                        animate={{ y: 0, opacity: 1 }}
+                                                        transition={{ delay: 0.3 }}
+                                                        className="grid grid-cols-2 gap-3 px-4"
+                                                    >
+                                                        <div className="bg-bg-secondary rounded-lg">
+                                                            <div className="p-3 text-center flex flex-col items-center gap-0.5">
+                                                                <Text
+                                                                    size={theme.typography.size.body2}
+                                                                    bold={theme.typography.bold.md}
+                                                                    className={gradientClass}
+                                                                >
+                                                                    {provider.staffCount?.toLocaleString() || 'N/A'}
+                                                                </Text>
+                                                                <Text>Staff Members</Text>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="bg-bg-secondary rounded-lg">
-                                                        <div className="p-3 text-center flex flex-col items-center">
-                                                            <Text
-                                                                size={theme.typography.size.body2}
-                                                                bold={theme.typography.bold.md}
-                                                                className={gradientClass}
-                                                            >
-                                                                {facilityData.specialties?.length || 0}
-                                                            </Text>
-                                                            <Text>Specialties</Text>
+                                                        <div className="bg-bg-secondary rounded-lg">
+                                                            <div className="p-3 text-center flex flex-col items-center">
+                                                                <Text
+                                                                    size={theme.typography.size.body2}
+                                                                    bold={theme.typography.bold.md}
+                                                                    className={gradientClass}
+                                                                >
+                                                                    {provider.specialties?.length || 0}
+                                                                </Text>
+                                                                <Text>Specialties</Text>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </motion.div>
-                                            )}
+                                                    </motion.div>
+                                                )
+                                            }
 
                                             {/* Identification */}
                                             <motion.div
@@ -225,8 +232,8 @@ const FacilityProfileSlider = () => {
                                                 transition={{ delay: 0.4 }}
                                             >
                                                 <div className="px-4">
-                                                    <div className="bg-bg-primary-lighter flex flex-col border border-border-primary rounded-xl p-4">
-                                                        <div className="flex items-center gap-1">
+                                                    <div className="bg-bg-secondary flex flex-col rounded-xl p-4">
+                                                        {/* <div className="flex items-center gap-1">
                                                             <HiOutlineIdentification className="text-text-secondary" size={16} />
                                                             <Text
                                                                 bold={theme.typography.bold.md}
@@ -234,21 +241,21 @@ const FacilityProfileSlider = () => {
                                                             >
                                                                 Identification
                                                             </Text>
-                                                        </div>
+                                                        </div> */}
 
                                                         <div className="flex flex-col gap-2">
                                                             <div className="flex items-center justify-between">
                                                                 <Text className="text-xs">Facility ID</Text>
                                                                 <div className="flex px-3 py-1 rounded-md bg-bg-tetiary">
                                                                     <Text>
-                                                                        {facilityData.facilityId}
+                                                                        {provider.facilityId}
                                                                     </Text>
                                                                 </div>
                                                             </div>
 
                                                             <Separator />
 
-                                                            <div className="flex flex-col gap-1">
+                                                            <div className="flex items-center justify-between gap-1">
                                                                 <Text>
                                                                     Prescribing Level
                                                                 </Text>
@@ -256,7 +263,7 @@ const FacilityProfileSlider = () => {
                                                                     <Text
                                                                         textColor={theme.colors.bg.primary}
                                                                     >
-                                                                        Level {facilityData.prescribingLevel} - {getPrescribingLevelInfo(facilityData.prescribingLevel).name}
+                                                                        Level {provider.prescribingLevel} - {getPrescribingLevelInfo(provider.prescribingLevel).name}
                                                                     </Text>
                                                                 </div>
                                                             </div>
@@ -272,52 +279,46 @@ const FacilityProfileSlider = () => {
                                                 transition={{ delay: 0.5 }}
                                             >
                                                 <div className="px-4">
-                                                    <div className="bg-bg-primary-lighter flex flex-col gap-2 border border-border-primary rounded-xl p-4">
-                                                        {/* <div className="flex items-center gap-1">
-                                                            <HiOutlineIdentification className="text-text-secondary" size={16} />
-                                                            <Text
-                                                                bold={theme.typography.bold.md}
-                                                                className={gradientClass}
-                                                            >
-                                                                Contact Information
-                                                            </Text>
-                                                        </div> */}
-
-                                                        <div className="flex flex-col gap-1">
-                                                            <div className="flex gap-2">
+                                                    <div className="bg-bg-secondary flex flex-col gap-2 rounded-xl p-4">
+                                                        <div className="flex flex-col gap-2">
+                                                            <div className="flex items-center justify-between gap-2">
                                                                 <div className="flex items-center gap-2">
                                                                     <HiOutlineMail className="text-text-secondary" size={14} />
                                                                     <Text textColor={theme.colors.text.secondary}>Email - </Text>
                                                                 </div>
-                                                                <Text>
-                                                                    <a
-                                                                        href={`mailto:${facilityData.email}`}
-                                                                    >
-                                                                        {facilityData.email}
-                                                                    </a>
-                                                                </Text>
+                                                                <div className="flex px-3 py-1 rounded-md bg-bg-tetiary">
+                                                                    <Text>
+                                                                        <a href={`mailto:${provider.email}`}>
+                                                                            {provider.email}
+                                                                        </a>
+                                                                    </Text>
+                                                                </div>
                                                             </div>
 
-                                                            <div className="flex gap-2">
+                                                            <Separator />
+
+                                                            <div className="flex items-center justify-between gap-2">
                                                                 <div className="flex items-center gap-2">
                                                                     <HiOutlinePhone className="text-text-secondary" size={14} />
                                                                     <Text textColor={theme.colors.text.secondary}>Phone - </Text>
                                                                 </div>
-                                                                <Text>
-                                                                    <a
-                                                                        href={`tel:${facilityData.phone}`}
-                                                                    >
-                                                                        {facilityData.phone}
-                                                                    </a>
-                                                                </Text>
+                                                                <div className="flex px-3 py-1 rounded-md bg-bg-tetiary">
+                                                                    <Text>
+                                                                        <a href={`tel:${provider.phone}`}>{provider.phone}</a>
+                                                                    </Text>
+                                                                </div>
                                                             </div>
 
-                                                            <div className="flex gap-2">
+                                                            <Separator />
+
+                                                            <div className="flex items-center justify-between gap-2">
                                                                 <div className="flex items-center gap-2">
                                                                     <HiOutlineLocationMarker className="text-text-secondary" size={14} />
                                                                     <Text textColor={theme.colors.text.secondary}>Address - </Text>
                                                                 </div>
-                                                                <Text>{facilityData.address}</Text>
+                                                                <div className="flex px-3 py-1 rounded-md bg-bg-tetiary">
+                                                                    <Text>{provider.address}</Text>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -325,7 +326,7 @@ const FacilityProfileSlider = () => {
                                             </motion.div>
 
                                             {/* Specialties */}
-                                            {facilityData.specialties && facilityData.specialties.length > 0 && (
+                                            {provider.specialties && provider.specialties.length > 0 && (
                                                 <motion.div
                                                     initial={{ y: 20, opacity: 0 }}
                                                     animate={{ y: 0, opacity: 1 }}
@@ -344,7 +345,7 @@ const FacilityProfileSlider = () => {
                                                             </div>
 
                                                             <div className="flex flex-wrap gap-1.5">
-                                                                {facilityData.specialties.map((specialty, index) => (
+                                                                {provider.specialties.map((specialty, index) => (
                                                                     <div
                                                                         className="flex gap-1 px-2 py-[2px] bg-bg-secondary border border-border-primary rounded-full"
                                                                         key={index}

@@ -4,11 +4,13 @@ import Cookies from "universal-cookie"
 import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 import useProfile from "@/app/hooks/useProfile"
+import { useAuth } from "@/app/context/authContext"
 
 const useMFA = () => {
     const cookies = new Cookies()
     const router = useRouter()
     const { getProfileMutation } = useProfile()
+    const { userDetails } = useAuth()
 
     const enableEmailOtp = async () => {
         const response = await protectedApi.POST("mfa/admin/email/enable")
@@ -37,6 +39,7 @@ const useMFA = () => {
     const submitOTP = async (otp: string) => {
         console.log({ otp });
         const response = await protectedApi.POST("mfa/admin/verify-otp", {
+            email: userDetails?.email,
             otp: otp
         });
         return response

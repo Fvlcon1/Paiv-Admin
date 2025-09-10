@@ -44,6 +44,8 @@ const FilterSlider = () => {
         refetchFlaggedClaims,
     } = useFlaggedContext()
 
+    
+
     const handleApply = () => {
         refetchFlaggedClaims()
         setIsFilterVisible(false)

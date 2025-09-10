@@ -6,6 +6,7 @@ import { useFormik } from "formik"
 import validationSchema from "../utils/validationSchema"
 import toast from "react-hot-toast"
 import { protectedApi } from "@/app/utils/apis/api"
+import { useAuth } from "@/app/context/authContext"
 
 interface LoginType {
     email: string,
@@ -15,6 +16,7 @@ interface LoginType {
 const useLogin = () => {
     const router = useRouter()
     const cookies = new Cookies()
+    const { setUserDetails } = useAuth()
 
     const sendEmailOtp = async () => {
         const response = await protectedApi.POST("mfa/admin/send-otp")
@@ -39,9 +41,10 @@ const useLogin = () => {
 
     const { mutate: handleSubmitMutation, isPending: isPendingLogin, isError: isErrorLogin, error: errorLogin } = useMutation({
         mutationFn: handeleSubmit,
-        onSuccess: (data) => {
+        onSuccess: (data, variable) => {
             const token = data.temp_token || data.access_token
             cookies.set("accessToken", token, { path: "/" })
+            setUserDetails({email: variable.email})
             if (!data.mfa_required)
                 router.push("/auth/mfa/select")
             else

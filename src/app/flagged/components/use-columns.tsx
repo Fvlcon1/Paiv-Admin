@@ -1,6 +1,6 @@
 import Text from "@styles/components/text"
 import { Progress } from "antd"
-import { getRelativeTime } from "@/utils/getDate"
+import getDate, { getRelativeTime } from "@/utils/getDate"
 import theme from "@styles/theme"
 import { FaMicrochip } from "react-icons/fa6"
 
@@ -32,7 +32,7 @@ const Status = ({status} : {status : string}) => {
 
 const ReviewedBy = ({reviewedBy} : {reviewedBy : string}) => {
     return (
-        reviewedBy === "NHIS_Expert_System" ? (
+        reviewedBy === "NHIS_EXPERT_SYSTEM" || reviewedBy === "NHIS_Expert_System" ? (
             <div className="flex items-center gap-1 rounded-md px-2 py-1 bg-bg-quantinary/70">
                 <FaMicrochip size={15} color={theme.colors.text.secondary} />
                 <Text ellipsis lineHeight={1}>
@@ -126,7 +126,7 @@ const useColumns = () => {
             cell : ({getValue} : {getValue : any}) => {
                 return (
                     <Text ellipsis lineHeight={1}>
-                        {getRelativeTime(getValue())}
+                        {getValue() ? getDate(new Date(getValue())) : "N/A"}
                     </Text>
                 )
             }
@@ -138,7 +138,7 @@ const useColumns = () => {
             cell : ({getValue} : {getValue : any}) => {
                 return (
                     <Text ellipsis lineHeight={1}>
-                        {getRelativeTime(getValue())}
+                        {getDate(new Date(getValue()))}
                     </Text>
                 )
             }

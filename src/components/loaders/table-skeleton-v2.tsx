@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface TableSkeletonProps {
-    columns: number;
+    columns?: number;
     rows?: number;
     showHeader?: boolean;
     className?: string;
@@ -10,7 +10,7 @@ interface TableSkeletonProps {
 }
 
 const TableSkeleton: React.FC<TableSkeletonProps> = ({
-    columns,
+    columns = 7,
     rows = 5,
     showHeader = true,
     className = '',

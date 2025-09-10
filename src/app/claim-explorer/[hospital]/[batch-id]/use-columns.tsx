@@ -1,27 +1,27 @@
 import Text from "@styles/components/text"
 import { Progress } from "antd"
-import { getRelativeTime } from "@/utils/getDate"
+import getDate, { getRelativeTime } from "@/utils/getDate"
 import theme from "@styles/theme"
 import { FaMicrochip } from "react-icons/fa6"
 
 const Status = ({status} : {status : string}) => {
     const color = {
-        "pending" : "#f59e0b",
         "approved" : theme.colors.text.success,
-        "rejected" : theme.colors.text.danger    
+        "rejected" : theme.colors.text.danger,
+        "flagged" : "#b35f00"
     }
 
     const bgColor = {
-        "pending" : "bg-orange-100",
         "approved" : "bg-green-100",
-        "rejected" : "bg-red-100"    
+        "rejected" : "bg-red-100",
+        "flagged" : "bg-orange-100"    
     }
     return (
         <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${bgColor[status as keyof typeof bgColor]}`}>
             <Text
                 textColor={color[status as keyof typeof color]}
             >
-                {status.charAt(0).toUpperCase() + status.slice(1)}
+                {status?.charAt(0).toUpperCase() + status?.slice(1)}
             </Text>
         </div>
     )
@@ -29,7 +29,7 @@ const Status = ({status} : {status : string}) => {
 
 const ReviewedBy = ({reviewedBy} : {reviewedBy : string}) => {
     return (
-        reviewedBy === "ai" ? (
+        reviewedBy === "NHIS_Expert_System" || reviewedBy === "NHIS_EXPERT_SYSTEM" ? (
             <div className="flex items-center gap-1 rounded-md px-2 py-1 bg-bg-quantinary/70">
                 <FaMicrochip size={15} color={theme.colors.text.secondary} />
                 <Text ellipsis lineHeight={1}>
@@ -47,7 +47,7 @@ const ReviewedBy = ({reviewedBy} : {reviewedBy : string}) => {
 const useColumns = () => {
     const columns = [
         {
-            accessorKey : 'id',
+            accessorKey : 'encounterToken',
             header : 'Encounter Token',
             enableSorting : true,
             cell : ({getValue} : {getValue : any}) => {
@@ -121,7 +121,7 @@ const useColumns = () => {
             cell : ({getValue} : {getValue : any}) => {
                 return (
                     <Text ellipsis lineHeight={1}>
-                        {getRelativeTime(getValue())}
+                        {getDate(new Date(getValue()))}
                     </Text>
                 )
             }
@@ -133,7 +133,7 @@ const useColumns = () => {
             cell : ({getValue} : {getValue : any}) => {
                 return (
                     <Text ellipsis lineHeight={1}>
-                        {getRelativeTime(getValue())}
+                        {getDate(new Date(getValue()), {shortmonth : true})}
                     </Text>
                 )
             }
@@ -145,7 +145,7 @@ const useColumns = () => {
             cell : ({getValue} : {getValue : any}) => {
                 return (
                     <Text ellipsis lineHeight={1}>
-                        {getValue()}
+                        {`GHS ${getValue()?.toLocaleString() || 0}`}
                     </Text>
                 )
             }

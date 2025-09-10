@@ -1,8 +1,12 @@
-export interface FlaggedClaim {
+import { Claim } from "@/app/claim-explorer/[hospital]/[batch-id]/utils/types";
+
+export interface FlaggedClaimTable {
     claimId: string;
     encounterToken: string;
     providerName: string;
     otherNames: string;
+    lastName: string;
+    fullName: string;
     nhisId: string;
     processedStatus: string;
     reviewedBy: string;
@@ -10,10 +14,20 @@ export interface FlaggedClaim {
     lastModified: string;
     totalApprovedCost: number;
     reasons: {
-        stage: string;
-        reason: string;
-        category: string;
-        severity: string;
-        timestamp: string;
+        stage: string,
+        reason: string,
+        category: string,
+        severity: string,
+        timestamp: string,
+    };
+}
+
+export interface FlaggedClaim extends Claim {
+    reasons: {
+        stage: string,
+        reason: string,
+        category: string,
+        severity: string,
+        timestamp: string,
     };
 }

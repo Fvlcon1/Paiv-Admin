@@ -1,8 +1,11 @@
 import { gradientClass } from "@/utils/constants";
-import { data } from "./data"
 import TableBody from "./table-body";
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
+import { transformBatchesToTable } from "../utils/transform-batches";
+import { BatchTable } from "../utils/types";
+import { useHospitalContext } from "../context/hospital-context";
+import NoData from "@components/NoData/noData";
 
 interface ProviderData {
     batchId: string;
@@ -11,15 +14,17 @@ interface ProviderData {
     expectedPayout: string;
 }
 
-const groupDataByYear = (): { years: string[], groupedData: ProviderData[][] } => {
+const groupDataByYear = (): { years: string[], groupedData: BatchTable[][] } => {
+    const { batches } = useHospitalContext()
+    const batchData = transformBatchesToTable(batches || [])
     // Extract years from batchIds and find unique years
-    const years = [...new Set(data.map(item => item.batchId.slice(-4)))];
+    const years = [...new Set(batchData.map(item => item.batchId.slice(-4)))];
     years.sort((a, b) => b.localeCompare(a)); // Sort years in descending order
-    
+
     // Create an array to hold data for each year
-    const groupedData: ProviderData[][] = Array.from({ length: years.length }, () => []);
-    
-    data.forEach((item: ProviderData) => {
+    const groupedData: BatchTable[][] = Array.from({ length: years.length }, () => []);
+
+    batchData.forEach((item: BatchTable) => {
         const year = item.batchId.slice(-4);
         const yearIndex = years.indexOf(year);
         if (yearIndex >= 0 && yearIndex < groupedData.length) {
@@ -33,9 +38,15 @@ const groupDataByYear = (): { years: string[], groupedData: ProviderData[][] } =
 const TableBodySorted = () => {
     const { years, groupedData } = groupDataByYear();
 
+    if (groupedData.length === 0) {
+        return (
+            <NoData />
+        )
+    }
+
     return (
         <div className="w-full flex flex-col gap-12 mt-2">
-            {groupedData.map((group: ProviderData[], index: number) => (
+            {groupedData.map((group: BatchTable[], index: number) => (
                 group.length > 0 ? (
                     <div key={index} className="flex flex-col gap-2">
                         <div className="flex items-center">

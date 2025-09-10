@@ -3,11 +3,12 @@ import useColumns from "../hooks/use-columns";
 import { getCoreRowModel } from "@tanstack/react-table";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { ProviderTable } from "../utils/types";
 
 const TableBody = ({
     data
 }: {
-    data: any[]
+    data: ProviderTable[]
 }) => {
     const { columns } = useColumns()
     const [isScrolling, setIsScrolling] = useState(false);

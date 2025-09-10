@@ -4,25 +4,20 @@ import Text from "@styles/components/text"
 import theme from "@styles/theme"
 import { useExplorerContext } from "../context/explorer-context"
 import { data } from "./data";
-
-interface ProviderData {
-    providerName: string;
-    prescribingLevel: string;
-    providerCategory: string;
-    email: string;
-    credentialStatus: string;
-    district: string;
-}
-
+import { extractProviderProfile, transformProvidersToTable } from "../utils/transform-providers";
+import { ProviderTable } from "../utils/types";
+import { useEffect } from "react";
 
 const TableBodySorted = ({ }) => {
     const { providers } = useExplorerContext()
-    const groupDataByProviderName = (): ProviderData[][] => {
-        const groupedData: ProviderData[][] = Array.from({ length: 26 }, () => []);
+    const providerProfiles = transformProvidersToTable(providers || [])
+
+    const groupDataByProviderName = (): ProviderTable[][] => {
+        const groupedData: ProviderTable[][] = Array.from({ length: 26 }, () => []);
     
-        data?.forEach((item: ProviderData) => {
-            const firstLetter = item.providerName.charAt(0).toUpperCase();
-            const index = firstLetter.charCodeAt(0) - 'A'.charCodeAt(0);
+        providerProfiles?.forEach((item: ProviderTable) => {
+            const firstLetter = item.providerName?.charAt(0).toUpperCase();
+            const index = firstLetter?.charCodeAt(0) - 'A'.charCodeAt(0);
             if (index >= 0 && index < 26) {
                 groupedData[index].push(item);
             }
@@ -31,6 +26,10 @@ const TableBodySorted = ({ }) => {
         return groupedData;
     };
     const groupedData = groupDataByProviderName();
+
+    useEffect(() => {
+        console.log({providers})
+    }, [providers])
 
     return (
         <div className="w-full flex flex-col gap-12">

@@ -32,6 +32,8 @@ const FlaggedContext = createContext<{
     setIsFilterVisible: (value: boolean) => void;
     refetchFlaggedClaims: () => void;
     isFlaggedClaimsRefetching: boolean;
+    setSearchQuery: (value: string) => void;
+    searchQuery: string;
 }>({
     flaggedClaims: [],
     isFlaggedClaimsLoading: false,
@@ -60,6 +62,8 @@ const FlaggedContext = createContext<{
     setTotalApprovedAmount: () => {},
     refetchFlaggedClaims: () => {},
     isFlaggedClaimsRefetching: false,
+    setSearchQuery: () => {},
+    searchQuery: "",
 })
 
 export const FlaggedContextProvider = ({children}: {children: ReactNode}) => {
@@ -91,6 +95,8 @@ export const FlaggedContextProvider = ({children}: {children: ReactNode}) => {
         setIsFilterVisible,
         refetchFlaggedClaims,
         isFlaggedClaimsRefetching,
+        setSearchQuery,
+        searchQuery,
     } = useFlagged()
 
     return (
@@ -122,6 +128,8 @@ export const FlaggedContextProvider = ({children}: {children: ReactNode}) => {
             setTotalApprovedAmount,
             refetchFlaggedClaims,
             isFlaggedClaimsRefetching,
+            setSearchQuery,
+            searchQuery,
         }}>
             {children}
         </FlaggedContext.Provider>

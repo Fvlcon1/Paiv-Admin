@@ -1,27 +1,70 @@
-import { FlaggedClaim } from "./types"
+import { Claim } from "@/app/claim-explorer/[hospital]/[batch-id]/utils/types";
+import { FlaggedClaim, FlaggedClaimTable } from "./types"
+import { transformClaim } from "@/app/claim-explorer/[hospital]/[batch-id]/utils/transform-claims";
 
-export const transformFlaggedClaims = (claims: any[]) : FlaggedClaim[] => {
-    return claims.map((claim: any) => {
-        return {
-            claimId: claim.id,
-            encounterToken: claim.encounter_id,
-            providerName: claim.provider_name,
-            otherNames: claim.other_names,
-            firstName: claim.first_name,
-            fullName: claim.other_names + " " + claim.last_name,
-            nhisId: claim.nhis_number,
-            processedStatus: claim.processed_status,
-            reviewedBy: claim.processed_by,
-            dateSubmitted: claim.created_at,
-            lastModified: claim.updated_at,
-            totalApprovedCost: claim.total_approved_amount,
-            reasons: {
-                stage: claim.reasons.stage,
-                reason: claim.reasons.reason,
-                category: claim.reasons.category,
-                severity: claim.reasons.severity,
-                timestamp: claim.reasons.timestamp,
-            },
-        }
-    })
+/**
+ * Transforms an array of raw claim data to table format
+ * @param data - Array of raw claim data
+ * @returns Array of transformed claim data
+ */
+export const transformFlaggedClaims = (data: any[]) : FlaggedClaim[] => {
+    try{
+        const transformedFlaggedClaims = data.map((flaggedClaim: any, index: number) => {
+            const claim = transformClaim(flaggedClaim)
+            console.log({claim, flaggedClaim, index})
+            // const reasons = (flaggedClaim.reason ?? []).map((reason: any) => ({
+            //     stage: reason.stage,
+            //     reason: reason.reason,
+            //     category: reason.category,
+            //     severity: reason.severity,
+            //     timestamp: reason.timestamp,
+            // }))
+            const reasons : any = []
+            
+            console.log({reasons})
+            const transformedFlaggedClaim = {
+                ...claim,
+                reasons,
+            }
+            console.log({transformedFlaggedClaim})
+            return transformedFlaggedClaim
+        })
+        console.log({data, transformedFlaggedClaims})
+        return transformedFlaggedClaims
+    } catch(e){
+        console.log({e})
+        return []
+    }
 }
+
+/**
+ * Transforms a raw claim data to table format
+ * @param claim - Raw claim data
+ * @returns Transformed claim data
+ */
+export const transformFlaggedClaimToTable = (claim: FlaggedClaim): FlaggedClaimTable => {
+    return {
+        encounterToken: claim.encounter.encounterId,
+        claimId: claim.basicInfo.id,
+        providerName: claim.basicInfo.providerName,
+        otherNames: claim.patient.otherNames,
+        lastName: claim.patient.lastName,
+        fullName: `${claim.patient.lastName} ${claim.patient.otherNames}`.trim(),
+        nhisId: claim.patient.nhisNumber,
+        processedStatus: claim.status.processedStatus?.toLowerCase() || 'pending',  // Ensure lowercase status
+        reviewedBy: claim.review.reviewedBy,
+        dateSubmitted: claim.metadata.submittedAt,
+        lastModified: claim.metadata.updatedAt || claim.metadata.submittedAt,
+        totalApprovedCost: claim.financials.totalApprovedAmount,
+        reasons: claim.reasons,
+    };
+};
+
+/**
+ * Transforms an array of raw claim data to table format
+ * @param claims - Array of raw claim data
+ * @returns Array of transformed claim data
+ */
+export const transformFlaggedClaimsToTable = (claims: FlaggedClaim[]): FlaggedClaimTable[] => {
+    return claims.map((claim: FlaggedClaim) => transformFlaggedClaimToTable(claim));
+};

@@ -108,6 +108,7 @@ const Menu = () => {
                                     <Text
                                         textColor={getMenuTextStyle(item.path).textColor}
                                         bold={getMenuTextStyle(item.path).bold}
+                                        // size={theme.typography.size.body2}
                                     >
                                         {item.title}
                                     </Text>

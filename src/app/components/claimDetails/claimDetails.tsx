@@ -1,0 +1,84 @@
+'use client'
+
+import { useState, useEffect } from "react";
+import Container from "@components/container/container";
+import Overlay from "@components/overlay/overlay";
+import Text from "@styles/components/text";
+import { TypographyBold } from "@styles/style.types";
+import { AnimatePresence } from "framer-motion";
+import { IClaimsDetailType } from "@/app/components/claimDetails/utils/types";
+import ClaimDetailsItems from "./components/claim-details-items";
+import Bottom from "./components/bottom";
+import theme from "@styles/theme";
+
+const ClaimDetails = ({
+    claimDetails,
+    isVisible,
+    close,
+    actions
+} : {
+    claimDetails: IClaimsDetailType
+    isVisible: boolean
+    close: () => void
+    actions?: React.ReactNode
+}) => {
+    const [maxHeight, setMaxHeight] = useState<number | null>(null);
+
+    useEffect(() => {
+        const updateHeight = () => {
+            setMaxHeight(window.innerHeight - 300);
+        };
+
+        updateHeight(); // Set initial height
+        window.addEventListener("resize", updateHeight);
+
+        return () => {
+            window.removeEventListener("resize", updateHeight);
+        };
+    }, []);
+
+    return (
+        <AnimatePresence>
+            {isVisible && (
+                <Overlay 
+                    onClick={() => close()} 
+                    className="!px-6"
+                >
+                    <Container 
+                        isVisible={isVisible} 
+                        close={() => close()} 
+                        className={`!rounded-xl border border-main-primary !h-[90%]`}
+                    >
+                        <div
+                            className="md:w-[800px] w-full flex flex-col h-full"
+                        >
+                            <div className="bg-main-primary border-solid border-b-[1px] border-main-primary h-[55px] flex items-center pl-6">
+                                <Text 
+                                    textColor={theme.colors.bg.primary}
+                                    bold={TypographyBold.md}
+                                >
+                                    Claim Details
+                                </Text>
+                            </div>
+
+                            {/* Scrollable Content */}
+                            <ClaimDetailsItems
+                                maxHeight={maxHeight}
+                                claimDetails={claimDetails}
+                            />
+
+                            {/* Bottom */}
+                            <Bottom
+                                expectedPayout={claimDetails.expectedPayout}
+                                totalPayout={claimDetails.totalPayout}
+                                actions={actions}
+                            />
+                        </div>
+                    </Container>
+                </Overlay>
+            )}
+        </AnimatePresence>
+    );
+};
+
+export default ClaimDetails;

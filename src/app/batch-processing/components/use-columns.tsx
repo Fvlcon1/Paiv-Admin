@@ -5,6 +5,7 @@ import { BsThreeDots } from "react-icons/bs"
 import { FaFolder } from "react-icons/fa"
 import { PiWarningFill } from "react-icons/pi"
 import { ProgressProps } from "antd"
+import { snakeToText } from "@/lib/utils"
 
 const ProgressCircle = ({ percent }: { percent: number }) => {
     const strokeColor: ProgressProps['strokeColor'] = {
@@ -89,7 +90,7 @@ const useColumns = () => {
             enableSorting: true,
             cell: ({ getValue }: { getValue: any }) => {
                 return (
-                    <Status status={getValue() ? getValue() : "not submitted"} />
+                    <Status status={getValue() ? snakeToText(getValue().toLowerCase()) : "not submitted"} />
                 )
             }
         },

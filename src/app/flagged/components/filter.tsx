@@ -14,7 +14,7 @@ import { useFlaggedContext } from "@/app/flagged/context/flagged-context"
 const Filter = () => {
     const [prescribingLevel, setPrescribingLevel] = useState<string>("All levels")
     const [status, setStatus] = useState<string>("Active")
-    const { setIsFilterVisible } = useFlaggedContext()
+    const { setIsFilterVisible, setSearchQuery, searchQuery } = useFlaggedContext()
 
     const prescribingLevels: DropdownItem[] = prescribingLevelsDropdown.map((item) => ({
         key: item.key,
@@ -32,8 +32,8 @@ const Filter = () => {
         <div className="flex items-center gap-2 w-full justify-between">
             <Input
                 placeholder="Search provider name, patient name, etc."
-                value={""}
-                onChange={(e) => { }}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 PreIcon={<HiMiniMagnifyingGlass size={15} color={theme.colors.text.tetiary} />}
                 className="!h-[35px] !shadow-xs !w-[400px] !px-2"
             />

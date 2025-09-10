@@ -85,7 +85,7 @@ const DiagnosisBarChartComponent = () => {
         },
         yaxis: {
             title: {
-                text: 'Number of Claims',
+                text: 'Percentage',
                 style: {
                     color: '#6B7280',
                     fontSize: '12px',
@@ -100,7 +100,7 @@ const DiagnosisBarChartComponent = () => {
                     fontFamily: 'Montserrat'
                 },
                 formatter: (value) => {
-                    return value.toLocaleString();
+                    return `${value.toLocaleString()}%`;
                 }
             }
         },

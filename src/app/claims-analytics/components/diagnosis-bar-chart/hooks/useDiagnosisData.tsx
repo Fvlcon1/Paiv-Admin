@@ -9,7 +9,7 @@ const useDiagnosisData = () => {
     const {topDiagnosis} = useAnalyticsContext()
 
     const transformToTopDiagnosis = (data: any[]) => {
-        const sortedData = [...data].sort((a, b) => a.count - b.count); // ascending sort by count
+        const sortedData = [...data].sort((a, b) => b.count - a.count); // Sort by count in descending order
     
         const categories: string[] = [];
         const diagnosisCodes: string[] = [];
@@ -18,7 +18,7 @@ const useDiagnosisData = () => {
         sortedData.forEach(item => {
             categories.push(item.diagnosis_name);
             diagnosisCodes.push(`${item.diagnosis_name.charAt(0).toUpperCase() + item.diagnosis_name.charAt(1).toUpperCase()}`);
-            series.push(item.count);
+            series.push(item.percentage);
         });
     
         setCategories(categories);

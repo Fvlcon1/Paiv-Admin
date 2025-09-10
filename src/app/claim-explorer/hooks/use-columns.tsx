@@ -6,13 +6,13 @@ import PLevelIcon from "../components/p-level-icon"
 const statusClassBg = {
     active : "bg-green-600/20",
     expired : "bg-red-600/20",
-    "pending review" : "bg-yellow-600/20",
+    pending : "bg-yellow-600/20",
 }
 
 const statusTextColor = {
-    active : "#24ad4e",
+    active : "#059669",
     expired : "#dc2626",
-    "pending review" : "#f59e0b",
+    pending : "#c77d03",
 }
 
 import { FaEye, FaUserTie } from "react-icons/fa"
@@ -21,9 +21,10 @@ import { PiHospitalFill } from "react-icons/pi"
 import { useExplorerContext } from "../context/explorer-context"
 import { HiMenuAlt3 } from "react-icons/hi"
 import ClickableTab from "@components/clickable/clickabletab"
+import getDate from "@/utils/getDate"
 
 const useColumns = () => {
-    const { setIsFacilityProfileVisible } = useExplorerContext()
+    const { setIsFacilityProfileVisible, setExpandedProviderId } = useExplorerContext()
 
     const handleContactAuthorizedIndividual = (providerId: string) => {
         // TODO: Implement contact authorized individual logic
@@ -125,12 +126,12 @@ const useColumns = () => {
             enableSorting : true,
             cell : ({getValue} : {getValue : () => string}) => (
                 <Text ellipsis lineHeight={1}>
-                    {getValue() || 'N/A'}
+                    {getDate(new Date(getValue())) || 'N/A'}
                 </Text>
             )
         },
         {
-            accessorKey : 'totalClaimsSubmitted',
+            accessorKey : 'totalClaims',
             header : 'Total Claims Submitted',
             enableSorting : true,
             cell : ({getValue} : {getValue : () => number}) => (
@@ -145,7 +146,7 @@ const useColumns = () => {
             enableSorting : true,
             cell : ({getValue} : {getValue : () => number}) => (
                 <Text ellipsis lineHeight={1}>
-                    ${getValue()?.toLocaleString() || '0'}
+                    GHS {getValue()?.toLocaleString() || '0'}
                 </Text>
             )
         },
@@ -160,6 +161,7 @@ const useColumns = () => {
                         onClick={(e) => {
                             e.stopPropagation()
                             setIsFacilityProfileVisible(true)
+                            setExpandedProviderId(row.original.providerId)
                         }}
                     />
                 </ClickableTab>

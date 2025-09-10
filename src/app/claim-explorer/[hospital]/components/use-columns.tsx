@@ -5,7 +5,7 @@ import { BsThreeDots } from "react-icons/bs"
 import { FaFolder } from "react-icons/fa"
 import { PiWarningFill } from "react-icons/pi"
 import { ProgressProps } from "antd"
-import { getRelativeTime } from "@/utils/getDate"
+import getDate, { getRelativeTime } from "@/utils/getDate"
 import ClickableTab from "@components/clickable/clickabletab"
 import { HiMenuAlt3 } from "react-icons/hi"
 import { useExplorerContext } from "../../context/explorer-context"
@@ -29,18 +29,18 @@ const Status = ({ status }: { status: string }) => {
         "not submitted": theme.colors.text.tetiary,
         "submitted": theme.colors.text.secondary,
         "processing": "#f59e0b",
-        "completed": theme.colors.text.success,
+        "processed": "#389e0d",
         "under review": theme.colors.text.danger
     }
     const bgColor = {
         "not submitted": "bg-bg-tetiary",
         "submitted": "bg-bg-tetiary",
         "processing": "bg-orange-100",
-        "completed": "bg-green-100",
+        "processed": "bg-[#389e0d]/10",
         "under review": "bg-red-100"
     }
     return (
-        <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${bgColor[status as keyof typeof bgColor]}`}>
+        <div className={`flex items-center gap-2 px-3 py-1 rounded-md ${bgColor[status as keyof typeof bgColor]}`}>
             <Text
                 textColor={color[status as keyof typeof color]}
                 ellipsis
@@ -52,7 +52,7 @@ const Status = ({ status }: { status: string }) => {
 }
 
 const useColumns = () => {
-    const { setIsBatchDetailsVisible } = useExplorerContext()
+    const { setIsBatchDetailsVisible, setSelectedBatch } = useExplorerContext()
     const columns = [
         {
             accessorKey: 'batchId',
@@ -105,7 +105,7 @@ const useColumns = () => {
             cell: ({ getValue }: { getValue: any }) => {
                 return (
                     <Text ellipsis lineHeight={1}>
-                        {getRelativeTime(getValue())}
+                        {getDate(new Date(getValue()))}
                     </Text>
                 )
             }
@@ -117,7 +117,7 @@ const useColumns = () => {
             cell: ({ getValue }: { getValue: any }) => {
                 return (
                     <Text ellipsis lineHeight={1}>
-                        {getRelativeTime(getValue())}
+                        {getValue() ? getDate(new Date(getValue())) : "N/A"}
                     </Text>
                 )
             }
@@ -135,13 +135,13 @@ const useColumns = () => {
             }
         },
         {
-            accessorKey: 'totalApprovedCost',
-            header: 'Total Approved Cost',
+            accessorKey: 'totalApprovalCost',
+            header: 'Total Approval Cost',
             enableSorting: true,
             cell: ({ getValue }: { getValue: any }) => {
                 return (
                     <Text ellipsis lineHeight={1}>
-                        {getValue()}
+                        {`GHS ${getValue()?.toLocaleString() || '0'}`}
                     </Text>
                 )
             }
@@ -150,7 +150,7 @@ const useColumns = () => {
             accessorKey: 'actions',
             header: 'Actions',
             enableSorting: true,
-            cell: ({ getValue }: { getValue: any }) => {
+            cell: ({ row, getValue }: { row: any, getValue: any }) => {
                 return (
                     <ClickableTab className="flex gap-2 cursor-pointer">
                         <HiMenuAlt3
@@ -159,6 +159,7 @@ const useColumns = () => {
                             onClick={(e) => {
                                 e.stopPropagation()
                                 setIsBatchDetailsVisible(true)
+                                setSelectedBatch(row.original)
                             }}
                         />
                     </ClickableTab>

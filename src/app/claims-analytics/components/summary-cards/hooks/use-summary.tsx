@@ -5,7 +5,7 @@ const useSummary = () => {
 
     const summaryObject = {
         avgPerMonth: {
-            title: "Average per month",
+            title: "Average claims per month",
             value: kpiSummary?.avg_per_month,
             change: "↗ +3.2% vs previous month"
         },
@@ -15,8 +15,8 @@ const useSummary = () => {
             change: "↗ +3.2% vs previous month"
         },
         totalPayout: {
-            title: "Total payout",
-            value: kpiSummary?.total_payout,
+            title: "Total payout (GHS)",
+            value: kpiSummary?.total_payout.toLocaleString(),
             change: "↗ +3.2% vs previous month"
         }
     }

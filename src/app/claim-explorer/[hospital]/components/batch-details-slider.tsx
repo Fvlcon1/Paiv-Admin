@@ -100,6 +100,10 @@ const BatchDetailsSlider = () => {
         }
     }
 
+    if (!selectedBatch) {
+        return null
+    }
+
     return (
         <AnimatePresence>
             {isBatchDetailsVisible && (
@@ -123,13 +127,13 @@ const BatchDetailsSlider = () => {
                                     <div className="grid grid-cols-2 gap-3">
                                         <StatCard
                                             title="Total Claims"
-                                            value={stats.totalClaims}
+                                            value={selectedBatch.totalClaims}
                                             icon={MdAttachMoney}
                                             color={theme.colors.text.secondary}
                                         />
                                         <StatCard
                                             title="Approved"
-                                            value={stats.approved}
+                                            value={selectedBatch.totalApproved}
                                             icon={FaCheckCircle}
                                             color={theme.colors.text.success}
                                             bgColor="#E8F5E9"
@@ -139,14 +143,14 @@ const BatchDetailsSlider = () => {
                                     <div className="grid grid-cols-2 gap-3">
                                         <StatCard
                                             title="Rejected"
-                                            value={stats.rejected}
+                                            value={selectedBatch.totalRejected}
                                             icon={FaTimesCircle}
                                             color={theme.colors.text.danger}
                                             bgColor="#FFEBEE"
                                         />
                                         <StatCard
                                             title="Flagged"
-                                            value={stats.flagged}
+                                            value={selectedBatch.totalFlagged}
                                             icon={FaFlag}
                                             color="#FFA000"
                                             bgColor="#FFF8E1"
@@ -160,13 +164,12 @@ const BatchDetailsSlider = () => {
                                         <div className="bg-bg-secondary py-0.5 px-3 rounded-lg">
                                             <FinancialInfoItem
                                                 label="Expected Amount"
-                                                value={stats.expectedAmount}
+                                                value={`GHS ${selectedBatch.expectedAmount?.toLocaleString() || 0}`}
                                                 showDivider={true}
                                             />
                                             <FinancialInfoItem
                                                 label="Approved Amount"
-                                                value={stats.approvedAmount}
-                                                valueColor={theme.colors.text.success}
+                                                value={`GHS ${selectedBatch.approvedAmount?.toLocaleString() || 0}`}
                                                 showDivider={false}
                                             />
                                         </div>
@@ -180,21 +183,21 @@ const BatchDetailsSlider = () => {
                                             <div className="bg-bg-secondary py-0.5 px-3 rounded-lg">
                                                 <FinancialInfoItem
                                                     label="Fully Verified"
-                                                    value={stats.verification.full}
+                                                    value={selectedBatch.verificationFully?.toLocaleString() || 0}
                                                     showDivider={true}
                                                     icon={FaUserCheck}
                                                     iconColor={theme.colors.text.success}
                                                 />
                                                 <FinancialInfoItem
                                                     label="Partially Verified"
-                                                    value={stats.verification.partial}
+                                                    value={selectedBatch.verificationPartially?.toLocaleString() || 0}
                                                     showDivider={true}
                                                     icon={FaUserClock}
                                                     iconColor={"orange"}
                                                 />
                                                 <FinancialInfoItem
                                                     label="Not Verified"
-                                                    value={stats.verification.none}
+                                                    value={selectedBatch.verificationNotVerified?.toLocaleString() || 0}
                                                     showDivider={false}
                                                     icon={FaUserTimes}
                                                     iconColor={theme.colors.text.danger}
