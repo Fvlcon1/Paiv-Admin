@@ -29,7 +29,7 @@ const useFlagged = () => {
     }, [searchQuery])
 
     const getFlaggedClaims = useCallback(async () => {
-        const response = await protectedApi.GET("v2/flagged-claims", {
+        const response = await protectedApi.GET("/v2/flagged-claims/", {
             date_submitted_from: dateSubmittedFrom?.length > 0 ? dayjs(dateSubmittedFrom).format("YYYY-MM-DD") : undefined,
             date_submitted_to: dateSubmittedTo?.length > 0 ? dayjs(dateSubmittedTo).format("YYYY-MM-DD") : undefined,
             last_modified_from: lastModifiedFrom?.length > 0 ? dayjs(lastModifiedFrom).format("YYYY-MM-DD") : undefined,
