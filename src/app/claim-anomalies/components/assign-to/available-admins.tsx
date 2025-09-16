@@ -33,7 +33,7 @@ const AvailableAdmins = ({
         await assignToAdminMutation({
             groupBy : "batch", 
             adminId, 
-            yearMonths : selectedYearMonths.map((item: string) => item.split('T')[0].substring(0, 7)), 
+            yearMonths : selectedMonths, 
             providers : selectedProviders
         })
         setIsVisible(false)

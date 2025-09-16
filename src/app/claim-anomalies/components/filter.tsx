@@ -14,6 +14,7 @@ import Button from "@components/button/button"
 import { TiUserAdd } from "react-icons/ti"
 import AssignTo from "./assign-to/assign-to"
 import AssignBy, { AssignByGrouping } from "./assign-by/assign-by"
+import { useAdminsContext } from "../context/admins-context"
 
 const Filter = () => {
     const [prescribingLevel, setPrescribingLevel] = useState<string>("All levels")
@@ -22,6 +23,7 @@ const Filter = () => {
     const [isAssignToVisible, setIsAssignToVisible] = useState<boolean>(false)
     const [isAssignByVisible, setIsAssignByVisible] = useState<boolean>(false)
     const [assignByGrouping, setAssignByGrouping] = useState<AssignByGrouping>("Region")
+    const {selectedYearMonths} = useAdminsContext()
 
     const prescribingLevels: DropdownItem[] = prescribingLevelsDropdown.map((item) => ({
         key: item.key,
@@ -70,6 +72,7 @@ const Filter = () => {
                                 isVisible={isAssignToVisible}
                                 setIsVisible={setIsAssignToVisible}
                                 selectedAnomalyIds={selectedAnomalyIds}
+                                selectedMonths={selectedYearMonths.map((item: string) => item.split('T')[0].substring(0, 7))}
                                 className="mt-2"
                             />
                         </div>

@@ -2,7 +2,7 @@ import Text from "@styles/components/text"
 import theme from "@styles/theme"
 import { Menu, Button } from "antd"
 import { BsThreeDotsVertical } from "react-icons/bs"
-import { getRelativeTime } from "@/utils/getDate"
+import getDate, { getRelativeTime } from "@/utils/getDate"
 import ClickableTab from "@components/clickable/clickabletab"
 import { TiUserAdd } from "react-icons/ti"
 import AssignTo, { colors } from "./assign-to/assign-to"
@@ -242,7 +242,7 @@ const useColumns = ({ onRowSelectionChange, selectedRowKeys = [] }: UseColumnsPr
                 const date = new Date(getValue())
                 return (
                     <Text ellipsis>
-                        {isNaN(date.getTime()) ? 'N/A' : getRelativeTime(date)}
+                        {getDate(date)}
                     </Text>
                 )
             }
