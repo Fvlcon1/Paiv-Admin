@@ -8,14 +8,15 @@ const DualTable = ({
     data: any[]
 }) => {
     return (
-        <div className="w-full max-w-[800px] flex flex-col gap-2">
+        <div className="w-full max-w-[800px] flex flex-col gap-2 border-[1px] border-border-primary border-t-[0] rounded-b-xl">
             <table className="w-full">
                 <tbody>
                     {
                         data.map((item, index) => (
                             <tr
                                 className={`
-                                    ${index % 2 === 0 ? 'border-y-[1px] border-border-secondary' : ''}
+                                    ${index % 2 === 0 ? 'border-y-[1px] border-border-primary' : ''}
+                                    ${index === 0 ? 'border-t-[0]' : ''}
                                     ${index === data.length - 1 ? 'border-b-[0]' : ''}
                                 `}
                                 key={index}

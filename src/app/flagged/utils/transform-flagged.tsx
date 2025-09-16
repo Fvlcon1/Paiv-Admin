@@ -11,25 +11,14 @@ export const transformFlaggedClaims = (data: any[]) : FlaggedClaim[] => {
     try{
         const transformedFlaggedClaims = data.map((flaggedClaim: any, index: number) => {
             const claim = transformClaim(flaggedClaim)
-            console.log({claim, flaggedClaim, index})
-            // const reasons = (flaggedClaim.reason ?? []).map((reason: any) => ({
-            //     stage: reason.stage,
-            //     reason: reason.reason,
-            //     category: reason.category,
-            //     severity: reason.severity,
-            //     timestamp: reason.timestamp,
-            // }))
             const reasons : any = []
             
-            console.log({reasons})
             const transformedFlaggedClaim = {
                 ...claim,
                 reasons,
             }
-            console.log({transformedFlaggedClaim})
             return transformedFlaggedClaim
         })
-        console.log({data, transformedFlaggedClaims})
         return transformedFlaggedClaims
     } catch(e){
         console.log({e})
@@ -57,6 +46,7 @@ export const transformFlaggedClaimToTable = (claim: FlaggedClaim): FlaggedClaimT
         lastModified: claim.metadata.updatedAt || claim.metadata.submittedAt,
         totalApprovedCost: claim.financials.totalApprovedAmount,
         reasons: claim.reasons,
+        assignedTo: claim.assignedTo,
     };
 };
 

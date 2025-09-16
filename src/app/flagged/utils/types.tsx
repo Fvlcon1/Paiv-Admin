@@ -13,6 +13,13 @@ export interface FlaggedClaimTable {
     dateSubmitted: string;
     lastModified: string;
     totalApprovedCost: number;
+    assignedTo?: {
+        id: string,
+        firstName: string;
+        lastName: string;
+        email: string;
+        lastActive: string;
+    };
     reasons: {
         stage: string,
         reason: string,

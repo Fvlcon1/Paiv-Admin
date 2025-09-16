@@ -20,6 +20,9 @@ import { useRouter } from "next/navigation"
 import Table from "./components/table"
 import Filter from "./components/filter"
 import { FaExclamationTriangle } from "react-icons/fa"
+import { useAnomalyContext } from "./context/anomaly-context"
+import TableSkeleton from "@components/loaders/table-skeleton-v2"
+import NoData from "@components/NoData/noData"
 
 interface ICrumbs {
     icon?: IconType
@@ -60,13 +63,22 @@ const Top = () => {
 }
 
 const ClaimAnomalies = () => {
+    const {anomalousBatchesLoading, anomalousBatches} = useAnomalyContext()
     return (
         <SlideIn
             direction="right"
-            className="w-full flex flex-col gap-2 py-4"
+            className="w-full flex flex-col gap-2 py-4 h-full"
         >
             <Top />
-            <Table />
+            {
+                anomalousBatchesLoading ? (
+                    <TableSkeleton rows={20}/>
+                ) : !anomalousBatches?.length ? (
+                    <NoData />
+                ) : (
+                    <Table />
+                )
+            }
         </SlideIn>
     )
 }

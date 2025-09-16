@@ -6,12 +6,12 @@ import theme from "@styles/theme"
 
 const Drugs = ({
     drugs
-} : {
-    drugs : IDrugsType[]
+}: {
+    drugs: IDrugsType[]
 }) => {
     return (
-        <div className="w-full border-solid border-[1px] border-main-primary rounded-xl flex flex-col overflow-hidden">
-            <div className="flex w-full border-solid border-b-[1px] border-main-primary bg-main-primary min-h-[45px] items-center pl-4">
+        <div className="w-full flex flex-col">
+            <div className="flex w-full bg-main-primary/80 min-h-[45px] items-center pl-4 rounded-t-xl">
                 <Text
                     bold={TypographyBold.md}
                     textColor={theme.colors.bg.primary}
@@ -20,7 +20,7 @@ const Drugs = ({
                 </Text>
             </div>
 
-            <div className="flex w-full flex-col">
+            <div className="flex w-full flex-col border-[1px] border-border-primary border-t-[0] rounded-b-xl">
                 <Table drugs={drugs} />
             </div>
         </div>

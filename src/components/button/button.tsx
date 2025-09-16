@@ -24,6 +24,8 @@ const Button = ({
 	hover,
 	text,
 	icon,
+	PreIcon,
+	PostIcon,
 	loadingColor
 }: ButtonProps) => {
 
@@ -84,7 +86,7 @@ const Button = ({
 				color: getTextColor()
 			}}
 		>
-			{loading ? loader : icon}
+			{loading ? loader : (icon || PreIcon)}
 			<Text
 				size={textSize}
 				bold={textBold ?? TypographyBold.md}
@@ -95,6 +97,13 @@ const Button = ({
 			>
 				{text ?? 'Button'}
 			</Text>
+			{
+				loading 
+					? (icon || PreIcon) 
+					? null 
+					: PreIcon ? loader : null 
+					: PostIcon
+			}
 		</div>
 	)
 

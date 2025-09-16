@@ -70,38 +70,3 @@ const WithTotal = ({
         </div>
     </div>
 )
-
-const SummaryItem = ({ label, value }: { label: string; value: string }) => (
-    <div className="flex gap-2 items-center">
-        <Text textColor={theme.colors.text.tetiary}>{label}:</Text>
-        {
-            value ? (
-                <Text>{value}</Text>
-            ) : (
-                <Text bold={TypographyBold.md2} textColor={theme.colors.text.tetiary}>Not specified</Text>
-            )
-        }
-    </div>
-);
-
-const SummaryList = ({ label, items }: { label: string; items: string[] }) => (
-    <div className="flex gap-1 items-center">
-        <Text textColor={theme.colors.text.tetiary}>{label}:</Text>
-        {items?.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
-                {items.map((item, index) => (
-                    <div 
-                        className="flex gap-1 px-2 py-1 bg-bg-quantinary border border-border-primary rounded-full"
-                        key={`${label}-${index}`}
-                    >
-                        <Text bold={TypographyBold.md}>
-                            {item}
-                        </Text>
-                    </div>
-                ))}
-            </div>
-        ) : (
-            <Text textColor={theme.colors.text.tetiary} bold={TypographyBold.md2}>None specified</Text>
-        )}
-    </div>
-);

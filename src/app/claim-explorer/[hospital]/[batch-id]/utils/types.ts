@@ -120,6 +120,15 @@ export interface Claim {
         createdAt: string;
         updatedAt: string;
         submittedAt: string;
+        assignedTo?: string
+    }
+
+    assignedTo?: {
+        id: string
+        firstName: string;
+        lastName: string;
+        email: string;
+        lastActive: string;
     }
 }
 

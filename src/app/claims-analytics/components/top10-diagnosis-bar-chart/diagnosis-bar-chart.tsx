@@ -17,7 +17,7 @@ const DiagnosisBarChart = () => {
 
     return (
         <SlideIn delay={0.6} className="flex flex-1">
-            <div className="w-full h-full flex flex-col gap-2 p-6">
+            <div className="w-full h-full flex flex-col gap-2 pt-6 pr-4 justify-center">
                 <div className="w-full flex justify-center pr-4">
                     <Text
                         textColor={theme.colors.text.primary}
@@ -30,7 +30,7 @@ const DiagnosisBarChart = () => {
                 </div>
 
                 {/** Chart */}
-                <div className="ml-[-10px] mt-[-10px]">
+                <div className="mt-[-10px]">
                     <DiagnosisBarChartComponent />
                 </div>
             </div>

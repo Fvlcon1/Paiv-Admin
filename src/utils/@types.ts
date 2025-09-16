@@ -16,8 +16,8 @@ export type ButtonStyleProps = {
 	background?: string
 	colorTheme?: string
 	border?: string
-	PreIcon?: ElementType
-	PostIcon?: ElementType
+	PreIcon?: ReactNode
+	PostIcon?: ReactNode
 	id?: string
 	radius?: number
 	padding?: string

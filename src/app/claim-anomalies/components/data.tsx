@@ -9,11 +9,14 @@ export const data = [
         rejectedClaims: "2",
         expectedPayout: "GHS 12,234",
         anomaly: "2",
-        status: "processing",
+        riskScore: "High",
+        riskScoreValue: 87,
+        status: "Confirmed Anomaly",
         claimPeriod: "JUL2025",
         dateSubmitted: "2025-07-01T14:30:00.000Z",
         lastUpdated: "2025-07-15T09:45:00.000Z",
-        totalApprovedCost: "GHS 11,850.50"
+        totalApprovedCost: "GHS 11,850.50",
+        assignedTo: "John Doe"
     },
     {
         batchId: "JUN2025",
@@ -24,11 +27,14 @@ export const data = [
         flaggedClaims: "3",
         rejectedClaims: "1",
         expectedPayout: "GHS 8,112",
-        status: "completed",
+        riskScore: "Medium",
+        riskScoreValue: 65,
+        status: "Dismissed",
         claimPeriod: "JUN2025",
         dateSubmitted: "2025-06-01T10:15:00.000Z",
         lastUpdated: "2025-06-20T16:20:00.000Z",
-        totalApprovedCost: "GHS 7,950.75"
+        totalApprovedCost: "GHS 7,950.75",
+        assignedTo: "Sarah Johnson"
     },
     {
         batchId: "MAY2025",
@@ -39,11 +45,14 @@ export const data = [
         flaggedClaims: "7",
         rejectedClaims: "3",
         expectedPayout: "GHS 5,280",
-        status: "under review",
+        riskScore: "High",
+        riskScoreValue: 92,
+        status: "Under Investigation",
         claimPeriod: "MAY2025",
         dateSubmitted: "2025-05-02T11:20:00.000Z",
         lastUpdated: "2025-07-10T14:10:00.000Z",
-        totalApprovedCost: "GHS 5,100.25"
+        totalApprovedCost: "GHS 5,100.25",
+        assignedTo: "Michael Chen"
     },
     {
         batchId: "APR2025",
@@ -55,11 +64,14 @@ export const data = [
         rejectedClaims: "0",
         expectedPayout: "GHS 2,608",
         anomaly: "2",
-        status: "submitted",
+        riskScore: "Low",
+        riskScoreValue: 15,
+        status: "Open",
         claimPeriod: "APR2025",
         dateSubmitted: "2025-04-03T09:45:00.000Z",
         lastUpdated: "2025-04-03T09:45:00.000Z",
-        totalApprovedCost: "GHS 0.00"
+        totalApprovedCost: "GHS 0.00",
+        assignedTo: "Unassigned"
     },
     {
         batchId: "MAR2025",
@@ -70,12 +82,14 @@ export const data = [
         flaggedClaims: "1",
         rejectedClaims: "0",
         expectedPayout: "GHS 2,600",
-        anomaly: "2",
-        status: "completed",
+        riskScore: "Medium",
+        riskScoreValue: 45,
+        status: "Dismissed",
         claimPeriod: "MAR2025",
         dateSubmitted: "2025-03-05T13:15:00.000Z",
         lastUpdated: "2025-03-15T11:30:00.000Z",
-        totalApprovedCost: "GHS 2,550.00"
+        totalApprovedCost: "GHS 2,550.00",
+        assignedTo: "David Wilson"
     },
     {
         batchId: "FEB2025",
@@ -86,11 +100,14 @@ export const data = [
         flaggedClaims: "2",
         rejectedClaims: "1",
         expectedPayout: "GHS 4,126",
-        status: "processing",
+        riskScore: "Medium",
+        riskScoreValue: 55,
+        status: "Confirmed Anomaly",
         claimPeriod: "FEB2025",
         dateSubmitted: "2025-02-01T15:20:00.000Z",
         lastUpdated: "2025-07-18T10:15:00.000Z",
-        totalApprovedCost: "GHS 3,850.50"
+        totalApprovedCost: "GHS 3,850.50",
+        assignedTo: "Emily Rodriguez"
     },
     {
         batchId: "JAN2025",
@@ -101,11 +118,14 @@ export const data = [
         flaggedClaims: "0",
         rejectedClaims: "0",
         expectedPayout: "GHS 2,100",
-        status: "completed",
+        riskScore: "Low",
+        riskScoreValue: 12,
+        status: "Dismissed",
         claimPeriod: "JAN2025",
         dateSubmitted: "2025-01-03T10:30:00.000Z",
         lastUpdated: "2025-01-20T14:45:00.000Z",
-        totalApprovedCost: "GHS 2,100.00"
+        totalApprovedCost: "GHS 2,100.00",
+        assignedTo: "Robert Taylor"
     },
     {
         batchId: "DEC2024",
@@ -116,11 +136,14 @@ export const data = [
         flaggedClaims: "5",
         rejectedClaims: "2",
         expectedPayout: "GHS 1,100",
-        status: "under review",
+        riskScore: "High",
+        riskScoreValue: 78,
+        status: "Under Investigation",
         claimPeriod: "DEC2024",
         dateSubmitted: "2024-12-02T11:45:00.000Z",
         lastUpdated: "2025-01-10T16:20:00.000Z",
-        totalApprovedCost: "GHS 1,050.75"
+        totalApprovedCost: "GHS 1,050.75",
+        assignedTo: "Lisa Wong"
     },
     {
         batchId: "NOV2024",
@@ -131,12 +154,14 @@ export const data = [
         flaggedClaims: "0",
         rejectedClaims: "0",
         expectedPayout: "GHS 555",
-        anomaly: "2",
-        status: "submitted",
+        riskScore: "Low",
+        riskScoreValue: 8,
+        status: "Open",
         claimPeriod: "NOV2024",
-        dateSubmitted: "2024-11-01T09:15:00.000Z",
-        lastUpdated: "2024-11-01T09:15:00.000Z",
-        totalApprovedCost: "GHS 0.00"
+        dateSubmitted: "2024-11-01T09:20:00.000Z",
+        lastUpdated: "2024-11-01T09:20:00.000Z",
+        totalApprovedCost: "GHS 0.00",
+        assignedTo: "Unassigned"
     },
     {
         batchId: "OCT2024",
@@ -147,11 +172,14 @@ export const data = [
         flaggedClaims: "12",
         rejectedClaims: "5",
         expectedPayout: "GHS 1,445",
-        status: "completed",
+        riskScore: "High",
+        riskScoreValue: 82,
+        status: "Dismissed",
         claimPeriod: "OCT2024",
-        dateSubmitted: "2024-10-02T13:30:00.000Z",
-        lastUpdated: "2024-10-25T11:20:00.000Z",
-        totalApprovedCost: "GHS 1,420.50"
+        dateSubmitted: "2024-10-01T08:45:00.000Z",
+        lastUpdated: "2024-10-25T14:30:00.000Z",
+        totalApprovedCost: "GHS 1,402.50",
+        assignedTo: "James Peterson"
     },
     {
         batchId: "SEP2024",
@@ -162,11 +190,14 @@ export const data = [
         flaggedClaims: "8",
         rejectedClaims: "3",
         expectedPayout: "GHS 1,445",
-        status: "processing",
+        riskScore: "High",
+        riskScoreValue: 76,
+        status: "Confirmed Anomaly",
         claimPeriod: "SEP2024",
         dateSubmitted: "2024-09-03T10:45:00.000Z",
         lastUpdated: "2024-10-15T14:30:00.000Z",
-        totalApprovedCost: "GHS 1,320.75"
+        totalApprovedCost: "GHS 1,320.75",
+        assignedTo: "Maria Garcia"
     },
     {
         batchId: "AUG2024",
@@ -177,11 +208,14 @@ export const data = [
         flaggedClaims: "22",
         rejectedClaims: "15",
         expectedPayout: "GHS 1,445",
-        status: "under review",
+        riskScore: "High",
+        riskScoreValue: 94,
+        status: "Dismissed",
         claimPeriod: "AUG2024",
-        dateSubmitted: "2024-08-01T14:20:00.000Z",
-        lastUpdated: "2024-09-05T16:15:00.000Z",
-        totalApprovedCost: "GHS 1,380.25"
+        dateSubmitted: "2024-08-01T11:30:00.000Z",
+        lastUpdated: "2024-08-30T16:45:00.000Z",
+        totalApprovedCost: "GHS 1,250.25",
+        assignedTo: "Thomas Kim"
     },
     {
         batchId: "JUL2024",
@@ -192,11 +226,14 @@ export const data = [
         flaggedClaims: "0",
         rejectedClaims: "0",
         expectedPayout: "GHS 1,445",
-        status: "completed",
+        riskScore: "Low",
+        riskScoreValue: 12,
+        status: "Dismissed",
         claimPeriod: "JUL2024",
         dateSubmitted: "2024-07-02T11:30:00.000Z",
         lastUpdated: "2024-07-25T10:45:00.000Z",
-        totalApprovedCost: "GHS 1,445.00"
+        totalApprovedCost: "GHS 1,445.00",
+        assignedTo: "Sarah Johnson"
     },
     {
         batchId: "JUN2024",
@@ -207,10 +244,13 @@ export const data = [
         flaggedClaims: "0",
         rejectedClaims: "0",
         expectedPayout: "GHS 1,445",
-        status: "submitted",
+        riskScore: "Low",
+        riskScoreValue: 5,
+        status: "Open",
         claimPeriod: "JUN2024",
-        dateSubmitted: "2024-06-03T09:15:00.000Z",
-        lastUpdated: "2024-06-03T09:15:00.000Z",
-        totalApprovedCost: "GHS 0.00"
+        dateSubmitted: "2024-06-03T10:15:00.000Z",
+        lastUpdated: "2024-06-03T10:15:00.000Z",
+        totalApprovedCost: "GHS 0.00",
+        assignedTo: "Unassigned"
     }
 ]

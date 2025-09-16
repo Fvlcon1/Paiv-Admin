@@ -45,7 +45,7 @@ const ApprovedAmountBarChartComponent = () => {
         plotOptions: {
             bar: {
                 horizontal: false,
-                columnWidth: '55%',
+                columnWidth: '90%',
                 borderRadius: 4,
                 distributed: true,
             },

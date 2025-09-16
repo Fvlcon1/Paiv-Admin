@@ -106,11 +106,11 @@ const Flagged = () => {
     return (
         <SlideIn
             direction="right"
-            className="w-full flex flex-col gap-2 py-4"
+            className="w-full flex flex-col gap-2 py-4 overflow-x-hidden"
         >
             <Top />
             {
-                (isFlaggedClaimsLoading || isFlaggedClaimsRefetching) ? (
+                (isFlaggedClaimsLoading) ? (
                     <TableSkeleton
                         rows={20}
                         showHeader

@@ -19,6 +19,8 @@ const useFlagged = () => {
     const [isFilterVisible, setIsFilterVisible] = useState(false)
     const [searchQuery, setSearchQuery] = useState<string>("")
     const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>("")
+    const [providerCategory, setProviderCategory] = useState<string>("")
+    const [prescriberLevel, setPrescriberLevel] = useState<string>("")
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -34,27 +36,22 @@ const useFlagged = () => {
             date_submitted_to: dateSubmittedTo?.length > 0 ? dayjs(dateSubmittedTo).format("YYYY-MM-DD") : undefined,
             last_modified_from: lastModifiedFrom?.length > 0 ? dayjs(lastModifiedFrom).format("YYYY-MM-DD") : undefined,
             last_modified_to: lastModifiedTo?.length > 0 ? dayjs(lastModifiedTo).format("YYYY-MM-DD") : undefined,
-            provider_name: debouncedSearchQuery.length > 0 ? debouncedSearchQuery : providerName?.length > 0 ? providerName : undefined,
+            provider_name: providerName?.length > 0 ? providerName : undefined,
             patient_name: patientName?.length > 0 ? patientName : undefined,
             encounter_token: encounterToken?.length > 0 ? encounterToken : undefined,
             nhis_id: nhisId?.length > 0 ? nhisId : undefined,
             claim_id: claimId?.length > 0 ? claimId : undefined,
             total_approved_amount: totalApprovedAmount > 0 ? totalApprovedAmount : undefined,
+            provider_type: providerCategory,
+            healthcare_level: prescriberLevel,
+            search : debouncedSearchQuery.length > 0 ? debouncedSearchQuery : undefined
         });
         const transformedFlaggedClaims = transformFlaggedClaims(response);
         return transformedFlaggedClaims
     }, [
-        dateSubmittedFrom,
-        dateSubmittedTo,
-        lastModifiedFrom,
-        lastModifiedTo,
-        providerName,
-        patientName,
-        debouncedSearchQuery,
-        encounterToken,
-        nhisId,
-        claimId,
-        totalApprovedAmount
+        dateSubmittedFrom, dateSubmittedTo, lastModifiedFrom, lastModifiedTo,
+        providerName, patientName, debouncedSearchQuery, encounterToken, nhisId,
+        claimId, totalApprovedAmount, providerCategory, prescriberLevel
     ]);
 
     const { data: flaggedClaims, isLoading: isFlaggedClaimsLoading, error: flaggedClaimsError, refetch : refetchFlaggedClaims, isRefetching : isFlaggedClaimsRefetching } = useQuery({
@@ -69,7 +66,9 @@ const useFlagged = () => {
             encounterToken,
             nhisId,
             claimId,
-            totalApprovedAmount
+            totalApprovedAmount,
+            providerCategory,
+            prescriberLevel
         ],
         queryFn: getFlaggedClaims,
         refetchOnWindowFocus: false,
@@ -106,6 +105,10 @@ const useFlagged = () => {
         isFlaggedClaimsRefetching,
         setSearchQuery,
         searchQuery,
+        providerCategory,
+        setProviderCategory,
+        prescriberLevel,
+        setPrescriberLevel,
     }
 }
 export default useFlagged

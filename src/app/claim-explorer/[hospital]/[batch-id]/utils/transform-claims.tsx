@@ -112,7 +112,15 @@ export const transformClaim = (data: any): Claim => {
             createdAt: data.created_at,
             updatedAt: data.updated_at,
             submittedAt: data.submitted_at,
+            assignedTo: data.assigned_to,
         },
+        assignedTo: {
+            id : data.assigned_to_admin?.id,
+            firstName: data.assigned_to_admin?.first_name,
+            lastName: data.assigned_to_admin?.last_name,
+            email: data.assigned_to_admin?.email,
+            lastActive: data.assigned_to_admin?.last_active,
+        }
     };
 };
 

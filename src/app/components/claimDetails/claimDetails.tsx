@@ -47,15 +47,16 @@ const ClaimDetails = ({
                     <Container 
                         isVisible={isVisible} 
                         close={() => close()} 
-                        className={`!rounded-xl border border-main-primary !h-[90%]`}
+                        className={`!rounded-xl border border-text-tetiary !h-[90%]`}
                     >
                         <div
                             className="md:w-[800px] w-full flex flex-col h-full"
                         >
-                            <div className="bg-main-primary border-solid border-b-[1px] border-main-primary h-[55px] flex items-center pl-6">
+                            <div className="bg-bg-primary border-b-[1px] shadow-lg shadow-black/5 border-border-primary h-[55px] flex items-center pl-6">
                                 <Text 
-                                    textColor={theme.colors.bg.primary}
-                                    bold={TypographyBold.md}
+                                    textColor={theme.colors.main.primary}
+                                    bold={theme.typography.bold.md2}
+                                    size={theme.typography.size.body2}
                                 >
                                     Claim Details
                                 </Text>

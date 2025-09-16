@@ -82,6 +82,7 @@ export const dummyClaimDetail: IClaimsDetailType = {
         checkoutImageUrl: "/images/checkout.jpg",
         createdAt: "2023-05-10T10:30:00Z",
         token: "TOKEN12345",
-        disposition: "Discharged"
+        disposition: "Discharged",
+        EncounterId: "ENC-2023-001234"
     }
 };

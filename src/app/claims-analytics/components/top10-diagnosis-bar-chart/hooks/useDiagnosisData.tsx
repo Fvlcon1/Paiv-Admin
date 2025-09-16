@@ -17,7 +17,8 @@ const useDiagnosisData = () => {
     
         sortedData.forEach(item => {
             categories.push(item.diagnosis_name);
-            diagnosisCodes.push(`${item.diagnosis_name.charAt(0).toUpperCase() + item.diagnosis_name.charAt(1).toUpperCase()}`);
+            // diagnosisCodes.push(`${item.diagnosis_name.charAt(0).toUpperCase() + item.diagnosis_name.charAt(1).toUpperCase()}`);
+            diagnosisCodes.push(`${item.diagnosis_name}`);
             series.push(item.percentage);
         });
     

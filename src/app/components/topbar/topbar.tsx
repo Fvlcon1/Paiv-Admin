@@ -35,7 +35,7 @@ const Topbar = () => {
     return (
         <div className={`fixed top-0 z-[51] h-[60px] px-4 flex items-center justify-between pl-[266px] border-b-[1px] border-solid border-b-border-primary w-full bg-bg-primary`}>
             <Link className="flex items-center gap-2" href={'/'}>
-                <Logo size={40} color="dark" />
+                <Logo size={30} color="dark" />
             </Link>
             <Button 
                 text="Logout"

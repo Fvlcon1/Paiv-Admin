@@ -34,6 +34,12 @@ const FlaggedContext = createContext<{
     isFlaggedClaimsRefetching: boolean;
     setSearchQuery: (value: string) => void;
     searchQuery: string;
+    providerCategory: string;
+    setProviderCategory: (value: string) => void;
+    prescriberLevel: string;
+    setPrescriberLevel: (value: string) => void;
+    selectedEncounterIds: string[];
+    setSelectedEncounterIds: (value: string[]) => void;
 }>({
     flaggedClaims: [],
     isFlaggedClaimsLoading: false,
@@ -64,6 +70,12 @@ const FlaggedContext = createContext<{
     isFlaggedClaimsRefetching: false,
     setSearchQuery: () => {},
     searchQuery: "",
+    providerCategory: "",
+    setProviderCategory: () => {},
+    prescriberLevel: "",
+    setPrescriberLevel: () => {},
+    selectedEncounterIds: [],
+    setSelectedEncounterIds: () => {},
 })
 
 export const FlaggedContextProvider = ({children}: {children: ReactNode}) => {
@@ -97,7 +109,13 @@ export const FlaggedContextProvider = ({children}: {children: ReactNode}) => {
         isFlaggedClaimsRefetching,
         setSearchQuery,
         searchQuery,
+        providerCategory,
+        setProviderCategory,
+        prescriberLevel,
+        setPrescriberLevel,
     } = useFlagged()
+
+    const [selectedEncounterIds, setSelectedEncounterIds] = useState<string[]>([])
 
     return (
         <FlaggedContext.Provider value={{
@@ -130,6 +148,12 @@ export const FlaggedContextProvider = ({children}: {children: ReactNode}) => {
             isFlaggedClaimsRefetching,
             setSearchQuery,
             searchQuery,
+            providerCategory,
+            setProviderCategory,
+            prescriberLevel,
+            setPrescriberLevel,
+            selectedEncounterIds,
+            setSelectedEncounterIds
         }}>
             {children}
         </FlaggedContext.Provider>

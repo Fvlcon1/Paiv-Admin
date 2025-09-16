@@ -12,8 +12,8 @@ const OtherDetails = ({
     const { data } = getOtherDetails(claimDetails)
 
     return (
-        <div className="w-full border-solid border-[1px] border-main-tetiary rounded-xl flex flex-col  h-[300px]">
-            <div className="flex w-full border-solid border-b-[1px] border-main-tetiary bg-main-primary min-h-[45px] items-center pl-4 rounded-t-[10px]">
+        <div className="w-full flex flex-col">
+            <div className="flex w-full bg-main-primary/80 min-h-[45px] items-center pl-4 rounded-t-xl">
                 <Text
                     bold={theme.typography.bold.md}
                     textColor={theme.colors.bg.primary}

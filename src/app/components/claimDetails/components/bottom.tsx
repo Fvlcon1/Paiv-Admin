@@ -12,7 +12,7 @@ const Bottom = ({
     actions?: React.ReactNode
 }) => {
     return (
-        <div className="bg-bg-secondary border-solid border-t-[1px] justify-between border-bg-tetiary rounded-b-xl h-[55px] flex items-center pl-6">
+        <div className="bg-bg-primary shadow-lg border-solid border-t-[1px] justify-between border-bg-tetiary rounded-b-xl h-[55px] flex items-center pl-6">
             <div className="flex gap-6 items-center">   
                 {
                     expectedPayout ? (

@@ -129,7 +129,7 @@ const StatusDistributionChart = () => {
                     <>
                         <Text
                             textColor={theme.colors.text.primary}
-                            bold={theme.typography.bold.md2}
+                            bold={theme.typography.bold.md}
                             size={theme.typography.size.HM}
                             
                         >

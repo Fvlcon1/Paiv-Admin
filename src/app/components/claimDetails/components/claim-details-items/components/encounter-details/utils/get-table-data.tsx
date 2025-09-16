@@ -5,7 +5,7 @@ import { getDateTime } from "@/utils/getDate"
 import { getLengthOfStay } from "./getLengthOfStay"
 import { IEncounterDetails } from "@/app/components/claimDetails/utils/types"
 
-const getTableData = (encounterDetails : IEncounterDetails) => {
+const getTableData = (encounterDetails: IEncounterDetails) => {
 	const {
 		gender,
 		dob,
@@ -17,7 +17,8 @@ const getTableData = (encounterDetails : IEncounterDetails) => {
 		claimSubmissionAt,
 		checkinTime,
 		checkoutTime,
-		disposition
+		disposition,
+		EncounterId
 	} = encounterDetails || {};
 
 	const data = [
@@ -28,6 +29,14 @@ const getTableData = (encounterDetails : IEncounterDetails) => {
 				</Text>
 				<Text>
 					&nbsp;{`${encounterDetails?.firstname}${encounterDetails?.othernames ? ` ${encounterDetails?.othernames}` : ''} ${encounterDetails?.lastname}`}
+				</Text>
+			</div>,
+			<div className="flex">
+				<Text textColor={theme.colors.text.tetiary}>
+					Encounter ID:
+				</Text>
+				<Text>
+					&nbsp;{EncounterId}
 				</Text>
 			</div>,
 		],

@@ -66,7 +66,7 @@ const ChartComponent = ({
             labels: {
                 style: {
                     colors: '#6B7280',
-                    fontSize: '10px',
+                    fontSize: '12px',
                     fontFamily: 'Montserrat'
                 }
             }
@@ -84,7 +84,7 @@ const ChartComponent = ({
             labels: {
                 style: {
                     colors: '#6B7280',
-                    fontSize: '10px',
+                    fontSize: '12px',
                     fontFamily: 'Montserrat'
                 }
             }

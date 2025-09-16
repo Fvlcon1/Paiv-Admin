@@ -28,10 +28,23 @@ const DiagnosisBarChartComponent = () => {
 
     const series = [
         {
-            name: 'Number of claims',
+            name: 'Percentage of claims',
             data: dataseries,
         },
     ];
+
+    // Format the categories for y-axis labels with their corresponding diagnosis codes
+    const yaxisLabels = diagnosisCodes.map((code, index) => ({
+        offsetY: 0,
+        style: {
+            colors: '#6B7280',
+            fontSize: '12px',
+            fontFamily: 'Montserrat',
+            minWidth: 120,
+            maxWidth: 200
+        },
+        text: code.length > 15 ? code.substring(0, 15) + '...' : code
+    }));
 
     const options : ApexOptions = {
         chart: {
@@ -44,8 +57,8 @@ const DiagnosisBarChartComponent = () => {
         colors: barColors,
         plotOptions: {
             bar: {
-                horizontal: false,
-                columnWidth: '55%',
+                horizontal: true,
+                barHeight: '90%',
                 borderRadius: 4,
                 distributed: true,
             },
@@ -62,15 +75,6 @@ const DiagnosisBarChartComponent = () => {
             categories: diagnosisCodes,
             axisBorder: { show: false },
             axisTicks: { show: false },
-            title: {
-                text: 'Diagnosis Codes',
-                style: {
-                    color: '#6B7280',
-                    fontSize: '12px',
-                    fontFamily: 'Montserrat',
-                    fontWeight: 500
-                }
-            },
             labels: {
                 style: {
                     colors: '#6B7280',
@@ -78,21 +82,18 @@ const DiagnosisBarChartComponent = () => {
                     fontFamily: 'Montserrat'
                 },
                 formatter: function(value) {
-                    // Truncate long diagnosis codes if needed
-                    return value.length > 15 ? value.substring(0, 15) + '...' : value;
+                    // return value.length > 15 ? value.substring(0, 15) + '...' : value;
+                    return `${value.toLocaleString()}%`;
                 }
+            },
+            position: 'bottom',
+            tooltip: {
+                enabled: false
             }
         },
         yaxis: {
-            title: {
-                text: 'Percentage',
-                style: {
-                    color: '#6B7280',
-                    fontSize: '12px',
-                    fontFamily: 'Montserrat',
-                    fontWeight: 500
-                }
-            },
+            axisBorder: { show: false },
+            axisTicks: { show: false },
             labels: {
                 style: {
                     colors: '#6B7280',
@@ -100,7 +101,7 @@ const DiagnosisBarChartComponent = () => {
                     fontFamily: 'Montserrat'
                 },
                 formatter: (value) => {
-                    return `${value.toLocaleString()}%`;
+                    return `${value.toLocaleString()}`;
                 }
             }
         },
@@ -110,7 +111,8 @@ const DiagnosisBarChartComponent = () => {
         grid: {
             borderColor: theme.colors.border.primary,
             strokeDashArray: 4,
-            yaxis: { lines: { show: true } }
+            yaxis: { lines: { show: false } },
+            xaxis: { lines: { show: true } }
         },
         tooltip: {
             theme: 'light',
@@ -119,6 +121,11 @@ const DiagnosisBarChartComponent = () => {
                     return categories[dataPointIndex] || '';
                 }
             },
+            y: {
+                formatter : function(_, { dataPointIndex }) {
+                    return `${dataseries[dataPointIndex]}%` || '0%';
+                }
+            }
         },
         fill: {
             opacity: 1

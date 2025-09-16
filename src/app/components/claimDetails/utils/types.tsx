@@ -77,6 +77,7 @@ export interface IEncounterDetails extends INhisDetails {
     checkinStatus? : boolean
     checkoutStatus? : boolean
     claimSubmissionAt? : Date
+    EncounterId? : string
 }
 
 export interface IDrugsType {
