@@ -15,7 +15,8 @@ const AvailableAdmins = ({
     admins,
     selectedMonths,
     setIsVisible,
-    assignedTo
+    assignedTo,
+    selectedProviderIds
 }: {
     admins: Admin[],
     selectedAnomalyIds?: string[],
@@ -24,22 +25,26 @@ const AvailableAdmins = ({
     setIsVisible: (isVisible: boolean) => void,
     assignedTo?: AnomalousBatch["assignedTo"]
 }) => {
-    const [clickedAdminId, setClickedAdminId] = useState("")
     const { refetchAnomalousBatches, setSelectedAnomalyIds } = useAnomalyContext()
-    const { assignToAdminMutation, assignToAdminSuccess, assignToAdminLoading, selectedProviders, selectedYearMonths, setSelectedYearMonths } = useAdminsContext()
+    const { assignToAdminMutation, assignToAdminLoading, selectedAdmins, setSelectedAdmins } = useAdminsContext()
 
     const handleAssignToAdmin = async (adminId: string) => {
-        setClickedAdminId(adminId)
+        setSelectedAdmins([adminId])
         await assignToAdminMutation({
             groupBy : "batch", 
             adminId, 
             yearMonths : selectedMonths, 
-            providers : selectedProviders
+            providers : selectedProviderIds
         })
+        console.log("after")
         setIsVisible(false)
         setSelectedAnomalyIds([])
         refetchAnomalousBatches()
     }
+
+    useEffect(() => {
+        console.log("remounted")
+    }, [])
 
     return (
         admins.map((item: Admin, index: number) => {
@@ -75,7 +80,7 @@ const AvailableAdmins = ({
                         </div>
 
                         {
-                            ((assignToAdminLoading) && clickedAdminId === item.id) ? (
+                            (assignToAdminLoading && selectedAdmins.includes(item.id)) ? (
                                 <LuLoaderCircle className="animate-spin" />
                             ) : item.lastActive === "just now" && (
                                 <GoDotFill

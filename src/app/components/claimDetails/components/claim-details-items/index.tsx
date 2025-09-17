@@ -31,16 +31,16 @@ const ClaimDetailsItems = ({
                 claimDetails.reasons ?
                 <Reason reasons={claimDetails.reasons}/> : <></>
             }
-            <WithTotal total={claimDetails.diagnosisTotal ?? 0}>
+            <WithTotal total={claimDetails.diagnosisTotal || 0}>
                 <Diagnosis diagnosis={claimDetails.diagnosis} />
             </WithTotal>
-            <WithTotal total={claimDetails.medicalProceduresTotal}>
+            <WithTotal total={claimDetails.medicalProceduresTotal || 0}>
                 <MedicalProcedures procedures={claimDetails.medicalProcedures} />
             </WithTotal>
-            <WithTotal total={claimDetails.drugsTotal}>
+            <WithTotal total={claimDetails.drugsTotal || 0}>
                 <Drugs drugs={claimDetails.drugs} />
             </WithTotal>
-            <WithTotal total={claimDetails.labTestsTotal}>
+            <WithTotal total={claimDetails.labTestsTotal || 0}>
                 <LabTests tests={claimDetails.labTests} />
             </WithTotal>
             <OtherDetails

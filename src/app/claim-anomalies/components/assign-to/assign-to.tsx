@@ -61,7 +61,7 @@ const AssignTo = ({
     assignedTo?: AnomalousBatch["assignedTo"]
 }) => {
     const assignToRef = useRef<HTMLDivElement>(null);
-    const { admins, setSearchQuery, searchQuery, selectedAdmins, setSelectedAdmins, selectedRegions, setSelectedRegions, selectedDistricts, setSelectedDistricts, selectedProviders, setSelectedProviders, assignToAdminMutation, assignToAdminLoading, assignToAdminError, assignToAdminSuccess, unAssignAdminMutation, unAssignAdminLoading, unAssignAdminError, unAssignAdminSuccess } = useAdminsContext()
+    const { admins, setSearchQuery, searchQuery } = useAdminsContext()
 
     useClickAway(assignToRef, () => {
         setIsVisible(false);

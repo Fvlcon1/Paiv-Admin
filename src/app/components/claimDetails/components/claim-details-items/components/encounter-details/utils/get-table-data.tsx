@@ -1,7 +1,7 @@
 import Text from "@styles/components/text"
 import theme from "@styles/theme"
 import { getAgeFromDate } from "./getAgeFromDate"
-import { getDateTime } from "@/utils/getDate"
+import getDate, { getDateTime } from "@/utils/getDate"
 import { getLengthOfStay } from "./getLengthOfStay"
 import { IEncounterDetails } from "@/app/components/claimDetails/utils/types"
 
@@ -28,7 +28,7 @@ const getTableData = (encounterDetails: IEncounterDetails) => {
 					Full Name:
 				</Text>
 				<Text>
-					&nbsp;{`${encounterDetails?.firstname}${encounterDetails?.othernames ? ` ${encounterDetails?.othernames}` : ''} ${encounterDetails?.lastname}`}
+					&nbsp;{`${encounterDetails?.othernames} ${encounterDetails?.lastname}`}
 				</Text>
 			</div>,
 			<div className="flex">
@@ -43,10 +43,10 @@ const getTableData = (encounterDetails: IEncounterDetails) => {
 		[
 			<div className="flex">
 				<Text textColor={theme.colors.text.tetiary}>
-					Gender & Age:
+					Gender:
 				</Text>
 				<Text>
-					&nbsp;{gender} | {dob && getAgeFromDate(new Date(dob))} years
+					&nbsp;{gender}
 				</Text>
 			</div>,
 			<div className="flex">
@@ -90,7 +90,7 @@ const getTableData = (encounterDetails: IEncounterDetails) => {
 					Claim submitted on:
 				</Text>
 				<Text>
-					&nbsp;{claimSubmissionAt ? getDateTime(claimSubmissionAt) : "-"}
+					&nbsp;{claimSubmissionAt ? getDate(claimSubmissionAt) : "-"}
 				</Text>
 			</div>
 		],
@@ -100,7 +100,7 @@ const getTableData = (encounterDetails: IEncounterDetails) => {
 					Check in time:
 				</Text>
 				<Text>
-					{checkinTime ? getDateTime(checkinTime) : "-"}
+					{checkinTime ? getDate(checkinTime) : "-"}
 				</Text>
 			</div>,
 			<div className="flex gap-1">
@@ -108,7 +108,7 @@ const getTableData = (encounterDetails: IEncounterDetails) => {
 					Check out time:
 				</Text>
 				<Text>
-					{checkoutTime ? getDateTime(checkoutTime) : "-"}
+					{checkoutTime ? getDate(checkoutTime) : "-"}
 				</Text>
 			</div>
 		],

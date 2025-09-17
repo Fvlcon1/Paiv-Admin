@@ -23,7 +23,7 @@ const Filter = () => {
     const [isAssignToVisible, setIsAssignToVisible] = useState<boolean>(false)
     const [isAssignByVisible, setIsAssignByVisible] = useState<boolean>(false)
     const [assignByGrouping, setAssignByGrouping] = useState<AssignByGrouping>("Region")
-    const {selectedYearMonths} = useAdminsContext()
+    const {selectedYearMonths, selectedProviders} = useAdminsContext()
 
     const prescribingLevels: DropdownItem[] = prescribingLevelsDropdown.map((item) => ({
         key: item.key,
@@ -73,6 +73,7 @@ const Filter = () => {
                                 setIsVisible={setIsAssignToVisible}
                                 selectedAnomalyIds={selectedAnomalyIds}
                                 selectedMonths={selectedYearMonths.map((item: string) => item.split('T')[0].substring(0, 7))}
+                                selectedProviderIds={selectedProviders}
                                 className="mt-2"
                             />
                         </div>

@@ -48,7 +48,7 @@ export interface IClaimsDetailType {
 
 export interface INhisDetails {
     imageUrl? : string
-    firstname : string,
+    firstname? : string,
     othernames : string,
     lastname : string,
     nhisId : string,

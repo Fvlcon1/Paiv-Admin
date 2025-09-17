@@ -265,7 +265,7 @@ const useColumns = ({ onRowSelectionChange, selectedRowKeys = [] }: UseColumnsPr
                             }}
                         >
                             {
-                                assignedTo.id ? (
+                                assignedTo?.id ? (
                                     <UserChip index={rowIndex} name={`${assignedTo.firstName} ${assignedTo.lastName}`} />
                                 ) : (
                                     <TiUserAdd color={theme.colors.text.tetiary} size={20} />

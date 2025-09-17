@@ -14,6 +14,11 @@ import { dummyClaimDetail } from "@/app/components/claimDetails/utils/data";
 import { IClaimsDetailType } from "@/app/components/claimDetails/utils/types";
 import { transformFlaggedClaimsToTable } from "@/app/flagged/utils/transform-flagged";
 import { FlaggedClaimTable } from "../utils/types";
+import Button from "@components/button/button";
+import OutlineButton from "@components/button/outlineButton";
+import ConfirmationModal from "@components/confirmation-modal/confirmation-modal";
+import Input from "@components/input/input";
+import { Actions } from "./actions";
 
 const Table = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
@@ -31,11 +36,9 @@ const Table = () => {
     const [claimDetails, setClaimDetails] = useState<IClaimsDetailType | null>(null);
 
     const flaggedClaimsTable = useMemo(() => {
-        return transformFlaggedClaimsToTable(flaggedClaims || []);
-    }, [flaggedClaims]);
-
-    useEffect(() => {
-        console.log('Flagged claims updated:', { flaggedClaims });
+        const flaggedTable = transformFlaggedClaimsToTable(flaggedClaims || []);
+        console.log({flaggedTable})
+        return flaggedTable
     }, [flaggedClaims]);
 
     useEffect(() => {
@@ -63,7 +66,7 @@ const Table = () => {
             }), {}),
         },
         onRowSelectionChange: (updater) => {
-            const newSelection = typeof updater === 'function' 
+            const newSelection = typeof updater === 'function'
                 ? updater({})
                 : updater;
             setSelectedRowKeys(Object.keys(newSelection));
@@ -96,9 +99,16 @@ const Table = () => {
                 claimDetails={claimDetails || dummyClaimDetail}
                 isVisible={isClaimsDetailsVisible}
                 close={() => setIsClaimsDetailsVisible(false)}
+                actions={
+                    <Actions
+                        claimDetails={claimDetails!}
+                        isClaimsDetailsVisible={isClaimsDetailsVisible}
+                        setIsClaimsDetailsVisible={setIsClaimsDetailsVisible}
+                    />
+                }
             />
             <div className="w-full px-4 pb-4 overflow-x-hidden">
-                <div 
+                <div
                     ref={tableContainerRef}
                     className="w-full overflow-x-auto relative"
                 >
@@ -107,11 +117,10 @@ const Table = () => {
                             {/* Table Head */}
                             <thead className="relative">
                                 {getHeaderGroups().map((headerGroup) => (
-                                    <tr 
+                                    <tr
                                         key={headerGroup.id}
-                                        className={`sticky top-0 bg-white z-20 ${
-                                            showShadow ? 'shadow-[0_2px_4px_-1px_rgba(0,0,0,0.1)]' : ''
-                                        }`}
+                                        className={`sticky top-0 bg-white z-20 ${showShadow ? 'shadow-[0_2px_4px_-1px_rgba(0,0,0,0.1)]' : ''
+                                            }`}
                                     >
                                         {headerGroup.headers.map((header, colIndex: number) => (
                                             <th
@@ -122,10 +131,10 @@ const Table = () => {
                                                 ${showShadow && colIndex === 0 ? 'shadow-[2px_2px_4px_-1px_rgba(0,0,0,0.1)]' : ''}`
                                                 }
                                                 onClick={header.column.getToggleSortingHandler()}
-                                                // style={{
-                                                //     minWidth: colIndex === 0 ? '150px' : '150px',
-                                                //     maxWidth: colIndex === 0 ? '150px' : '150px',
-                                                // }}
+                                            // style={{
+                                            //     minWidth: colIndex === 0 ? '150px' : '150px',
+                                            //     maxWidth: colIndex === 0 ? '150px' : '150px',
+                                            // }}
                                             >
                                                 <div className={`py-[15px] ${colIndex === 0 ? 'px-[10px]' : 'px-[30px]'} flex h-full items-center gap-1`}>
                                                     <Text
@@ -156,7 +165,7 @@ const Table = () => {
                                                 key={row.id}
                                                 className={`${isLoading ? "cursor-wait" : "cursor-pointer"} ${index % 2 === 0 ? "bg-bg-primary-lighter" : ""} group hover:bg-bg-secondary duration-500`}
                                                 onClick={() => {
-                                                    // setClaimDetails(row.original)
+                                                    setClaimDetails(row.original.details)
                                                     setIsClaimsDetailsVisible(true)
                                                 }}
                                             >
